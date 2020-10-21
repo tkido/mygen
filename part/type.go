@@ -4,7 +4,7 @@ package part
 type Type int
 
 const (
-	// Body Penis
+	// Body
 	AccA Type = iota
 	AccB
 	BeastEars
@@ -23,6 +23,7 @@ const (
 	RearHair
 	Tail
 	Wing
+	// Penis
 )
 
 var Types = []Type{
@@ -44,4 +45,9 @@ var Types = []Type{
 	Wing,
 	Clothing,
 	Cloak,
+}
+
+type Setting struct {
+	Id     int
+	Colors []int
 }
