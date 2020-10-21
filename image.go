@@ -52,8 +52,8 @@ func filterImage(img *ebiten.Image) *ebiten.Image {
 			if index == -1 {
 				continue
 			}
-			nc := imgGrad.At(index, 9)
-
+			nc := imgGrad.At(index, 42*4)
+			// 透明度は元のものを維持する
 			oc1 := color.RGBAModel.Convert(oc).(color.RGBA)
 			nc1 := color.RGBAModel.Convert(nc).(color.RGBA)
 			nc1.A = oc1.A

@@ -32,6 +32,7 @@ func updateFace() {
 				}
 			}
 		}
+
 		files := globParts(sprite.Face, game.setting.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- {
 			file := files[i]
@@ -44,8 +45,8 @@ func updateFace() {
 				if err != nil {
 					log.Fatalf("invalid default color label")
 				}
-				if lay == layer.FrontHair {
-					p := palette.Type(index)
+				p := palette.Type(index)
+				if p == palette.Skin {
 					fmt.Println(p)
 					imgSrc = filterImage(imgSrc)
 				}

@@ -1,5 +1,7 @@
 package gradient
 
+type Row int
+
 //go:generate stringer -type=Type
 type Type int
 
@@ -10,10 +12,10 @@ const (
 	Acc
 )
 
-// gradient.png の Start 行目から Number 行がパレット
+// gradient.png の Start 行目から Number 行がそのタイプが選べる行
 type Gradient struct {
-	Start  int
-	Number int
+	Start  Row
+	Number Row
 }
 
 var Map = map[Type]Gradient{
