@@ -34,12 +34,14 @@ var (
 	imgFace *ebiten.Image
 	imgMenu *ebiten.Image
 	imgBg   *ebiten.Image
+	imgGrad *ebiten.Image
 )
 
 func init() {
 	imgFace, _ = ebiten.NewImage(144, 144, ebiten.FilterDefault)
 	imgMenu, _ = ebiten.NewImage(64*64, 64, ebiten.FilterDefault)
 	imgBg, _, _ = ebitenutil.NewImageFromFile("system/background.png", ebiten.FilterDefault)
+	imgGrad, _, _ = ebitenutil.NewImageFromFile("generator/gradients.png", ebiten.FilterDefault)
 	game = Game{
 		cursorY: 0,
 		cursorX: 0,

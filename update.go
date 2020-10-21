@@ -2,7 +2,11 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"regexp"
+	"strconv"
 
+	"github.com/tkido/mygen/palette"
 	"github.com/tkido/mygen/part"
 
 	"github.com/hajimehoshi/ebiten"
@@ -10,11 +14,13 @@ import (
 	"github.com/tkido/mygen/sprite"
 )
 
+var reDefaultColor = regexp.MustCompile(`_m(\d{3})`)
+
 func updateFace() {
 	imgFace.Clear()
 	for i := len(layer.FaceLayers) - 1; 0 <= i; i-- {
 		lay := layer.FaceLayers[i]
-		fmt.Println(lay)
+		// log.Printf("Set %s...\n", lay)
 
 		label := "01"
 		if pt, ok := layerPartMap[lay]; ok {
@@ -29,20 +35,26 @@ func updateFace() {
 		files := globParts(sprite.Face, game.setting.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- {
 			file := files[i]
+			// fmt.Println(file)
 			imgSrc := loadImage(file)
+			// default color found
+			if ms := reDefaultColor.FindStringSubmatch(file); len(ms) >= 2 {
+				label := ms[1]
+				index, err := strconv.Atoi(label)
+				if err != nil {
+					log.Fatalf("invalid default color label")
+				}
+				if lay == layer.FrontHair {
+					p := palette.Type(index)
+					fmt.Println(p)
+					imgSrc = filterImage(imgSrc)
+				}
+			}
 			op := &ebiten.DrawImageOptions{}
 			imgFace.DrawImage(imgSrc, op)
 		}
 	}
-	// f, err := os.Create("dist/outimage.png")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// defer f.Close()
-	// err = png.Encode(f, imgFace)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+
 }
 
 func updateMenu() {

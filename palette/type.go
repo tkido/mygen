@@ -6,7 +6,7 @@ import "github.com/tkido/mygen/part"
 type Type int
 
 const (
-	Skin = iota + 1
+	Skin Type = iota + 1
 	Eyes
 	Hair
 	HairSub

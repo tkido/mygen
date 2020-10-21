@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"path/filepath"
 	"regexp"
@@ -21,7 +20,6 @@ func init() {
 			files := globVariations(bt, pt)
 			vs := []Variation{}
 			for _, file := range files {
-				fmt.Println(file)
 				fileName := filepath.Base(file)
 				ms := re.FindStringSubmatch(fileName)
 				if len(ms) < 2 {
@@ -38,7 +36,6 @@ func init() {
 			sort.Slice(vs, func(i, j int) bool {
 				return vs[i].id < vs[j].id
 			})
-			fmt.Println(vs)
 			variationMap[bt][pt] = vs
 		}
 	}
