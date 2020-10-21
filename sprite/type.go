@@ -9,3 +9,10 @@ const (
 	TV
 	TVD
 )
+
+var Types = []Type{
+	Face,
+	SV,
+	TV,
+	TVD,
+}

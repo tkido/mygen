@@ -7,13 +7,13 @@ import (
 	"regexp"
 	"sort"
 	"strconv"
-	"testing"
 
 	"github.com/tkido/mygen/base"
 	"github.com/tkido/mygen/part"
 )
 
-func TestMakeVariationMap(t *testing.T) {
+func init() {
+	// make variationMap
 	re := regexp.MustCompile(`_p(\d+)`)
 	for _, bt := range base.Types {
 		variationMap[bt] = map[part.Type][]Variation{}
@@ -42,10 +42,4 @@ func TestMakeVariationMap(t *testing.T) {
 			variationMap[bt][pt] = vs
 		}
 	}
-	// parts := globParts(sprite.Face, base.Male, layer.Face, "01")
-	// for _, part := range parts {
-	// 	fmt.Println(part)
-	// }
-	// files = globParts(sprite.SV, base.Male, layer.Wing1)
-	// fmt.Println(files)
 }

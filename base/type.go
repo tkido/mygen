@@ -8,3 +8,9 @@ const (
 	Female
 	Kid
 )
+
+var Types = []Type{
+	Male,
+	Female,
+	Kid,
+}

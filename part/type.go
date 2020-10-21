@@ -24,3 +24,24 @@ const (
 	Tail
 	Wing
 )
+
+var Types = []Type{
+	Face,
+	RearHair,
+	FrontHair,
+	Eyebrows,
+	Eyes,
+	Glasses,
+	Ears,
+	Nose,
+	Beard,
+	Mouth,
+	FacialMark,
+	BeastEars,
+	AccA,
+	AccB,
+	Tail,
+	Wing,
+	Clothing,
+	Cloak,
+}
