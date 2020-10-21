@@ -24,6 +24,12 @@ func globVariations(base base.Type, part part.Type) []string {
 	return files
 }
 
+var globCache map[string][]string
+
+func init() {
+	globCache = map[string][]string{}
+}
+
 func globParts(sp sprite.Type, base base.Type, layer layer.Type, num string) []string {
 	header := sp.String()
 	if sp == sprite.Face {
@@ -34,10 +40,15 @@ func globParts(sp sprite.Type, base base.Type, layer layer.Type, num string) []s
 		sp.String(),
 		base.String(),
 		fmt.Sprintf("%s_%s_p%s*.png", header, layer, num))
-	fmt.Println(path)
-	files, err := filepath.Glob(path)
-	if err != nil {
-		log.Fatal(err)
+	// fmt.Println(path)
+	files, ok := globCache[path]
+	if !ok {
+		var err error
+		files, err = filepath.Glob(path)
+		if err != nil {
+			log.Fatal(err)
+		}
+		globCache[path] = files
 	}
 	return files
 }

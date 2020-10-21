@@ -96,22 +96,26 @@ func (g *Game) CursorMove(x, y int) error {
 
 func (g *Game) Update(screen *ebiten.Image) error {
 	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
-		updateFace()
-		updateMenu()
+		// updateFace()
+		// updateMenu()
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
 		g.CursorMove(0, -1)
+		updateFace()
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
 		g.CursorMove(0, 1)
+		updateFace()
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
 		g.CursorMove(-1, 0)
+		updateFace()
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
 		g.CursorMove(1, 0)
+		updateFace()
 	}
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	for i := 0; i < 30; i++ {
+	for i := 3; i < 30; i++ {
 		for j := 0; j < 17; j++ {
 			op := &ebiten.DrawImageOptions{}
 			op.GeoM.Translate(float64(i)*64, float64(j)*64)
@@ -119,6 +123,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		}
 	}
 	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(200, 0)
 	screen.DrawImage(imgMenu, op)
 	op.GeoM.Translate(0, 64)
 	screen.DrawImage(imgFace, op)
