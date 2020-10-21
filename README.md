@@ -1,1 +1,1 @@
-# mygen
+# generator
