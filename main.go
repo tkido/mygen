@@ -9,7 +9,6 @@ import (
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"github.com/tkido/mygen/base"
-	"github.com/tkido/mygen/palette"
 	"github.com/tkido/mygen/part"
 	"github.com/tkido/mygen/status"
 )
@@ -31,24 +30,7 @@ var (
 	game Game
 )
 
-func NewCharacter(id int, bt base.Type) Character {
-	c := Character{
-		Id:        id,
-		Base:      bt,
-		StatusMap: map[status.Type]Status{},
-	}
-	for st := status.Human; st <= status.ZombieNaked; st++ {
-		s := Status{
-			Parts:  part.NewSetting(bt, st),
-			Colors: palette.NewSetting(),
-		}
-		c.StatusMap[st] = s
-	}
-	return c
-}
-
 func init() {
-
 	game = Game{
 		View:         NewView(),
 		ImageManager: NewImageManager(),
@@ -117,7 +99,10 @@ func (g *Game) Update(screen *ebiten.Image) error {
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	g.View.Draw(screen)
+	g.DebugPrint(screen)
+}
 
+func (g *Game) DebugPrint(screen *ebiten.Image) {
 	msg := fmt.Sprintf(`********************************
 cursorX: %d
 cursorY: %d
