@@ -42,12 +42,12 @@ func updateFace() {
 			file := files[i]
 			fmt.Println(file)
 			imgSrc := g.ImageManager.LoadImage(file)
-			// default color found
+			// color info found
 			if ms := reDefaultColor.FindStringSubmatch(file); len(ms) >= 2 {
 				label := ms[1]
 				index, err := strconv.Atoi(label)
 				if err != nil {
-					log.Fatalf("invalid default color label")
+					log.Fatalf("invalid color info")
 				}
 				p := palette.Type(index)
 				if p == palette.Skin {

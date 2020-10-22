@@ -8,7 +8,7 @@ import (
 
 type Index int
 
-const Null Index = 1
+const Null Index = -1
 
 func NewSetting(bt base.Type, st status.Type) Setting {
 	return Setting{
