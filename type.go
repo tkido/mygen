@@ -2,12 +2,18 @@ package main
 
 import (
 	"github.com/tkido/mygen/base"
+	"github.com/tkido/mygen/gradient"
 	"github.com/tkido/mygen/layer"
+	"github.com/tkido/mygen/palette"
 	"github.com/tkido/mygen/part"
 	"github.com/tkido/mygen/sprite"
+	"github.com/tkido/mygen/status"
 )
 
-const rootPath = "generator"
+const (
+	rootPath = "generator"
+	distPath = "dist"
+)
 
 var variationMap = map[base.Type]map[part.Type][]Variation{}
 var partsMap = map[sprite.Type]map[base.Type]map[part.Type][]Part{}
@@ -23,6 +29,17 @@ type Part struct {
 	label   string
 	file    string
 	colorId int
+}
+
+type Character struct {
+	Id        int
+	Base      base.Type
+	StatusMap map[status.Type]Status
+}
+
+type Status struct {
+	Parts  map[part.Type]part.Index
+	Colors map[palette.Type]gradient.Row
 }
 
 var layerPartMap = map[layer.Type]part.Type{

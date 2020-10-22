@@ -1,6 +1,39 @@
 package part
 
-import "github.com/tkido/mygen/gradient"
+import (
+	"github.com/tkido/mygen/base"
+	"github.com/tkido/mygen/gradient"
+	"github.com/tkido/mygen/status"
+)
+
+type Index int
+
+const Null Index = 1
+
+func NewSetting(bt base.Type, st status.Type) Setting {
+	return Setting{
+		AccA:       Null,
+		AccB:       Null,
+		BeastEars:  Null,
+		Beard:      Null,
+		Clothing:   Null,
+		Cloak:      Null,
+		Ears:       0,
+		Eyebrows:   Null,
+		Eyes:       0,
+		Face:       0,
+		FacialMark: Null,
+		FrontHair:  Null,
+		Glasses:    Null,
+		Mouth:      0,
+		Nose:       0,
+		RearHair:   Null,
+		Tail:       Null,
+		Wing:       Null,
+	}
+}
+
+type Setting map[Type]Index
 
 //go:generate stringer -type=Type
 type Type int
@@ -68,9 +101,4 @@ var GradientMap = map[Type]gradient.Type{
 	Wing:       gradient.Acc,
 	Clothing:   gradient.Acc,
 	Cloak:      gradient.Acc,
-}
-
-type Setting struct {
-	Id     int
-	Colors []int
 }

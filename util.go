@@ -30,7 +30,7 @@ func init() {
 	globCache = map[string][]string{}
 }
 
-func globParts(sp sprite.Type, base base.Type, layer layer.Type, num string) []string {
+func globParts(sp sprite.Type, base base.Type, layer layer.Type, label string) []string {
 	header := sp.String()
 	if sp == sprite.Face {
 		header = "FG"
@@ -39,7 +39,7 @@ func globParts(sp sprite.Type, base base.Type, layer layer.Type, num string) []s
 		rootPath,
 		sp.String(),
 		base.String(),
-		fmt.Sprintf("%s_%s_p%s*.png", header, layer, num))
+		fmt.Sprintf("%s_%s_p%s*.png", header, layer, label))
 	files, ok := globCache[path]
 	if !ok {
 		var err error

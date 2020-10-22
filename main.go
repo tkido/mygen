@@ -9,7 +9,9 @@ import (
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"github.com/tkido/mygen/base"
+	"github.com/tkido/mygen/palette"
 	"github.com/tkido/mygen/part"
+	"github.com/tkido/mygen/status"
 )
 
 const (
@@ -20,14 +22,14 @@ const (
 type Game struct {
 	cursorX int
 	cursorY int
-	setting Setting
+	Character
 }
 
-type Setting struct {
-	Id    int
-	Base  base.Type
-	Parts map[part.Type]int
-}
+// type Setting struct {
+// 	Id    int
+// 	Base  base.Type
+// 	Parts map[part.Type]int
+// }
 
 var (
 	game    Game
@@ -37,19 +39,31 @@ var (
 	imgGrad *ebiten.Image
 )
 
+func NewCharacter(id int, bt base.Type) Character {
+	c := Character{
+		Id:        id,
+		Base:      bt,
+		StatusMap: map[status.Type]Status{},
+	}
+	for st := status.Human; st <= status.ZombieNaked; st++ {
+		s := Status{
+			Parts:  part.NewSetting(bt, st),
+			Colors: palette.NewSetting(),
+		}
+		c.StatusMap[st] = s
+	}
+	return c
+}
+
 func init() {
 	imgFace, _ = ebiten.NewImage(144, 144, ebiten.FilterDefault)
 	imgMenu, _ = ebiten.NewImage(64*64, 64, ebiten.FilterDefault)
 	imgBg, _, _ = ebitenutil.NewImageFromFile("system/background.png", ebiten.FilterDefault)
 	imgGrad, _, _ = ebitenutil.NewImageFromFile("generator/gradients.png", ebiten.FilterDefault)
 	game = Game{
-		cursorY: 0,
-		cursorX: 0,
-		setting: Setting{
-			Id:    3,
-			Base:  base.Female,
-			Parts: map[part.Type]int{},
-		},
+		Character: NewCharacter(0, base.Female),
+		cursorY:   0,
+		cursorX:   0,
 	}
 }
 
@@ -67,20 +81,20 @@ func (g *Game) CursorMove(x, y int) error {
 	if x != 0 {
 		switch g.cursorY {
 		case 0: // Id
-			g.setting.Id += x
+			g.Character.Id += x
 		case 1:
-			g.setting.Base += base.Type(x)
-			if g.setting.Base >= base.Type(len(base.Types)) {
-				g.setting.Base = base.Type(0)
-			} else if g.setting.Base < base.Type(0) {
-				g.setting.Base = base.Type(len(base.Types) - 1)
+			g.Character.Base += base.Type(x)
+			if g.Character.Base >= base.Type(len(base.Types)) {
+				g.Character.Base = base.Type(0)
+			} else if g.Character.Base < base.Type(0) {
+				g.Character.Base = base.Type(len(base.Types) - 1)
 			}
 		case 2: // Body
 		case 3: // Status
 		case 4: // Emotion
 		default:
 			pt := part.Type(g.cursorY - 5)
-			if list, ok := variationMap[g.setting.Base][pt]; ok {
+			if list, ok := variationMap[g.Character.Base][pt]; ok {
 				g.cursorX += x
 				max := len(list)
 				if g.cursorX >= max {
@@ -88,30 +102,24 @@ func (g *Game) CursorMove(x, y int) error {
 				} else if g.cursorX < 0 {
 					g.cursorX = max - 1
 				}
-				g.setting.Parts[pt] = g.cursorX
+				g.Character.StatusMap[status.Human].Parts[pt] = part.Index(g.cursorX)
 			}
 		}
 	}
+	updateFace()
 
 	return nil
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {
-	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
-		// updateFace()
-		// updateMenu()
-	} else if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
 		g.CursorMove(0, -1)
-		updateFace()
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
 		g.CursorMove(0, 1)
-		updateFace()
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
 		g.CursorMove(-1, 0)
-		updateFace()
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
 		g.CursorMove(1, 0)
-		updateFace()
 	}
 	return nil
 }
@@ -136,14 +144,12 @@ cursorY: %d
 genre: %s
 ID: %d
 Base: %s
-Parts: %v
 ********************************`,
 		g.cursorX,
 		g.cursorY,
 		part.Type(g.cursorY-5),
-		g.setting.Id,
-		g.setting.Base,
-		g.setting.Parts,
+		g.Character.Id,
+		g.Character.Base,
 	)
 	ebitenutil.DebugPrint(screen, msg)
 }

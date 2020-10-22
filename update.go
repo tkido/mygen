@@ -8,6 +8,7 @@ import (
 
 	"github.com/tkido/mygen/palette"
 	"github.com/tkido/mygen/part"
+	"github.com/tkido/mygen/status"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/layer"
@@ -24,16 +25,19 @@ func updateFace() {
 
 		label := "01"
 		if pt, ok := layerPartMap[lay]; ok {
-			if list, ok := variationMap[game.setting.Base][pt]; ok {
-				if index, ok := game.setting.Parts[pt]; ok {
-					if index < len(list) {
+			if list, ok := variationMap[game.Character.Base][pt]; ok {
+				if index, ok := game.Character.StatusMap[status.Human].Parts[pt]; ok {
+					if index == part.Null {
+						continue
+					}
+					if index < part.Index(len(list)) {
 						label = list[index].label
 					}
 				}
 			}
 		}
 
-		files := globParts(sprite.Face, game.setting.Base, lay, label)
+		files := globParts(sprite.Face, game.Character.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- {
 			file := files[i]
 			// fmt.Println(file)
@@ -48,7 +52,7 @@ func updateFace() {
 				p := palette.Type(index)
 				if p == palette.Skin {
 					fmt.Println(p)
-					imgSrc = filterImage(imgSrc)
+					// imgSrc = filterImage(imgSrc)
 				}
 			}
 			op := &ebiten.DrawImageOptions{}
@@ -59,7 +63,7 @@ func updateFace() {
 }
 
 func updateMenu() {
-	vs := variationMap[game.setting.Base][part.Mouth]
+	vs := variationMap[game.Character.Base][part.Mouth]
 	for i, v := range vs {
 		src := loadImage(v.file)
 		op := &ebiten.DrawImageOptions{}
