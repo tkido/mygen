@@ -27,11 +27,11 @@ type Game struct {
 }
 
 var (
-	game Game
+	g Game
 )
 
 func init() {
-	game = Game{
+	g = Game{
 		View:         NewView(),
 		ImageManager: NewImageManager(),
 		Character:    NewCharacter(0, base.Female),
@@ -128,7 +128,7 @@ func main() {
 	ebiten.SetWindowTitle("Charactor Generator")
 	ebiten.SetRunnableInBackground(true)
 	ebiten.SetWindowFloating(true)
-	if err := ebiten.RunGame(&game); err != nil {
+	if err := ebiten.RunGame(&g); err != nil {
 		log.Fatal(err)
 	}
 }

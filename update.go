@@ -18,15 +18,15 @@ import (
 var reDefaultColor = regexp.MustCompile(`_m(\d{3})`)
 
 func updateFace() {
-	game.View.Face.Clear()
+	g.View.Face.Clear()
 	for i := len(layer.FaceLayers) - 1; 0 <= i; i-- {
 		lay := layer.FaceLayers[i]
 		// log.Printf("Set %s...\n", lay)
 
 		label := "01"
 		if pt, ok := layerPartMap[lay]; ok {
-			if list, ok := variationMap[game.Character.Base][pt]; ok {
-				if index, ok := game.Character.StatusMap[status.Human].Parts[pt]; ok {
+			if list, ok := variationMap[g.Character.Base][pt]; ok {
+				if index, ok := g.Character.StatusMap[status.Human].Parts[pt]; ok {
 					if index == part.Null {
 						continue
 					}
@@ -37,11 +37,11 @@ func updateFace() {
 			}
 		}
 
-		files := globParts(sprite.Face, game.Character.Base, lay, label)
+		files := globParts(sprite.Face, g.Character.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- {
 			file := files[i]
 			fmt.Println(file)
-			imgSrc := game.ImageManager.LoadImage(file)
+			imgSrc := g.ImageManager.LoadImage(file)
 			// default color found
 			if ms := reDefaultColor.FindStringSubmatch(file); len(ms) >= 2 {
 				label := ms[1]
@@ -56,18 +56,18 @@ func updateFace() {
 				}
 			}
 			op := &ebiten.DrawImageOptions{}
-			game.View.Face.DrawImage(imgSrc, op)
+			g.View.Face.DrawImage(imgSrc, op)
 		}
 	}
 
 }
 
 func updateMenu() {
-	vs := variationMap[game.Character.Base][part.Mouth]
+	vs := variationMap[g.Character.Base][part.Mouth]
 	for i, v := range vs {
-		src := game.ImageManager.LoadImage(v.file)
+		src := g.ImageManager.LoadImage(v.file)
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(64*float64(i), 0)
-		game.View.Menu.DrawImage(src, op)
+		g.View.Menu.DrawImage(src, op)
 	}
 }
