@@ -17,10 +17,11 @@ type ImageManager struct {
 }
 
 func NewImageManager() ImageManager {
-	grad, _, _ := ebitenutil.NewImageFromFile("generator/gradients.png", ebiten.FilterDefault)
+	Gradient, _, _ := ebitenutil.NewImageFromFile("generator/gradients.png", ebiten.FilterDefault)
+	Cache := map[string]*ebiten.Image{}
 	return ImageManager{
-		Gradient: grad,
-		Cache:    map[string]*ebiten.Image{},
+		Gradient,
+		Cache,
 	}
 }
 

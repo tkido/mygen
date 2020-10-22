@@ -18,7 +18,7 @@ import (
 var reDefaultColor = regexp.MustCompile(`_m(\d{3})`)
 
 func updateFace() {
-	imgFace.Clear()
+	game.View.Face.Clear()
 	for i := len(layer.FaceLayers) - 1; 0 <= i; i-- {
 		lay := layer.FaceLayers[i]
 		// log.Printf("Set %s...\n", lay)
@@ -56,7 +56,7 @@ func updateFace() {
 				}
 			}
 			op := &ebiten.DrawImageOptions{}
-			imgFace.DrawImage(imgSrc, op)
+			game.View.Face.DrawImage(imgSrc, op)
 		}
 	}
 
@@ -68,6 +68,6 @@ func updateMenu() {
 		src := game.ImageManager.LoadImage(v.file)
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(64*float64(i), 0)
-		imgMenu.DrawImage(src, op)
+		game.View.Menu.DrawImage(src, op)
 	}
 }
