@@ -40,8 +40,8 @@ func updateFace() {
 		files := globParts(sprite.Face, game.Character.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- {
 			file := files[i]
-			// fmt.Println(file)
-			imgSrc := loadImage(file)
+			fmt.Println(file)
+			imgSrc := game.ImageManager.LoadImage(file)
 			// default color found
 			if ms := reDefaultColor.FindStringSubmatch(file); len(ms) >= 2 {
 				label := ms[1]
@@ -65,7 +65,7 @@ func updateFace() {
 func updateMenu() {
 	vs := variationMap[game.Character.Base][part.Mouth]
 	for i, v := range vs {
-		src := loadImage(v.file)
+		src := game.ImageManager.LoadImage(v.file)
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(64*float64(i), 0)
 		imgMenu.DrawImage(src, op)

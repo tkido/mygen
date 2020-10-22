@@ -20,6 +20,7 @@ const (
 )
 
 type Game struct {
+	ImageManager
 	cursorX int
 	cursorY int
 	Character
@@ -36,7 +37,6 @@ var (
 	imgFace *ebiten.Image
 	imgMenu *ebiten.Image
 	imgBg   *ebiten.Image
-	imgGrad *ebiten.Image
 )
 
 func NewCharacter(id int, bt base.Type) Character {
@@ -59,11 +59,11 @@ func init() {
 	imgFace, _ = ebiten.NewImage(144, 144, ebiten.FilterDefault)
 	imgMenu, _ = ebiten.NewImage(64*64, 64, ebiten.FilterDefault)
 	imgBg, _, _ = ebitenutil.NewImageFromFile("system/background.png", ebiten.FilterDefault)
-	imgGrad, _, _ = ebitenutil.NewImageFromFile("generator/gradients.png", ebiten.FilterDefault)
 	game = Game{
-		Character: NewCharacter(0, base.Female),
-		cursorY:   0,
-		cursorX:   0,
+		ImageManager: NewImageManager(),
+		Character:    NewCharacter(0, base.Female),
+		cursorY:      0,
+		cursorX:      0,
 	}
 }
 

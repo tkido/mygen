@@ -39,7 +39,7 @@ func globParts(sp sprite.Type, base base.Type, layer layer.Type, label string) [
 		rootPath,
 		sp.String(),
 		base.String(),
-		fmt.Sprintf("%s_%s_p%s*.png", header, layer, label))
+		fmt.Sprintf("%s_%s_p%s_*.png", header, layer, label))
 	files, ok := globCache[path]
 	if !ok {
 		var err error

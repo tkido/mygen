@@ -11,26 +11,33 @@ import (
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
-var imgCache map[string]*ebiten.Image
-
-func init() {
-	imgCache = map[string]*ebiten.Image{}
+type ImageManager struct {
+	Gradient *ebiten.Image
+	Cache    map[string]*ebiten.Image
 }
 
-func loadImage(path string) *ebiten.Image {
-	img, ok := imgCache[path]
+func NewImageManager() ImageManager {
+	grad, _, _ := ebitenutil.NewImageFromFile("generator/gradients.png", ebiten.FilterDefault)
+	return ImageManager{
+		Gradient: grad,
+		Cache:    map[string]*ebiten.Image{},
+	}
+}
+
+func (m *ImageManager) LoadImage(path string) *ebiten.Image {
+	img, ok := m.Cache[path]
 	if !ok {
 		var err error
 		img, _, err = ebitenutil.NewImageFromFile(path, ebiten.FilterDefault)
 		if err != nil {
 			log.Fatal(err)
 		}
-		imgCache[path] = img
+		m.Cache[path] = img
 	}
 	return img
 }
 
-func saveImage(path string, img *ebiten.Image) {
+func (m *ImageManager) SaveImage(path string, img *ebiten.Image) {
 	f, err := os.Create(path)
 	if err != nil {
 		log.Fatal(err)
@@ -42,17 +49,17 @@ func saveImage(path string, img *ebiten.Image) {
 	}
 }
 
-func filterImage(img *ebiten.Image) *ebiten.Image {
+func (m *ImageManager) FilterImage(img *ebiten.Image) *ebiten.Image {
 	w, h := img.Size()
 	newImage, _ := ebiten.NewImage(w, h, ebiten.FilterDefault)
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
 			oc := img.At(x, y)
-			index := colorToGradientIndex(oc)
+			index := m.ColorToGradientIndex(oc)
 			if index == -1 {
 				continue
 			}
-			nc := imgGrad.At(index, 42*4)
+			nc := m.Gradient.At(index, 42*4)
 			// 透明度は元のものを維持する
 			oc1 := color.RGBAModel.Convert(oc).(color.RGBA)
 			nc1 := color.RGBAModel.Convert(nc).(color.RGBA)
@@ -64,7 +71,7 @@ func filterImage(img *ebiten.Image) *ebiten.Image {
 	return newImage
 }
 
-func colorToGradientIndex(col color.Color) int {
+func (m *ImageManager) ColorToGradientIndex(col color.Color) int {
 	c := color.RGBAModel.Convert(col).(color.RGBA)
 	// transparent not convert
 	if c.A == 0 {
