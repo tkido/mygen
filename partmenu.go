@@ -18,7 +18,6 @@ type PartMenu struct {
 func NewPartMenu(w, h, col, row int) *PartMenu {
 	canvas, _ := ebiten.NewImage(w*col, h*row, ebiten.FilterDefault)
 	cursorImg, _ := ebiten.NewImage(w, h, ebiten.FilterDefault)
-	cursorImg.Fill(color.RGBA{255, 255, 0, 64})
 
 	menu := &PartMenu{
 		MenuBase: MenuBase{
@@ -56,7 +55,10 @@ func (m *PartMenu) Update() {
 		m.Data = append(m.Data, g.ImageManager.LoadImage(p.file))
 	}
 	m.Limit = len(m.Data) - 1
-	m.Reflesh()
+
+	m.SetCursor(int(g.Character.StatusMap[status.Human].Parts[m.Part] + 1))
+
+	// m.Reflesh()
 }
 
 func (m *PartMenu) Reflesh() {
@@ -71,6 +73,7 @@ func (m *PartMenu) Reflesh() {
 		op.GeoM.Translate(float64(x*m.W), float64(y*m.H))
 		m.Canvas.DrawImage(img, op)
 		if m.Cursor == i {
+			m.CursorImg.Fill(g.View.GetFocusColor(m))
 			op := &ebiten.DrawImageOptions{}
 			op.GeoM.Translate(float64(x*m.W), float64(y*m.H))
 			m.Canvas.DrawImage(m.CursorImg, op)

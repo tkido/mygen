@@ -1,22 +1,36 @@
 package main
 
 import (
+	"image/color"
+
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
 type View struct {
-	Bg   *ebiten.Image
-	Face *ebiten.Image
+	Bg         *ebiten.Image
+	Face       *ebiten.Image
+	HotColor   color.Color
+	FocusColor color.Color
 }
 
 func NewView() View {
 	Bg, _, _ := ebitenutil.NewImageFromFile("system/background.png", ebiten.FilterDefault)
 	Face, _ := ebiten.NewImage(144, 144, ebiten.FilterDefault)
 	return View{
-		Bg:   Bg,
-		Face: Face,
+		Bg:         Bg,
+		Face:       Face,
+		HotColor:   color.RGBA{255, 0, 0, 64},
+		FocusColor: color.RGBA{255, 255, 0, 64},
 	}
+}
+
+func (v View) GetFocusColor(m Menu) color.Color {
+	c := g.View.FocusColor
+	if g.Controller.Menus[g.Controller.TabIndex] == m {
+		c = g.View.HotColor
+	}
+	return c
 }
 
 func (v View) Draw(screen *ebiten.Image) {

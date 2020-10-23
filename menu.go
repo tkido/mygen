@@ -63,7 +63,6 @@ type MainMenu struct {
 func NewMainMenu(w, h, col, row int) *MainMenu {
 	canvas, _ := ebiten.NewImage(w*col, h*row, ebiten.FilterDefault)
 	cursorImg, _ := ebiten.NewImage(w, h, ebiten.FilterDefault)
-	cursorImg.Fill(color.RGBA{255, 255, 0, 64})
 
 	menu := &MainMenu{
 		MenuBase: MenuBase{
@@ -115,6 +114,7 @@ func (m *MainMenu) Reflesh() {
 		y := i / m.Col
 		text.Draw(m.Canvas, s, f, x*m.W, y*m.H+fHeight, color.Black)
 		if m.Cursor == i {
+			m.CursorImg.Fill(g.View.GetFocusColor(m))
 			op := &ebiten.DrawImageOptions{}
 			op.GeoM.Translate(float64(x*m.W), float64(y*m.H))
 			m.Canvas.DrawImage(m.CursorImg, op)
