@@ -49,7 +49,9 @@ func (c *Controller) Exit(key ebiten.Key) {
 	case ebiten.KeyUp:
 	case ebiten.KeyDown:
 	case ebiten.KeyLeft:
+		c.Focused = g.MainMenu
 	case ebiten.KeyRight:
+		c.Focused = g.PartMenu
 	}
 }
 
