@@ -35,6 +35,7 @@ func init() {
 		GlobManager:      NewGlobManager(),
 		VariationManager: NewVariationManager(),
 	}
+	g.VariationManager.Init()
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {

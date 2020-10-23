@@ -20,6 +20,19 @@ func NewGlobManager() GlobManager {
 	}
 }
 
+func (gm *GlobManager) Get(pattern string) []string {
+	cached, ok := gm.Cache[pattern]
+	if ok {
+		return cached
+	}
+	paths, err := filepath.Glob(pattern)
+	if err != nil {
+		log.Fatal(err)
+	}
+	gm.Cache[pattern] = paths
+	return paths
+}
+
 func (gm *GlobManager) Parts(sp sprite.Type, base base.Type, layer layer.Type, label string) []string {
 	header := sp.String()
 	if sp == sprite.Face {

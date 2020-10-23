@@ -23,12 +23,17 @@ type VariationManager struct {
 }
 
 func NewVariationManager() VariationManager {
+	return VariationManager{
+		Map: map[base.Type]map[part.Type][]Variation{},
+	}
+}
+
+func (vm *VariationManager) Init() {
 	re := regexp.MustCompile(`_p(\d+)`)
-	vmap := map[base.Type]map[part.Type][]Variation{}
 	for _, bt := range base.Types {
-		vmap[bt] = map[part.Type][]Variation{}
+		vm.Map[bt] = map[part.Type][]Variation{}
 		for _, pt := range part.Types {
-			files := g.GlobManager.Variations(bt, pt)
+			files := vm.Get(bt, pt)
 			vs := []Variation{}
 			for _, file := range files {
 				fileName := filepath.Base(file)
@@ -47,23 +52,16 @@ func NewVariationManager() VariationManager {
 			sort.Slice(vs, func(i, j int) bool {
 				return vs[i].id < vs[j].id
 			})
-			vmap[bt][pt] = vs
+			vm.Map[bt][pt] = vs
 		}
-	}
-	return VariationManager{
-		Map: vmap,
 	}
 }
 
-func (gm *GlobManager) Variations(base base.Type, part part.Type) []string {
+func (vm *VariationManager) Get(bt base.Type, pt part.Type) []string {
 	path := filepath.Join(
 		rootPath,
 		"Variation",
-		base.String(),
-		fmt.Sprintf("icon_%s_*.png", part))
-	files, err := filepath.Glob(path)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return files
+		bt.String(),
+		fmt.Sprintf("icon_%s_*.png", pt))
+	return g.GlobManager.Get(path)
 }
