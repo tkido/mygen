@@ -34,13 +34,13 @@ func (v View) GetFocusColor(m Menu) color.Color {
 }
 
 func (v View) Draw(screen *ebiten.Image) {
-	for i := 0; i < 30; i++ {
-		for j := 0; j < 17; j++ {
-			op := &ebiten.DrawImageOptions{}
-			op.GeoM.Translate(float64(i)*64, float64(j)*64)
-			screen.DrawImage(v.Bg, op)
-		}
-	}
+	// for i := 0; i < 30; i++ {
+	// 	for j := 0; j < 17; j++ {
+	// 		op := &ebiten.DrawImageOptions{}
+	// 		op.GeoM.Translate(float64(i)*64, float64(j)*64)
+	// 		screen.DrawImage(v.Bg, op)
+	// 	}
+	// }
 
 	var op *ebiten.DrawImageOptions
 
@@ -53,10 +53,14 @@ func (v View) Draw(screen *ebiten.Image) {
 	screen.DrawImage(v.Face, op)
 
 	op = &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(1000, 0)
+	op.GeoM.Translate(1000, 400)
 	screen.DrawImage(g.ImageManager.Gradient, op)
 
 	op = &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(0, 0)
 	screen.DrawImage(g.MainMenu.Canvas, op)
+
+	op = &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(1000, 0)
+	screen.DrawImage(g.PaletteMenu.Canvas, op)
 }

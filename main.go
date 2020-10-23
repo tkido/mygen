@@ -24,8 +24,9 @@ type Game struct {
 	VariationManager
 	PartManager
 	font.FontManager
-	MainMenu *MainMenu
-	PartMenu *PartMenu
+	MainMenu    *MainMenu
+	PartMenu    *PartMenu
+	PaletteMenu *PaletteMenu
 }
 
 var (
@@ -44,15 +45,18 @@ func init() {
 		PartManager:      NewPartManager(),
 		FontManager:      font.NewFontManager(),
 		MainMenu:         NewMainMenu(100, 20, 2, 20),
-		PartMenu:         NewPartMenu(64, 64, 8, 8),
+		PartMenu:         NewPartMenu(64, 64, 12, 7),
+		PaletteMenu:      NewPaletteMenu(80, 20, 4, 1),
 	}
 	g.VariationManager.Init()
 	g.FontManager.RegisterFont(font.Regular, "system/mplus-1m-regular.ttf")
 
 	g.Controller.Menus = append(g.Controller.Menus, g.MainMenu)
 	g.Controller.Menus = append(g.Controller.Menus, g.PartMenu)
-	g.MainMenu.Update() // TBD
-	g.PartMenu.Update() // TBD
+	g.Controller.Menus = append(g.Controller.Menus, g.PaletteMenu)
+	g.MainMenu.Update()    // TBD
+	g.PartMenu.Update()    // TBD
+	g.PaletteMenu.Update() // TBD
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {

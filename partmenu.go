@@ -57,20 +57,18 @@ func (m *PartMenu) Update() {
 	m.Limit = len(m.Data) - 1
 
 	m.SetCursor(int(g.Character.StatusMap[status.Human].Parts[m.Part] + 1))
-
-	// m.Reflesh()
 }
 
 func (m *PartMenu) Reflesh() {
 	log.Println("PartMenu.Reflesh")
-
-	m.Canvas.Fill(color.White)
+	m.Canvas.Fill(color.Transparent)
 
 	for i, img := range m.Data {
 		x := i % m.Col
 		y := i / m.Col
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(float64(x*m.W), float64(y*m.H))
+		m.Canvas.DrawImage(g.View.Bg, op)
 		m.Canvas.DrawImage(img, op)
 		if m.Cursor == i {
 			m.CursorImg.Fill(g.View.GetFocusColor(m))
