@@ -47,7 +47,7 @@ func (c *Controller) CursorMove(x, y int) error {
 		case 4: // Emotion
 		default:
 			pt := part.Type(g.cursorY - 5)
-			if list, ok := variationMap[g.Character.Base][pt]; ok {
+			if list, ok := g.VariationManager.Map[g.Character.Base][pt]; ok {
 				c.cursorX += x
 				max := len(list)
 				if c.cursorX >= max {

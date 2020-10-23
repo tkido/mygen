@@ -19,6 +19,7 @@ type Game struct {
 	Character
 	ImageManager
 	GlobManager
+	VariationManager
 }
 
 var (
@@ -27,11 +28,12 @@ var (
 
 func init() {
 	g = Game{
-		Controller:   NewController(),
-		View:         NewView(),
-		Character:    NewCharacter(0, base.Female),
-		ImageManager: NewImageManager(),
-		GlobManager:  NewGlobManager(),
+		Controller:       NewController(),
+		View:             NewView(),
+		Character:        NewCharacter(0, base.Female),
+		ImageManager:     NewImageManager(),
+		GlobManager:      NewGlobManager(),
+		VariationManager: NewVariationManager(),
 	}
 }
 

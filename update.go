@@ -25,7 +25,7 @@ func updateFace() {
 
 		label := "01"
 		if pt, ok := layerPartMap[lay]; ok {
-			if list, ok := variationMap[g.Character.Base][pt]; ok {
+			if list, ok := g.VariationManager.Map[g.Character.Base][pt]; ok {
 				if index, ok := g.Character.StatusMap[status.Human].Parts[pt]; ok {
 					if index == part.Null {
 						continue
@@ -63,7 +63,7 @@ func updateFace() {
 }
 
 func updateMenu() {
-	vs := variationMap[g.Character.Base][part.Mouth]
+	vs := g.VariationManager.Map[g.Character.Base][part.Mouth]
 	for i, v := range vs {
 		src := g.ImageManager.LoadImage(v.file)
 		op := &ebiten.DrawImageOptions{}
