@@ -24,16 +24,33 @@ func NewController() Controller {
 func (c *Controller) Update() error {
 	if c.Focused != nil {
 		if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
-			c.Focused.MoveCursor(0, -1)
+			if c.Focused.MoveCursor(0, -1) {
+				c.Exit(ebiten.KeyUp)
+			}
 		} else if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
-			c.Focused.MoveCursor(0, 1)
+			if c.Focused.MoveCursor(0, 1) {
+				c.Exit(ebiten.KeyDown)
+			}
 		} else if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
-			c.Focused.MoveCursor(-1, 0)
+			if c.Focused.MoveCursor(-1, 0) {
+				c.Exit(ebiten.KeyLeft)
+			}
 		} else if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
-			c.Focused.MoveCursor(1, 0)
+			if c.Focused.MoveCursor(1, 0) {
+				c.Exit(ebiten.KeyRight)
+			}
 		}
 	}
 	return nil
+}
+
+func (c *Controller) Exit(key ebiten.Key) {
+	switch key {
+	case ebiten.KeyUp:
+	case ebiten.KeyDown:
+	case ebiten.KeyLeft:
+	case ebiten.KeyRight:
+	}
 }
 
 func (c *Controller) CursorMove(x, y int) error {
