@@ -36,4 +36,8 @@ func (v View) Draw(screen *ebiten.Image) {
 	op.GeoM.Translate(0, 64)
 	screen.DrawImage(v.Face, op)
 
+	op = &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(1000, 0)
+	screen.DrawImage(g.ImageManager.Gradient, op)
+
 }

@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
+	"image/color"
 	"log"
 	"regexp"
 	"strconv"
 
 	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/text"
+	"github.com/tkido/mygen/font"
 	"github.com/tkido/mygen/layer"
 	"github.com/tkido/mygen/palette"
 	"github.com/tkido/mygen/part"
@@ -64,6 +67,8 @@ func (l *Logic) UpdateFace() {
 		}
 	}
 
+	f := g.FontManager.Face(font.Regular, font.XSmall)
+	text.Draw(g.View.Face, "らくがき", f, 30, 30, color.Black)
 }
 
 func (l *Logic) UpdateMenu() {

@@ -6,6 +6,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/base"
+	"github.com/tkido/mygen/font"
 )
 
 const (
@@ -22,6 +23,7 @@ type Game struct {
 	GlobManager
 	VariationManager
 	PartManager
+	font.FontManager
 }
 
 var (
@@ -38,8 +40,10 @@ func init() {
 		GlobManager:      NewGlobManager(),
 		VariationManager: NewVariationManager(),
 		PartManager:      NewPartManager(),
+		FontManager:      font.NewFontManager(),
 	}
 	g.VariationManager.Init()
+	g.FontManager.RegisterFont(font.Regular, "system/mplus-1m-regular.ttf")
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {
