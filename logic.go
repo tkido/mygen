@@ -2,14 +2,11 @@ package main
 
 import (
 	"fmt"
-	"image/color"
 	"log"
 	"regexp"
 	"strconv"
 
 	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/text"
-	"github.com/tkido/mygen/font"
 	"github.com/tkido/mygen/layer"
 	"github.com/tkido/mygen/palette"
 	"github.com/tkido/mygen/part"
@@ -26,6 +23,8 @@ func NewLogic() Logic {
 var reDefaultColor = regexp.MustCompile(`_m(\d{3})`)
 
 func (l *Logic) UpdateFace() {
+	g.MainMenu.Reflesh()
+
 	g.View.Face.Clear()
 	for i := len(layer.FaceLayers) - 1; 0 <= i; i-- { // reverse
 		lay := layer.FaceLayers[i]
@@ -66,9 +65,6 @@ func (l *Logic) UpdateFace() {
 			g.View.Face.DrawImage(imgSrc, op)
 		}
 	}
-
-	f := g.FontManager.Face(font.Regular, font.XSmall)
-	text.Draw(g.View.Face, "らくがき", f, 30, 30, color.Black)
 }
 
 func (l *Logic) UpdateMenu() {
@@ -77,6 +73,6 @@ func (l *Logic) UpdateMenu() {
 		src := g.ImageManager.LoadImage(v.file)
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(64*float64(i), 0)
-		g.View.Menu.DrawImage(src, op)
+		g.View.PartMenu.DrawImage(src, op)
 	}
 }

@@ -52,7 +52,7 @@ func (g *Game) Update(screen *ebiten.Image) error {
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	g.View.Draw(screen)
-	g.DebugPrint(screen)
+	// g.DebugPrint(screen)
 }
 
 func main() {
