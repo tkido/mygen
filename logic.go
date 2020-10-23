@@ -57,9 +57,8 @@ func (l *Logic) UpdateFace() {
 				p := palette.Type(index)
 				row, ok := g.Character.StatusMap[status.Human].Colors[p]
 				if ok && row != -1 {
-					imgSrc = g.ImageManager.FilterImage(imgSrc)
+					imgSrc = g.ImageManager.FilterImage(imgSrc, row)
 				}
-				imgSrc = g.ImageManager.FilterImage(imgSrc)
 			}
 			op := &ebiten.DrawImageOptions{}
 			g.View.Face.DrawImage(imgSrc, op)

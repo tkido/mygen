@@ -45,7 +45,6 @@ func (m *PaletteMenu) SetCursor(index int) {
 	// }
 	g.ColorMenu.Update()
 	m.Reflesh()
-	g.Logic.UpdateFace()
 }
 
 func (m *PaletteMenu) Update() {

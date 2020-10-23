@@ -41,7 +41,6 @@ func (m *PartMenu) SetCursor(index int) {
 	m.MenuBase.SetCursor(index)
 	g.Character.StatusMap[status.Human].Parts[m.Part] = part.Index(index - 1)
 	m.Reflesh()
-	g.Logic.UpdateFace()
 }
 
 func (m *PartMenu) Update() {

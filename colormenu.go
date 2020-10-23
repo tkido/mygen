@@ -41,26 +41,29 @@ func NewColorMenu(w, h, col, row int) *ColorMenu {
 
 func (m *ColorMenu) SetCursor(index int) {
 	m.MenuBase.SetCursor(index)
-	g.Character.StatusMap[status.Human].Parts[m.Part] = part.Index(index - 1)
+	pt := g.PaletteMenu.Data[g.PaletteMenu.Cursor]
+	g.Character.StatusMap[status.Human].Colors[pt] = m.Data[m.Cursor]
 	m.Reflesh()
-	g.Logic.UpdateFace()
 }
 
 func (m *ColorMenu) Update() {
-	// ps, ok := g.VariationManager.Map[g.Character.Base][m.Part]
-	// if !ok {
-	// 	log.Fatalf("not found")
-	// }
 	m.Data = []gradient.Row{-1}
+	newCursor := 0
 	if gt, ok := part.GradientMap[g.PartMenu.Part]; ok {
+		pt := g.PaletteMenu.Data[g.PaletteMenu.Cursor]
+		currentRow := g.Character.StatusMap[status.Human].Colors[pt]
+
 		g := gradient.Map[gt]
 		for row := g.Start; row <= g.Start+g.Number; row++ {
+			if currentRow == row {
+				newCursor = len(m.Data)
+			}
 			m.Data = append(m.Data, row)
 		}
 	}
 	m.Limit = len(m.Data) - 1
 
-	m.SetCursor(int(g.Character.StatusMap[status.Human].Parts[m.Part] + 1))
+	m.SetCursor(newCursor)
 }
 
 func (m *ColorMenu) Reflesh() {

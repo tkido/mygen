@@ -46,7 +46,6 @@ func (m *MainMenu) SetCursor(index int) {
 		g.PartMenu.Update()
 		g.PaletteMenu.Update()
 	}
-	g.Logic.UpdateFace()
 }
 
 func (m *MainMenu) Update() {

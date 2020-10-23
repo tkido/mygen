@@ -9,6 +9,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"github.com/tkido/mygen/gradient"
 )
 
 type ImageManager struct {
@@ -50,18 +51,17 @@ func (m *ImageManager) SaveImage(path string, img *ebiten.Image) {
 	}
 }
 
-func (m *ImageManager) FilterImage(img *ebiten.Image) *ebiten.Image {
+func (m *ImageManager) FilterImage(img *ebiten.Image, row gradient.Row) *ebiten.Image {
 	w, h := img.Size()
 	newImage, _ := ebiten.NewImage(w, h, ebiten.FilterDefault)
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
 			oc := img.At(x, y)
-			log.Printf("x: %d, y: %d", x, y)
 			index := m.ColorToGradientIndex(oc)
 			if index == -1 {
 				continue
 			}
-			nc := m.Gradient.At(index, 42*4)
+			nc := m.Gradient.At(index, int(row)*4)
 			// 透明度は元のものを維持する
 			oc1 := color.RGBAModel.Convert(oc).(color.RGBA)
 			nc1 := color.RGBAModel.Convert(nc).(color.RGBA)
@@ -75,7 +75,7 @@ func (m *ImageManager) FilterImage(img *ebiten.Image) *ebiten.Image {
 
 func (m *ImageManager) ColorToGradientIndex(col color.Color) int {
 	c := color.RGBAModel.Convert(col).(color.RGBA)
-	// transparent not convert
+	// transparent pixel need not convert
 	if c.A == 0 {
 		return -1
 	}
@@ -88,10 +88,9 @@ func (m *ImageManager) ColorToGradientIndex(col color.Color) int {
 	max = math.Max(max, fg)
 	min = math.Min(min, fb)
 	max = math.Max(max, fb)
+
 	rst := math.Floor(255.0 - (min+max)/2)
-
 	// rst := math.Floor(255.0 - (fr+fg+fb)/3)
-
 	// rst := math.Floor(255.0 - math.Pow(fr*fg*fb, 1/3))
 
 	return int(rst)

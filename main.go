@@ -61,6 +61,7 @@ func init() {
 	g.PartMenu.Update()    // TBD
 	g.PaletteMenu.Update() // TBD
 	g.ColorMenu.Update()   // TBD
+
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {

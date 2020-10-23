@@ -37,6 +37,8 @@ func (v View) Draw(screen *ebiten.Image) {
 	screen.Fill(color.White)
 	var op *ebiten.DrawImageOptions
 
+	g.Logic.UpdateFace()
+
 	op = &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(200, 64*8)
 	screen.DrawImage(v.Face, op)
