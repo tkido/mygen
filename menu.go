@@ -14,9 +14,33 @@ import (
 type MenuBase struct {
 	W, H, Col, Row int
 	Cursor         int
+	Limit          int
 	Canvas         *ebiten.Image
 	CursorImg      *ebiten.Image
 	Dirty          bool
+	Self           Menu
+}
+
+func (m *MenuBase) MoveCursor(dX, dY int) {
+	x := m.Cursor % m.Col
+	y := m.Cursor / m.Col
+	newCursor := (y+dY)*m.Col + (x + dX)
+	switch {
+	case dX == -1 && (x == 0 || newCursor < 0):
+		return // 左脱出
+	case dX == 1 && (x == m.Col-1 || newCursor > m.Limit):
+		return // 右脱出
+	case dY == -1 && (y == 0 || newCursor < 0):
+		return // 上脱出
+	case dY == 1 && (y == m.Row-1 || newCursor > m.Limit):
+		return // 下脱出
+	default:
+		m.Self.SetCursor(newCursor)
+	}
+}
+
+func (m *MenuBase) SetCursor(index int) {
+	m.Cursor = index
 }
 
 type Menu interface {
@@ -53,32 +77,13 @@ func NewMainMenu(w, h, col, row int) *MainMenu {
 		},
 		Data: []string{},
 	}
+	menu.Self = menu
 	menu.Update()
 	return menu
 }
 
-func (m *MainMenu) MoveCursor(dX, dY int) {
-	log.Printf("MainMenu.MoveCursor dX: %d, dY: %d", dX, dY)
-	x := m.Cursor % m.Col
-	y := m.Cursor / m.Col
-	newCursor := (y+dY)*m.Col + (x + dX)
-	limit := len(m.Data) - 1
-	switch {
-	case dX == -1 && (x == 0 || newCursor < 0):
-		return // 左脱出
-	case dX == 1 && (x == m.Col-1 || newCursor > limit):
-		return // 右脱出
-	case dY == -1 && (y == 0 || newCursor < 0):
-		return // 上脱出
-	case dY == 1 && (y == m.Row-1 || newCursor > limit):
-		return // 下脱出
-	default:
-		m.SetCursor(newCursor)
-	}
-}
-
 func (m *MainMenu) SetCursor(index int) {
-	m.Cursor = index
+	m.MenuBase.SetCursor(index)
 	g.Logic.UpdateFace()
 }
 
@@ -89,6 +94,7 @@ func (m *MainMenu) Update() {
 	for _, pt := range part.Types {
 		m.Data = append(m.Data, pt.String())
 	}
+	m.Limit = len(m.Data) - 1
 }
 
 func (m *MainMenu) Reflesh() {

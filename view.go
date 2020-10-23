@@ -32,12 +32,13 @@ func (v View) Draw(screen *ebiten.Image) {
 	}
 
 	var op *ebiten.DrawImageOptions
+
 	op = &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(200, 0)
 	screen.DrawImage(v.PartMenu, op)
 
 	op = &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(200, 64)
+	op.GeoM.Translate(200, 640)
 	screen.DrawImage(v.Face, op)
 
 	op = &ebiten.DrawImageOptions{}
