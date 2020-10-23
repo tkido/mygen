@@ -102,12 +102,12 @@ func (m *MainMenu) Reflesh() {
 	f := g.FontManager.Face(font.Regular, font.XSmall)
 	fHeight := f.Metrics().Height.Ceil()
 
-	m.Canvas.Fill(color.Black)
+	m.Canvas.Fill(color.White)
 
 	for i, s := range m.Data {
 		x := i % m.Col
 		y := i / m.Col
-		text.Draw(m.Canvas, s, f, x*m.W, y*m.H+fHeight, color.White)
+		text.Draw(m.Canvas, s, f, x*m.W, y*m.H+fHeight, color.Black)
 		if m.Cursor == i {
 			op := &ebiten.DrawImageOptions{}
 			op.GeoM.Translate(float64(x*m.W), float64(y*m.H))

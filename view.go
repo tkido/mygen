@@ -6,19 +6,16 @@ import (
 )
 
 type View struct {
-	Bg       *ebiten.Image
-	Face     *ebiten.Image
-	PartMenu *ebiten.Image
+	Bg   *ebiten.Image
+	Face *ebiten.Image
 }
 
 func NewView() View {
 	Bg, _, _ := ebitenutil.NewImageFromFile("system/background.png", ebiten.FilterDefault)
 	Face, _ := ebiten.NewImage(144, 144, ebiten.FilterDefault)
-	PartMenu, _ := ebiten.NewImage(64*64, 64, ebiten.FilterDefault)
 	return View{
-		Bg:       Bg,
-		Face:     Face,
-		PartMenu: PartMenu,
+		Bg:   Bg,
+		Face: Face,
 	}
 }
 
@@ -35,10 +32,10 @@ func (v View) Draw(screen *ebiten.Image) {
 
 	op = &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(200, 0)
-	screen.DrawImage(v.PartMenu, op)
+	screen.DrawImage(g.PartMenu.Canvas, op)
 
 	op = &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(200, 640)
+	op.GeoM.Translate(200, 64*4)
 	screen.DrawImage(v.Face, op)
 
 	op = &ebiten.DrawImageOptions{}
