@@ -11,6 +11,7 @@ import (
 type Controller struct {
 	cursorX int
 	cursorY int
+	Focused Menu
 }
 
 func NewController() Controller {
@@ -18,6 +19,21 @@ func NewController() Controller {
 		cursorY: 0,
 		cursorX: 0,
 	}
+}
+
+func (c *Controller) Update() error {
+	if c.Focused != nil {
+		if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
+			c.Focused.MoveCursor(0, -1)
+		} else if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
+			c.Focused.MoveCursor(0, 1)
+		} else if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
+			c.Focused.MoveCursor(-1, 0)
+		} else if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
+			c.Focused.MoveCursor(1, 0)
+		}
+	}
+	return nil
 }
 
 func (c *Controller) CursorMove(x, y int) error {
@@ -59,20 +75,7 @@ func (c *Controller) CursorMove(x, y int) error {
 			}
 		}
 	}
-	g.Logic.UpdateFace()
+	// g.Logic.UpdateFace()
 
-	return nil
-}
-
-func (c *Controller) Update() error {
-	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
-		g.CursorMove(0, -1)
-	} else if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
-		g.CursorMove(0, 1)
-	} else if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
-		g.CursorMove(-1, 0)
-	} else if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
-		g.CursorMove(1, 0)
-	}
 	return nil
 }

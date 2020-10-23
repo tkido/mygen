@@ -12,20 +12,22 @@ import (
 )
 
 type MenuBase struct {
-	X, Y, W, H, Col, Row int
-	Canvas               *ebiten.Image
-	Cursor               *ebiten.Image
-	Dirty                bool
+	W, H, Col, Row int
+	Cursor         int
+	Canvas         *ebiten.Image
+	CursorImg      *ebiten.Image
+	Dirty          bool
 }
 
 type Menu interface {
 	Update()
 	Reflesh()
 	MoveCursor(dX, dY int)
-	SetFocus(index int)
-	IsFocused() bool
-	GetFocus()
-	LoseFocus()
+	SetCursor(index int)
+	// SetFocus(index int)
+	// IsFocused() bool
+	// GetFocus()
+	// LoseFocus()
 }
 
 type MainMenu struct {
@@ -33,27 +35,51 @@ type MainMenu struct {
 	Data []string
 }
 
-func NewMainMenu(w, h, col, row int) MainMenu {
+func NewMainMenu(w, h, col, row int) *MainMenu {
 	canvas, _ := ebiten.NewImage(w*col, h*row, ebiten.FilterDefault)
-	cursor, _ := ebiten.NewImage(w, h, ebiten.FilterDefault)
-	cursor.Fill(color.RGBA{255, 255, 0, 64})
+	cursorImg, _ := ebiten.NewImage(w, h, ebiten.FilterDefault)
+	cursorImg.Fill(color.RGBA{255, 255, 0, 64})
 
-	menu := MainMenu{
+	menu := &MainMenu{
 		MenuBase: MenuBase{
-			X:      0,
-			Y:      0,
-			W:      w,
-			H:      h,
-			Col:    col,
-			Row:    row,
-			Canvas: canvas,
-			Cursor: cursor,
-			Dirty:  true,
+			W:         w,
+			H:         h,
+			Col:       col,
+			Row:       row,
+			Cursor:    0,
+			Canvas:    canvas,
+			CursorImg: cursorImg,
+			Dirty:     true,
 		},
 		Data: []string{},
 	}
 	menu.Update()
 	return menu
+}
+
+func (m *MainMenu) MoveCursor(dX, dY int) {
+	log.Printf("MainMenu.MoveCursor dX: %d, dY: %d", dX, dY)
+	x := m.Cursor % m.Col
+	y := m.Cursor / m.Col
+	newCursor := (y+dY)*m.Col + (x + dX)
+	limit := len(m.Data) - 1
+	switch {
+	case dX == -1 && (x == 0 || newCursor < 0):
+		return // 左脱出
+	case dX == 1 && (x == m.Col-1 || newCursor > limit):
+		return // 右脱出
+	case dY == -1 && (y == 0 || newCursor < 0):
+		return // 上脱出
+	case dY == 1 && (y == m.Row-1 || newCursor > limit):
+		return // 下脱出
+	default:
+		m.SetCursor(newCursor)
+	}
+}
+
+func (m *MainMenu) SetCursor(index int) {
+	m.Cursor = index
+	g.Logic.UpdateFace()
 }
 
 func (m *MainMenu) Update() {
@@ -63,9 +89,6 @@ func (m *MainMenu) Update() {
 	for _, pt := range part.Types {
 		m.Data = append(m.Data, pt.String())
 	}
-	m.Data = append(m.Data, "Load")
-	m.Data = append(m.Data, "Save")
-	m.Data = append(m.Data, "New")
 }
 
 func (m *MainMenu) Reflesh() {
@@ -79,10 +102,10 @@ func (m *MainMenu) Reflesh() {
 		x := i % m.Col
 		y := i / m.Col
 		text.Draw(m.Canvas, s, f, x*m.W, y*m.H+fHeight, color.White)
-		if x == m.X && y == m.Y {
+		if m.Cursor == i {
 			op := &ebiten.DrawImageOptions{}
 			op.GeoM.Translate(float64(x*m.W), float64(y*m.H))
-			m.Canvas.DrawImage(m.Cursor, op)
+			m.Canvas.DrawImage(m.CursorImg, op)
 		}
 	}
 }

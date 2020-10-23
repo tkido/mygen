@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"regexp"
 	"strconv"
@@ -46,7 +45,7 @@ func (l *Logic) UpdateFace() {
 		files := g.PartManager.Get(sprite.Face, g.Character.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- { // reverse
 			file := files[i]
-			fmt.Println(file)
+			// fmt.Println(file)
 			imgSrc := g.ImageManager.LoadImage(file)
 			// color info found
 			if ms := reDefaultColor.FindStringSubmatch(file); len(ms) >= 2 {
@@ -57,7 +56,7 @@ func (l *Logic) UpdateFace() {
 				}
 				p := palette.Type(index)
 				if p == palette.Skin {
-					fmt.Println(p)
+					// fmt.Println(p)
 					// imgSrc = filterImage(imgSrc)
 				}
 			}
@@ -67,12 +66,12 @@ func (l *Logic) UpdateFace() {
 	}
 }
 
-func (l *Logic) UpdateMenu() {
-	vs := g.VariationManager.Map[g.Character.Base][part.Mouth]
-	for i, v := range vs {
-		src := g.ImageManager.LoadImage(v.file)
-		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(64*float64(i), 0)
-		g.View.PartMenu.DrawImage(src, op)
-	}
-}
+// func (l *Logic) UpdateMenu() {
+// 	vs := g.VariationManager.Map[g.Character.Base][part.Mouth]
+// 	for i, v := range vs {
+// 		src := g.ImageManager.LoadImage(v.file)
+// 		op := &ebiten.DrawImageOptions{}
+// 		op.GeoM.Translate(64*float64(i), 0)
+// 		g.View.PartMenu.DrawImage(src, op)
+// 	}
+// }

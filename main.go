@@ -24,6 +24,7 @@ type Game struct {
 	VariationManager
 	PartManager
 	font.FontManager
+	MainMenu *MainMenu
 }
 
 var (
@@ -41,9 +42,11 @@ func init() {
 		VariationManager: NewVariationManager(),
 		PartManager:      NewPartManager(),
 		FontManager:      font.NewFontManager(),
+		MainMenu:         NewMainMenu(100, 20, 2, 20),
 	}
 	g.VariationManager.Init()
 	g.FontManager.RegisterFont(font.Regular, "system/mplus-1m-regular.ttf")
+	g.Controller.Focused = g.MainMenu
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {

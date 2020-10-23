@@ -9,7 +9,6 @@ type View struct {
 	Bg       *ebiten.Image
 	Face     *ebiten.Image
 	PartMenu *ebiten.Image
-	MainMenu MainMenu
 }
 
 func NewView() View {
@@ -20,7 +19,6 @@ func NewView() View {
 		Bg:       Bg,
 		Face:     Face,
 		PartMenu: PartMenu,
-		MainMenu: NewMainMenu(200, 20, 1, 40),
 	}
 }
 
@@ -48,5 +46,5 @@ func (v View) Draw(screen *ebiten.Image) {
 
 	op = &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(0, 0)
-	screen.DrawImage(v.MainMenu.Canvas, op)
+	screen.DrawImage(g.MainMenu.Canvas, op)
 }
