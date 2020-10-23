@@ -17,6 +17,7 @@ type Game struct {
 	Controller
 	View
 	Character
+	Logic
 	ImageManager
 	GlobManager
 	VariationManager
@@ -32,6 +33,7 @@ func init() {
 		Controller:       NewController(),
 		View:             NewView(),
 		Character:        NewCharacter(0, base.Female),
+		Logic:            NewLogic(),
 		ImageManager:     NewImageManager(),
 		GlobManager:      NewGlobManager(),
 		VariationManager: NewVariationManager(),

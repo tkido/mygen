@@ -59,7 +59,7 @@ func (c *Controller) CursorMove(x, y int) error {
 			}
 		}
 	}
-	updateFace()
+	g.Logic.UpdateFace()
 
 	return nil
 }

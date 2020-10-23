@@ -6,23 +6,27 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/tkido/mygen/palette"
-	"github.com/tkido/mygen/part"
-	"github.com/tkido/mygen/status"
-
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/layer"
+	"github.com/tkido/mygen/palette"
+	"github.com/tkido/mygen/part"
 	"github.com/tkido/mygen/sprite"
+	"github.com/tkido/mygen/status"
 )
+
+type Logic struct{}
+
+func NewLogic() Logic {
+	return Logic{}
+}
 
 var reDefaultColor = regexp.MustCompile(`_m(\d{3})`)
 
-func updateFace() {
+func (l *Logic) UpdateFace() {
 	g.View.Face.Clear()
-	for i := len(layer.FaceLayers) - 1; 0 <= i; i-- {
+	for i := len(layer.FaceLayers) - 1; 0 <= i; i-- { // reverse
 		lay := layer.FaceLayers[i]
 		// log.Printf("Set %s...\n", lay)
-
 		label := "01"
 		if pt, ok := g.PartManager.LayerPartMap[lay]; ok {
 			if list, ok := g.VariationManager.Map[g.Character.Base][pt]; ok {
@@ -38,7 +42,7 @@ func updateFace() {
 		}
 
 		files := g.PartManager.Get(sprite.Face, g.Character.Base, lay, label)
-		for i := len(files) - 1; 0 <= i; i-- {
+		for i := len(files) - 1; 0 <= i; i-- { // reverse
 			file := files[i]
 			fmt.Println(file)
 			imgSrc := g.ImageManager.LoadImage(file)
@@ -62,7 +66,7 @@ func updateFace() {
 
 }
 
-func updateMenu() {
+func (l *Logic) UpdateMenu() {
 	vs := g.VariationManager.Map[g.Character.Base][part.Mouth]
 	for i, v := range vs {
 		src := g.ImageManager.LoadImage(v.file)
