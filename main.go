@@ -20,6 +20,7 @@ type Game struct {
 	ImageManager
 	GlobManager
 	VariationManager
+	PartManager
 }
 
 var (
@@ -34,6 +35,7 @@ func init() {
 		ImageManager:     NewImageManager(),
 		GlobManager:      NewGlobManager(),
 		VariationManager: NewVariationManager(),
+		PartManager:      NewPartManager(),
 	}
 	g.VariationManager.Init()
 }

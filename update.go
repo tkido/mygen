@@ -24,7 +24,7 @@ func updateFace() {
 		// log.Printf("Set %s...\n", lay)
 
 		label := "01"
-		if pt, ok := layerPartMap[lay]; ok {
+		if pt, ok := g.PartManager.LayerPartMap[lay]; ok {
 			if list, ok := g.VariationManager.Map[g.Character.Base][pt]; ok {
 				if index, ok := g.Character.StatusMap[status.Human].Parts[pt]; ok {
 					if index == part.Null {
@@ -37,7 +37,7 @@ func updateFace() {
 			}
 		}
 
-		files := g.GlobManager.Parts(sprite.Face, g.Character.Base, lay, label)
+		files := g.PartManager.Get(sprite.Face, g.Character.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- {
 			file := files[i]
 			fmt.Println(file)

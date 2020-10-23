@@ -58,10 +58,10 @@ func (vm *VariationManager) Init() {
 }
 
 func (vm *VariationManager) Get(bt base.Type, pt part.Type) []string {
-	path := filepath.Join(
+	pattern := filepath.Join(
 		rootPath,
 		"Variation",
 		bt.String(),
 		fmt.Sprintf("icon_%s_*.png", pt))
-	return g.GlobManager.Get(path)
+	return g.GlobManager.Get(pattern)
 }
