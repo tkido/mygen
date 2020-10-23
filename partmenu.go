@@ -6,6 +6,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/part"
+	"github.com/tkido/mygen/status"
 )
 
 type PartMenu struct {
@@ -37,16 +38,22 @@ func NewPartMenu(w, h, col, row int) *PartMenu {
 
 func (m *PartMenu) SetCursor(index int) {
 	m.MenuBase.SetCursor(index)
+	g.Character.StatusMap[status.Human].Parts[part.FrontHair] = part.Index(index - 1)
+	m.Reflesh()
 	g.Logic.UpdateFace()
 }
 
 func (m *PartMenu) Update() {
-	ps := g.VariationManager.Get(g.Character.Base, part.FrontHair)
-	m.Limit = len(ps) - 1
-	m.Data = []*ebiten.Image{}
-	for _, p := range ps {
-		m.Data = append(m.Data, g.ImageManager.LoadImage(p))
+	ps, ok := g.VariationManager.Map[g.Character.Base][part.FrontHair]
+	if !ok {
+		log.Fatalf("not found")
 	}
+	m.Data = []*ebiten.Image{}
+	m.Data = append(m.Data, g.View.Bg)
+	for _, p := range ps {
+		m.Data = append(m.Data, g.ImageManager.LoadImage(p.file))
+	}
+	m.Limit = len(m.Data) - 1
 	m.Reflesh()
 }
 

@@ -52,6 +52,7 @@ func (vm *VariationManager) Init() {
 			sort.Slice(vs, func(i, j int) bool {
 				return vs[i].id < vs[j].id
 			})
+			log.Println(vs)
 			vm.Map[bt][pt] = vs
 		}
 	}

@@ -48,7 +48,8 @@ func init() {
 	}
 	g.VariationManager.Init()
 	g.FontManager.RegisterFont(font.Regular, "system/mplus-1m-regular.ttf")
-	g.Controller.Focused = g.MainMenu
+	// g.Controller.Focused = g.MainMenu
+	g.Controller.Focused = g.PartMenu
 	g.PartMenu.Update() // TBD
 }
 
