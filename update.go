@@ -37,7 +37,7 @@ func updateFace() {
 			}
 		}
 
-		files := globParts(sprite.Face, g.Character.Base, lay, label)
+		files := g.GlobManager.Parts(sprite.Face, g.Character.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- {
 			file := files[i]
 			fmt.Println(file)

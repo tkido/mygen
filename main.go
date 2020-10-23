@@ -18,6 +18,7 @@ type Game struct {
 	View
 	Character
 	ImageManager
+	GlobManager
 }
 
 var (
@@ -30,6 +31,7 @@ func init() {
 		View:         NewView(),
 		Character:    NewCharacter(0, base.Female),
 		ImageManager: NewImageManager(),
+		GlobManager:  NewGlobManager(),
 	}
 }
 
