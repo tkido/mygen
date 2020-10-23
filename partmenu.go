@@ -11,6 +11,7 @@ import (
 
 type PartMenu struct {
 	MenuBase
+	Part part.Type
 	Data []*ebiten.Image
 }
 
@@ -30,6 +31,7 @@ func NewPartMenu(w, h, col, row int) *PartMenu {
 			CursorImg: cursorImg,
 			Dirty:     true,
 		},
+		Part: part.Face,
 		Data: []*ebiten.Image{},
 	}
 	menu.Self = menu
@@ -38,13 +40,13 @@ func NewPartMenu(w, h, col, row int) *PartMenu {
 
 func (m *PartMenu) SetCursor(index int) {
 	m.MenuBase.SetCursor(index)
-	g.Character.StatusMap[status.Human].Parts[part.FrontHair] = part.Index(index - 1)
+	g.Character.StatusMap[status.Human].Parts[m.Part] = part.Index(index - 1)
 	m.Reflesh()
 	g.Logic.UpdateFace()
 }
 
 func (m *PartMenu) Update() {
-	ps, ok := g.VariationManager.Map[g.Character.Base][part.FrontHair]
+	ps, ok := g.VariationManager.Map[g.Character.Base][m.Part]
 	if !ok {
 		log.Fatalf("not found")
 	}

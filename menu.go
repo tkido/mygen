@@ -84,6 +84,11 @@ func NewMainMenu(w, h, col, row int) *MainMenu {
 
 func (m *MainMenu) SetCursor(index int) {
 	m.MenuBase.SetCursor(index)
+	const offset = 2 // num of appended menu item
+	if m.Cursor >= offset {
+		g.PartMenu.Part = part.Types[m.Cursor-offset]
+		g.PartMenu.Update()
+	}
 	g.Logic.UpdateFace()
 }
 
