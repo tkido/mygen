@@ -56,6 +56,7 @@ func (m *ImageManager) FilterImage(img *ebiten.Image) *ebiten.Image {
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
 			oc := img.At(x, y)
+			log.Printf("x: %d, y: %d", x, y)
 			index := m.ColorToGradientIndex(oc)
 			if index == -1 {
 				continue

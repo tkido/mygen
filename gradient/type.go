@@ -20,7 +20,7 @@ type Gradient struct {
 
 var Map = map[Type]Gradient{
 	Hair: {0, 23},
-	Eyes: {24, 12},
-	Skin: {36, 17},
+	Eyes: {24, 11},
+	Skin: {36, 16},
 	Acc:  {53, 17},
 }

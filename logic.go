@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"regexp"
 	"strconv"
@@ -46,7 +45,7 @@ func (l *Logic) UpdateFace() {
 		files := g.PartManager.Get(sprite.Face, g.Character.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- { // reverse
 			file := files[i]
-			fmt.Println(file)
+			// fmt.Println(file)
 			imgSrc := g.ImageManager.LoadImage(file)
 			// color info found
 			if ms := reDefaultColor.FindStringSubmatch(file); len(ms) >= 2 {
@@ -56,10 +55,11 @@ func (l *Logic) UpdateFace() {
 					log.Fatalf("invalid color info")
 				}
 				p := palette.Type(index)
-				if p == palette.Skin {
-					// fmt.Println(p)
-					// imgSrc = filterImage(imgSrc)
+				row, ok := g.Character.StatusMap[status.Human].Colors[p]
+				if ok && row != -1 {
+					imgSrc = g.ImageManager.FilterImage(imgSrc)
 				}
+				imgSrc = g.ImageManager.FilterImage(imgSrc)
 			}
 			op := &ebiten.DrawImageOptions{}
 			g.View.Face.DrawImage(imgSrc, op)

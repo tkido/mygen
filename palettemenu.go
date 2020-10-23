@@ -12,7 +12,7 @@ import (
 
 type PaletteMenu struct {
 	MenuBase
-	Data []string
+	Data []palette.Type
 }
 
 func NewPaletteMenu(w, h, col, row int) *PaletteMenu {
@@ -30,7 +30,7 @@ func NewPaletteMenu(w, h, col, row int) *PaletteMenu {
 			CursorImg: cursorImg,
 			Dirty:     true,
 		},
-		Data: []string{},
+		Data: []palette.Type{},
 	}
 	menu.Self = menu
 	return menu
@@ -43,16 +43,17 @@ func (m *PaletteMenu) SetCursor(index int) {
 	// 	g.PartMenu.Part = part.Types[m.Cursor-offset]
 	// 	g.PartMenu.Update()
 	// }
+	g.ColorMenu.Update()
 	m.Reflesh()
 	g.Logic.UpdateFace()
 }
 
 func (m *PaletteMenu) Update() {
-	m.Data = []string{}
+	m.Data = []palette.Type{}
 	pt := g.PartMenu.Part
 	ps := palette.Map[pt]
 	for _, p := range ps {
-		m.Data = append(m.Data, p.String())
+		m.Data = append(m.Data, p)
 	}
 	m.Limit = len(m.Data) - 1
 	m.SetCursor(0)
@@ -64,10 +65,10 @@ func (m *PaletteMenu) Reflesh() {
 	fHeight := f.Metrics().Height.Ceil()
 	m.Canvas.Fill(color.White)
 
-	for i, s := range m.Data {
+	for i, p := range m.Data {
 		x := i % m.Col
 		y := i / m.Col
-		text.Draw(m.Canvas, s, f, x*m.W, y*m.H+fHeight, color.Black)
+		text.Draw(m.Canvas, p.String(), f, x*m.W, y*m.H+fHeight, color.Black)
 		if m.Cursor == i {
 			m.CursorImg.Fill(g.View.GetFocusColor(m))
 			op := &ebiten.DrawImageOptions{}
