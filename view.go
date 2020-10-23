@@ -49,7 +49,7 @@ func (v View) Draw(screen *ebiten.Image) {
 	screen.DrawImage(g.PartMenu.Canvas, op)
 
 	op = &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(200, 64*4)
+	op.GeoM.Translate(200, 64*8)
 	screen.DrawImage(v.Face, op)
 
 	op = &ebiten.DrawImageOptions{}

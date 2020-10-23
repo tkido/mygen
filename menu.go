@@ -49,10 +49,6 @@ type Menu interface {
 	Reflesh()
 	MoveCursor(dX, dY int) (exit bool)
 	SetCursor(index int)
-	// SetFocus(index int)
-	// IsFocused() bool
-	// GetFocus()
-	// LoseFocus()
 }
 
 type MainMenu struct {

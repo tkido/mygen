@@ -44,7 +44,7 @@ func init() {
 		PartManager:      NewPartManager(),
 		FontManager:      font.NewFontManager(),
 		MainMenu:         NewMainMenu(100, 20, 2, 20),
-		PartMenu:         NewPartMenu(64, 64, 8, 4),
+		PartMenu:         NewPartMenu(64, 64, 8, 8),
 	}
 	g.VariationManager.Init()
 	g.FontManager.RegisterFont(font.Regular, "system/mplus-1m-regular.ttf")
