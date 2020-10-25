@@ -6,8 +6,6 @@ import (
 	"log"
 
 	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/text"
-	"github.com/tkido/mygen/font"
 	"github.com/tkido/mygen/part"
 )
 
@@ -60,15 +58,15 @@ func (m *MainMenu) Update() {
 
 func (m *MainMenu) Reflesh() {
 	log.Println("Menu.Reflesh")
-	f := g.FontManager.Face(font.Regular, font.XSmall)
-	fHeight := f.Metrics().Height.Ceil()
+	// f := g.FontManager.Face(font.Regular, font.XSmall)
+	// fHeight := f.Metrics().Height.Ceil()
 
 	m.Canvas.Fill(color.White)
 
-	for i, s := range m.Data {
+	for i, _ := range m.Data {
 		x := i % m.Col
 		y := i / m.Col
-		text.Draw(m.Canvas, s, f, x*m.W, y*m.H+fHeight, color.Black)
+		// text.Draw(m.Canvas, s, f, x*m.W, y*m.H+fHeight, color.Black)
 		if m.Cursor == i {
 			m.CursorImg.Fill(g.View.GetFocusColor(m))
 			op := &ebiten.DrawImageOptions{}

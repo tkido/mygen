@@ -26,7 +26,7 @@ type Game struct {
 	GlobManager
 	VariationManager
 	PartManager
-	font.FontManager
+	// font.FontManager
 	MainMenu    *MainMenu
 	PartMenu    *PartMenu
 	PaletteMenu *PaletteMenu
@@ -48,14 +48,14 @@ func init() {
 		GlobManager:      NewGlobManager(),
 		VariationManager: NewVariationManager(),
 		PartManager:      NewPartManager(),
-		FontManager:      font.NewFontManager(),
-		MainMenu:         NewMainMenu(100, 20, 2, 20),
-		PartMenu:         NewPartMenu(64, 64, 12, 7),
-		PaletteMenu:      NewPaletteMenu(80, 20, 4, 1),
-		ColorMenu:        NewColorMenu(32, 32, 6, 4),
+		// FontManager:      font.NewFontManager(),
+		MainMenu:    NewMainMenu(100, 20, 2, 20),
+		PartMenu:    NewPartMenu(64, 64, 12, 7),
+		PaletteMenu: NewPaletteMenu(80, 20, 4, 1),
+		ColorMenu:   NewColorMenu(32, 32, 6, 4),
 	}
 	g.VariationManager.Init()
-	g.FontManager.RegisterFont(font.Regular, "system/mplus-1m-regular.ttf")
+	// g.FontManager.RegisterFont(font.Regular, "system/mplus-1m-regular.ttf")
 
 	g.Controller.Menus = append(g.Controller.Menus, g.MainMenu)
 	g.Controller.Menus = append(g.Controller.Menus, g.PartMenu)
@@ -67,10 +67,11 @@ func init() {
 	g.ColorMenu.Update()   // TBD
 
 	clicked := func(el ui.Element) {
-		fmt.Println("clicked!!")
+		fmt.Println("label clicked!!")
 	}
-	g.Root.SetMouseCallback(ui.LeftClick, clicked)
-
+	label := ui.NewLabel(200, 100, "labelのテスト", font.Regular, font.Small, ui.Center, ui.Color("FFF"), ui.Color("000"))
+	label.SetMouseCallback(ui.LeftClick, clicked)
+	g.Root.Add(100, 500, label)
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {

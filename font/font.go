@@ -3,66 +3,38 @@ package font
 import (
 	"io/ioutil"
 	"log"
-	"os"
 
 	"github.com/golang/freetype/truetype"
-	"golang.org/x/image/font"
+	"github.com/tkido/mygen/assets"
+	"github.com/tkido/tendon/ui"
 )
 
 type FontType int
 
-//go:generate stringer -type=FontType
 const (
-	Regular FontType = iota
+	Regular ui.FontType = iota
 	Bold
 	Pixel
 )
 
 type FontSize int
 
-//go:generate stringer -type=FontSize
 const (
-	XSmall FontSize = 12
-	Small           = 16
-	Medium          = 24
-	Large           = 36
-	XLarge          = 48
+	XSmall ui.FontSize = 12
+	Small              = 16
+	Medium             = 24
+	Large              = 36
+	XLarge             = 48
 )
 
-type FontManager struct {
-	Fonts map[FontType]FontData
+func init() {
+	register(Regular, "mplus-1m-regular.ttf")
+	// register(Bold, "mplus-1p-bold.ttf")
+	// register(Pixel, "PixelMplus12-Regular.ttf")
 }
 
-func NewFontManager() FontManager {
-	return FontManager{
-		Fonts: map[FontType]FontData{},
-	}
-}
-
-type FontData struct {
-	Font  *truetype.Font
-	Faces map[FontSize]font.Face
-}
-
-func (fm *FontManager) Face(fontType FontType, size FontSize) font.Face {
-	fd, ok := fm.Fonts[fontType]
-	if !ok {
-		log.Fatalf("FontManager.Face: unknown FontType %d", fontType)
-	}
-	if face, ok := fd.Faces[size]; ok {
-		return face
-	}
-	face := truetype.NewFace(fd.Font, &truetype.Options{
-		Size:    float64(size),
-		DPI:     72,
-		Hinting: font.HintingFull,
-	})
-	fd.Faces[size] = face
-	return face
-}
-
-func (fm *FontManager) RegisterFont(fontType FontType, path string) {
-	ttf, err := os.Open(path)
+func register(fontType ui.FontType, path string) {
+	ttf, err := assets.Open(path)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -75,5 +47,5 @@ func (fm *FontManager) RegisterFont(fontType FontType, path string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fm.Fonts[fontType] = FontData{tt, map[FontSize]font.Face{}}
+	ui.RegisterFont(fontType, tt)
 }
