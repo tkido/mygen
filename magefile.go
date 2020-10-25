@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	exeFileName = "chargen.exe"
+	exeFileName = "mygen.exe"
 )
 
 // Default target to run when none is specified
@@ -47,13 +47,18 @@ func Test() error {
 // Statik
 func Statik() error {
 	fmt.Println("Statik...")
-	return sh.RunV("statik", "-src", "_assets", "-dest", "assets", "-tags", "release")
+	return sh.RunV("statik", "-f", "-src", "_assets", "-dest", "assets", "-tags", "release")
 }
 
 // Release
 func Release() error {
 	mg.Deps(Test)
 	mg.Deps(Statik)
-	fmt.Println("Release...")
-	return sh.RunV("go", "build", "-tags", "release", "-o", exeFileName, ".")
+	fmt.Println("Release Build...")
+	err := sh.RunV("go", "build", "-tags", "release", "-o", exeFileName, ".")
+	if err != nil {
+		return err
+	}
+	fmt.Println("Release Run...")
+	return sh.RunV("./" + exeFileName)
 }
