@@ -34,7 +34,7 @@ func (v View) GetFocusColor(m Menu) color.Color {
 }
 
 func (v View) Draw(screen *ebiten.Image) {
-	screen.Fill(color.White)
+	// screen.Fill(color.White)
 	var op *ebiten.DrawImageOptions
 
 	g.Logic.UpdateFace()

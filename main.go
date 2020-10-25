@@ -1,12 +1,14 @@
 package main
 
 import (
+	"fmt"
 	_ "image/png"
 	"log"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/base"
 	"github.com/tkido/mygen/font"
+	"github.com/tkido/tendon/ui"
 )
 
 const (
@@ -15,6 +17,7 @@ const (
 )
 
 type Game struct {
+	Root ui.Element
 	Controller
 	View
 	Character
@@ -36,6 +39,7 @@ var (
 
 func init() {
 	g = Game{
+		Root:             ui.NewRoot(screenWidth, screenHeight, ui.Color("ff0000")),
 		Controller:       NewController(),
 		View:             NewView(),
 		Character:        NewCharacter(0, base.Female),
@@ -62,15 +66,26 @@ func init() {
 	g.PaletteMenu.Update() // TBD
 	g.ColorMenu.Update()   // TBD
 
+	clicked := func(el ui.Element) {
+		fmt.Println("clicked!!")
+	}
+	g.Root.SetMouseCallback(ui.LeftClick, clicked)
+
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {
+	ui.Update()
 	return g.Controller.Update()
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
+	ui.Draw(screen)
 	g.View.Draw(screen)
 	// g.DebugPrint(screen)
+}
+
+func (g *Game) Layout(outsideWidth, outsideHeight int) (width, height int) {
+	return screenWidth, screenHeight
 }
 
 func main() {

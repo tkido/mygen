@@ -24,7 +24,3 @@ Base: %s
 	)
 	ebitenutil.DebugPrint(screen, msg)
 }
-
-func (g *Game) Layout(outsideWidth, outsideHeight int) (width, height int) {
-	return screenWidth, screenHeight
-}
