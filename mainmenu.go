@@ -72,7 +72,11 @@ func (m *MainMenu) Update() {
 
 	m.Clear()
 	for i, text := range m.Data {
-		label := ui.NewLabel(m.W, m.H, text, font.Regular, font.Small, ui.Center, color.Black, color.White)
+		bgColor := ui.Color("fff")
+		if i%4 == 1 || i%4 == 2 {
+			bgColor = ui.Color("e3ebf1")
+		}
+		label := ui.NewLabel(m.W, m.H, text, font.Regular, font.Small, ui.Center, color.Black, bgColor)
 
 		caption := text
 		index := i
@@ -97,18 +101,4 @@ func (m *MainMenu) Update() {
 func (m *MainMenu) Reflesh() {
 	log.Println("MainMenu.Reflesh")
 	m.Image.Fill(ui.Color("aa0"))
-	// f := g.FontManager.Face(font.Regular, font.XSmall)
-	// fHeight := f.Metrics().Height.Ceil()
-
-	// for i, _ := range m.Data {
-	// 	x := i % m.Col
-	// 	y := i / m.Col
-	// 	text.Draw(m.Canvas, s, f, x*m.W, y*m.H+fHeight, color.Black)
-	// 	if m.Cursor == i {
-	// 		m.CursorImg.Fill(g.View.GetFocusColor(m))
-	// 		op := &ebiten.DrawImageOptions{}
-	// 		op.GeoM.Translate(float64(x*m.W), float64(y*m.H))
-	// 		m.Canvas.DrawImage(m.CursorImg, op)
-	// 	}
-	// }
 }
