@@ -24,6 +24,7 @@ type Game struct {
 	GlobManager
 	VariationManager
 	PartManager
+	MainMenu    *MainMenu
 	PartMenu    *PartMenu
 	PaletteMenu *PaletteMenu
 	ColorMenu   *ColorMenu
@@ -44,17 +45,24 @@ func init() {
 		GlobManager:      NewGlobManager(),
 		VariationManager: NewVariationManager(),
 		PartManager:      NewPartManager(),
-		// MainMenu:    NewMainMenu(100, 20, 2, 20),
-		PartMenu:    NewPartMenu(64, 64, 12, 7),
-		PaletteMenu: NewPaletteMenu(80, 20, 4, 1),
-		ColorMenu:   NewColorMenu(32, 32, 6, 4),
+		MainMenu:         NewMainMenu(100, 20, 2, 20),
+		PartMenu:         NewPartMenu(64, 64, 12, 7),
+		PaletteMenu:      NewPaletteMenu(80, 20, 4, 1),
+		ColorMenu:        NewColorMenu(32, 32, 6, 4),
 	}
 	g.VariationManager.Init()
 
-	mainMenu := NewMainMenu(100, 20, 2, 20)
-	mainMenu.Update()
-	mainMenu.SetFocus()
-	g.Root.Add(0, 0, mainMenu)
+	// mainMenu := NewMainMenu(100, 20, 2, 20)
+	// mainMenu.Update()
+	// mainMenu.SetFocus()
+	// g.Root.Add(0, 0, mainMenu)
+
+	g.MainMenu.Update()
+	g.MainMenu.SetFocus()
+	g.Root.Add(0, 0, g.MainMenu)
+
+	g.PartMenu.Update()
+	g.Root.Add(200, 0, g.PartMenu)
 
 	// g.Controller.Menus = append(g.Controller.Menus, g.MainMenu)
 	// g.Controller.Menus = append(g.Controller.Menus, g.PartMenu)

@@ -48,7 +48,7 @@ func (m *MainMenu) MoveCursor(dX, dY int) (exit bool) {
 }
 
 func (m *MainMenu) SetCursor(index int) {
-	log.Printf("MainMenu SetCursor")
+	log.Printf("MainMenu SetCursor index = %d", index)
 	m.MenuBase.SetCursor(index)
 	const offset = 2 // num of appended menu item
 	if m.Cursor >= offset {
@@ -57,7 +57,6 @@ func (m *MainMenu) SetCursor(index int) {
 		g.PaletteMenu.Update()
 	}
 	x, y := m.Cursor%m.Col, m.Cursor/m.Col
-	log.Printf("SetCursor x: %d, y: %d", x, y)
 	m.CursorBox.Move(x*m.W, y*m.H)
 }
 
