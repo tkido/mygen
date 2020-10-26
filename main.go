@@ -22,12 +22,15 @@ type Game struct {
 	GlobManager
 	VariationManager
 	PartManager
+
 	MainMenu    *MainMenu
 	PartMenu    *PartMenu
 	PaletteMenu *PaletteMenu
 	ColorMenu   *ColorMenu
 	Tabs        []ui.Element
 	TabIndex    int
+
+	Sprites *Sprites
 }
 
 var (
@@ -49,6 +52,7 @@ func init() {
 		ColorMenu:        NewColorMenu(32, 32, 6, 4),
 		Tabs:             []ui.Element{},
 		TabIndex:         0,
+		Sprites:          NewSprites(),
 	}
 	g.VariationManager.Init()
 
@@ -82,6 +86,8 @@ func init() {
 		g.Tabs[g.TabIndex].SetFocus()
 	}
 	g.Root.SetKeyCallback(ebiten.KeyTab, changeTab)
+
+	g.Root.Add(0, 64*8, g.Sprites)
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {

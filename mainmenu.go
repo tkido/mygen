@@ -68,6 +68,8 @@ func (m *MainMenu) SetCursor(index int) {
 	}
 	x, y := m.Cursor%m.Col, m.Cursor/m.Col
 	m.CursorBox.Move(x*m.W, y*m.H)
+
+	g.Sprites.Dirty()
 }
 
 func (m *MainMenu) Update() {

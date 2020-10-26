@@ -64,6 +64,7 @@ func (m *PartMenu) SetCursor(index int) {
 	g.Character.StatusMap[status.Human].Parts[m.Part] = part.Index(index - 1)
 	x, y := m.Cursor%m.Col, m.Cursor/m.Col
 	m.CursorBox.Move(x*m.W, y*m.H)
+	g.Sprites.Dirty()
 }
 
 func (m *PartMenu) Update() {
