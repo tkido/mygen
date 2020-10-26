@@ -25,14 +25,6 @@ func NewView() View {
 	}
 }
 
-func (v View) GetFocusColor(m Menu) color.Color {
-	c := g.View.FocusColor
-	if g.Controller.Menus[g.Controller.TabIndex] == m {
-		c = g.View.HotColor
-	}
-	return c
-}
-
 func (v View) Draw(screen *ebiten.Image) {
 	// screen.Fill(color.White)
 	// var op *ebiten.DrawImageOptions

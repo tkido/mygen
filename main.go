@@ -16,7 +16,6 @@ const (
 
 type Game struct {
 	Root ui.Element
-	Controller
 	View
 	Character
 	Logic
@@ -28,6 +27,8 @@ type Game struct {
 	PartMenu    *PartMenu
 	PaletteMenu *PaletteMenu
 	ColorMenu   *ColorMenu
+	Tabs        []ui.Element
+	TabIndex    int
 }
 
 var (
@@ -37,7 +38,6 @@ var (
 func init() {
 	g = Game{
 		Root:             ui.NewRoot(screenWidth, screenHeight, ui.Color("ff0000")),
-		Controller:       NewController(),
 		View:             NewView(),
 		Character:        NewCharacter(0, base.Female),
 		Logic:            NewLogic(),
@@ -49,30 +49,35 @@ func init() {
 		PartMenu:         NewPartMenu(64, 64, 12, 7),
 		PaletteMenu:      NewPaletteMenu(80, 20, 4, 1),
 		ColorMenu:        NewColorMenu(32, 32, 6, 4),
+		Tabs:             []ui.Element{},
+		TabIndex:         0,
 	}
 	g.VariationManager.Init()
-
-	// mainMenu := NewMainMenu(100, 20, 2, 20)
-	// mainMenu.Update()
-	// mainMenu.SetFocus()
-	// g.Root.Add(0, 0, mainMenu)
 
 	g.MainMenu.SetFocus()
 	g.MainMenu.Update()
 	g.Root.Add(0, 0, g.MainMenu)
+	g.Tabs = append(g.Tabs, g.MainMenu)
 
 	g.PartMenu.Update()
 	g.Root.Add(200, 0, g.PartMenu)
+	g.Tabs = append(g.Tabs, g.PartMenu)
 
-	// g.Controller.Menus = append(g.Controller.Menus, g.MainMenu)
-	// g.Controller.Menus = append(g.Controller.Menus, g.PartMenu)
-	// g.Controller.Menus = append(g.Controller.Menus, g.PaletteMenu)
-	// g.Controller.Menus = append(g.Controller.Menus, g.ColorMenu)
-
-	// g.MainMenu.Update()    // TBD
-	// g.PartMenu.Update()    // TBD
-	// g.PaletteMenu.Update() // TBD
-	// g.ColorMenu.Update()   // TBD
+	changeTab := func(el ui.Element) {
+		d := 1
+		if ebiten.IsKeyPressed(ebiten.KeyShift) {
+			d = -1
+		}
+		g.TabIndex += d
+		num := len(g.Tabs)
+		if g.TabIndex < 0 {
+			g.TabIndex = num - 1
+		} else if g.TabIndex >= num {
+			g.TabIndex = 0
+		}
+		g.Tabs[g.TabIndex].SetFocus()
+	}
+	g.Root.SetKeyCallback(ebiten.KeyTab, changeTab)
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {
@@ -81,8 +86,6 @@ func (g *Game) Update(screen *ebiten.Image) error {
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	ui.Draw(screen)
-	// g.View.Draw(screen)
-	// g.DebugPrint(screen)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (width, height int) {
