@@ -13,14 +13,17 @@ import (
 )
 
 type ImageManager struct {
+	Bg       *ebiten.Image
 	Gradient *ebiten.Image
 	Cache    map[string]*ebiten.Image
 }
 
 func NewImageManager() ImageManager {
+	Bg, _, _ := ebitenutil.NewImageFromFile("system/background.png", ebiten.FilterDefault)
 	Gradient, _, _ := ebitenutil.NewImageFromFile("generator/gradients.png", ebiten.FilterDefault)
 	Cache := map[string]*ebiten.Image{}
 	return ImageManager{
+		Bg,
 		Gradient,
 		Cache,
 	}

@@ -72,7 +72,7 @@ func (m *PartMenu) Update() {
 		log.Fatalf("not found")
 	}
 	m.Data = []*ebiten.Image{}
-	m.Data = append(m.Data, g.View.Bg)
+	m.Data = append(m.Data, g.ImageManager.Bg)
 	for _, p := range ps {
 		m.Data = append(m.Data, g.ImageManager.LoadImage(p.file))
 	}
@@ -107,7 +107,7 @@ func (m *PartMenu) Reflesh() {
 		x, y := i%m.Col, i/m.Col
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(float64(x*m.W), float64(y*m.H))
-		m.Image.DrawImage(g.View.Bg, op)
+		m.Image.DrawImage(g.ImageManager.Bg, op)
 		m.Image.DrawImage(img, op)
 	}
 }
