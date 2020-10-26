@@ -66,6 +66,9 @@ func init() {
 	g.Root.Add(1000, 0, g.PaletteMenu)
 	g.Tabs = append(g.Tabs, g.PaletteMenu)
 
+	g.Root.Add(1000, 20, g.ColorMenu)
+	g.Tabs = append(g.Tabs, g.ColorMenu)
+
 	changeTab := func(el ui.Element) {
 		d := 1
 		if ebiten.IsKeyPressed(ebiten.KeyShift) {

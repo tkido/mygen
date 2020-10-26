@@ -38,16 +38,4 @@ func (v View) Draw(screen *ebiten.Image) {
 	// op = &ebiten.DrawImageOptions{}
 	// op.GeoM.Translate(1000, 400)
 	// screen.DrawImage(g.ImageManager.Gradient, op)
-
-	// op = &ebiten.DrawImageOptions{}
-	// op.GeoM.Translate(200, 0)
-	// screen.DrawImage(g.PartMenu.Canvas, op)
-
-	// op = &ebiten.DrawImageOptions{}
-	// op.GeoM.Translate(1000, 0)
-	// screen.DrawImage(g.PaletteMenu.Canvas, op)
-
-	// op = &ebiten.DrawImageOptions{}
-	// op.GeoM.Translate(1000, 20)
-	// screen.DrawImage(g.ColorMenu.Canvas, op)
 }

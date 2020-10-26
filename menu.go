@@ -44,9 +44,6 @@ func (m *MenuBase) MoveCursor(dX, dY int) (exit bool) {
 	case dY == 1 && (y == m.Row-1 || newCursor > m.Limit):
 		return true // 下脱出
 	default:
-		// if mb, ok := m.Self.(*MenuBase); ok {
-		// 	mb.SetCursor(newCursor)
-		// }
 		m.SetCursor(newCursor)
 		return false
 	}
