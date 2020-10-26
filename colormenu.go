@@ -12,28 +12,16 @@ import (
 )
 
 type ColorMenu struct {
-	MenuBase
+	*MenuBase
 	Part part.Type
 	Data []gradient.Row
 }
 
 func NewColorMenu(w, h, col, row int) *ColorMenu {
-	canvas, _ := ebiten.NewImage(w*col, h*row, ebiten.FilterDefault)
-	cursorImg, _ := ebiten.NewImage(w, h, ebiten.FilterDefault)
-
 	menu := &ColorMenu{
-		MenuBase: MenuBase{
-			W:         w,
-			H:         h,
-			Col:       col,
-			Row:       row,
-			Cursor:    0,
-			Canvas:    canvas,
-			CursorImg: cursorImg,
-			Dirty:     true,
-		},
-		Part: part.Face,
-		Data: []gradient.Row{},
+		NewMenuBase(w, h, col, row, color.White),
+		part.Face,
+		[]gradient.Row{},
 	}
 	menu.Self = menu
 	return menu
@@ -68,7 +56,8 @@ func (m *ColorMenu) Update() {
 
 func (m *ColorMenu) Reflesh() {
 	log.Println("ColorMenu.Reflesh")
-	m.Canvas.Fill(color.Transparent)
+	w, h := m.Size()
+	m.Image, _ = ebiten.NewImage(w, h, ebiten.FilterDefault)
 	for i, row := range m.Data {
 		x := i % m.Col
 		y := i / m.Col
@@ -77,12 +66,13 @@ func (m *ColorMenu) Reflesh() {
 		op.GeoM.Translate(float64(x*m.W), float64(y*m.H))
 		r := int(row)
 		rect := image.Rect(64, r*4, 256-64, (r+1)*4)
-		m.Canvas.DrawImage(g.ImageManager.Gradient.SubImage(rect).(*ebiten.Image), op)
-		if m.Cursor == i {
-			m.CursorImg.Fill(g.View.GetFocusColor(m))
-			op := &ebiten.DrawImageOptions{}
-			op.GeoM.Translate(float64(x*m.W), float64(y*m.H))
-			m.Canvas.DrawImage(m.CursorImg, op)
-		}
+		m.Image.DrawImage(g.ImageManager.Gradient.SubImage(rect).(*ebiten.Image), op)
+
+		// if m.Cursor == i {
+		// 	m.CursorImg.Fill(g.View.GetFocusColor(m))
+		// 	op := &ebiten.DrawImageOptions{}
+		// 	op.GeoM.Translate(float64(x*m.W), float64(y*m.H))
+		// 	m.Canvas.DrawImage(m.CursorImg, op)
+		// }
 	}
 }

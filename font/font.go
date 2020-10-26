@@ -6,7 +6,7 @@ import (
 
 	"github.com/golang/freetype/truetype"
 	"github.com/tkido/mygen/assets"
-	"github.com/tkido/tendon/ui"
+	"github.com/tkido/mygen/ui"
 )
 
 type FontType int

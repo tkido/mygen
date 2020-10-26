@@ -22,7 +22,7 @@ func NewLogic() Logic {
 var reDefaultColor = regexp.MustCompile(`_m(\d{3})`)
 
 func (l *Logic) UpdateFace() {
-	g.MainMenu.Reflesh()
+	// g.MainMenu.Reflesh()
 
 	g.View.Face.Clear()
 	for i := len(layer.FaceLayers) - 1; 0 <= i; i-- { // reverse

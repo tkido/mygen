@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/rakyll/statik/fs"
-	_ "github.com/tkido/tendon/assets/statik"
+	_ "github.com/tkido/mygen/assets/statik"
 )
 
 var fileSystem http.FileSystem

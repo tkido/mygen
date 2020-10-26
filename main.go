@@ -1,14 +1,12 @@
 package main
 
 import (
-	"fmt"
 	_ "image/png"
 	"log"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/base"
-	"github.com/tkido/mygen/font"
-	"github.com/tkido/tendon/ui"
+	"github.com/tkido/mygen/ui"
 )
 
 const (
@@ -26,8 +24,6 @@ type Game struct {
 	GlobManager
 	VariationManager
 	PartManager
-	// font.FontManager
-	MainMenu    *MainMenu
 	PartMenu    *PartMenu
 	PaletteMenu *PaletteMenu
 	ColorMenu   *ColorMenu
@@ -48,40 +44,36 @@ func init() {
 		GlobManager:      NewGlobManager(),
 		VariationManager: NewVariationManager(),
 		PartManager:      NewPartManager(),
-		// FontManager:      font.NewFontManager(),
-		MainMenu:    NewMainMenu(100, 20, 2, 20),
+		// MainMenu:    NewMainMenu(100, 20, 2, 20),
 		PartMenu:    NewPartMenu(64, 64, 12, 7),
 		PaletteMenu: NewPaletteMenu(80, 20, 4, 1),
 		ColorMenu:   NewColorMenu(32, 32, 6, 4),
 	}
 	g.VariationManager.Init()
-	// g.FontManager.RegisterFont(font.Regular, "system/mplus-1m-regular.ttf")
 
-	g.Controller.Menus = append(g.Controller.Menus, g.MainMenu)
-	g.Controller.Menus = append(g.Controller.Menus, g.PartMenu)
-	g.Controller.Menus = append(g.Controller.Menus, g.PaletteMenu)
-	g.Controller.Menus = append(g.Controller.Menus, g.ColorMenu)
-	g.MainMenu.Update()    // TBD
-	g.PartMenu.Update()    // TBD
-	g.PaletteMenu.Update() // TBD
-	g.ColorMenu.Update()   // TBD
+	mainMenu := NewMainMenu(100, 20, 2, 20)
+	mainMenu.Update()
+	mainMenu.SetFocus()
+	g.Root.Add(0, 0, mainMenu)
 
-	clicked := func(el ui.Element) {
-		fmt.Println("label clicked!!")
-	}
-	label := ui.NewLabel(200, 100, "labelのテスト", font.Regular, font.Small, ui.Center, ui.Color("FFF"), ui.Color("000"))
-	label.SetMouseCallback(ui.LeftClick, clicked)
-	g.Root.Add(100, 500, label)
+	// g.Controller.Menus = append(g.Controller.Menus, g.MainMenu)
+	// g.Controller.Menus = append(g.Controller.Menus, g.PartMenu)
+	// g.Controller.Menus = append(g.Controller.Menus, g.PaletteMenu)
+	// g.Controller.Menus = append(g.Controller.Menus, g.ColorMenu)
+
+	// g.MainMenu.Update()    // TBD
+	// g.PartMenu.Update()    // TBD
+	// g.PaletteMenu.Update() // TBD
+	// g.ColorMenu.Update()   // TBD
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {
-	ui.Update()
-	return g.Controller.Update()
+	return ui.Update()
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	ui.Draw(screen)
-	g.View.Draw(screen)
+	// g.View.Draw(screen)
 	// g.DebugPrint(screen)
 }
 

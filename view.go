@@ -35,31 +35,31 @@ func (v View) GetFocusColor(m Menu) color.Color {
 
 func (v View) Draw(screen *ebiten.Image) {
 	// screen.Fill(color.White)
-	var op *ebiten.DrawImageOptions
+	// var op *ebiten.DrawImageOptions
 
-	g.Logic.UpdateFace()
+	// g.Logic.UpdateFace()
 
-	op = &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(200, 64*8)
-	screen.DrawImage(v.Face, op)
+	// op = &ebiten.DrawImageOptions{}
+	// op.GeoM.Translate(200, 64*8)
+	// screen.DrawImage(v.Face, op)
 
-	op = &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(1000, 400)
-	screen.DrawImage(g.ImageManager.Gradient, op)
+	// op = &ebiten.DrawImageOptions{}
+	// op.GeoM.Translate(1000, 400)
+	// screen.DrawImage(g.ImageManager.Gradient, op)
 
-	op = &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(0, 0)
-	screen.DrawImage(g.MainMenu.Canvas, op)
+	// op = &ebiten.DrawImageOptions{}
+	// op.GeoM.Translate(0, 0)
+	// screen.DrawImage(g.MainMenu.Canvas, op)
 
-	op = &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(200, 0)
-	screen.DrawImage(g.PartMenu.Canvas, op)
+	// op = &ebiten.DrawImageOptions{}
+	// op.GeoM.Translate(200, 0)
+	// screen.DrawImage(g.PartMenu.Canvas, op)
 
-	op = &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(1000, 0)
-	screen.DrawImage(g.PaletteMenu.Canvas, op)
+	// op = &ebiten.DrawImageOptions{}
+	// op.GeoM.Translate(1000, 0)
+	// screen.DrawImage(g.PaletteMenu.Canvas, op)
 
-	op = &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(1000, 20)
-	screen.DrawImage(g.ColorMenu.Canvas, op)
+	// op = &ebiten.DrawImageOptions{}
+	// op.GeoM.Translate(1000, 20)
+	// screen.DrawImage(g.ColorMenu.Canvas, op)
 }
