@@ -74,10 +74,7 @@ func (m *PartMenu) Update() {
 		clicked := func(el ui.Element) {
 			m.SetCursor(index)
 		}
-		box.SetMouseCallback(
-			ui.LeftClick,
-			clicked,
-		)
+		box.SetMouseCallback(ui.LeftClick, clicked)
 		x, y := i%m.Col, i/m.Col
 		m.Add(x*m.W, y*m.H, box)
 	}
@@ -95,8 +92,7 @@ func (m *PartMenu) Reflesh() {
 	log.Println("PartMenu.Reflesh")
 	m.Image.Fill(ui.Color("0f0"))
 	for i, img := range m.Data {
-		x := i % m.Col
-		y := i / m.Col
+		x, y := i%m.Col, i/m.Col
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(float64(x*m.W), float64(y*m.H))
 		m.Image.DrawImage(g.View.Bg, op)
