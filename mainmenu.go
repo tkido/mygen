@@ -20,7 +20,7 @@ type MainMenu struct {
 func NewMainMenu(w, h, col, row int) *MainMenu {
 	m := &MainMenu{
 		NewMenuBase(w, h, col, row, color.White),
-		ui.NewBox(w, h, nil),
+		ui.NewBox(w, h, ui.Color("ff0a")),
 		[]string{},
 	}
 	m.Self = m
@@ -39,9 +39,11 @@ func NewMainMenu(w, h, col, row int) *MainMenu {
 	})
 
 	m.SetUiCallback(ui.GotFocus, func(el ui.Element) {
+		log.Printf("MainMenu GotFocus")
 		m.CursorBox.SetBackgroundColor(ui.Color("f00a"))
 	})
 	m.SetUiCallback(ui.LostFocus, func(el ui.Element) {
+		log.Printf("MainMenu LostFocus")
 		m.CursorBox.SetBackgroundColor(ui.Color("ff0a"))
 	})
 
@@ -89,6 +91,7 @@ func (m *MainMenu) Update() {
 		index := i
 		clicked := func(el ui.Element) {
 			log.Printf("%s clicked\n", caption)
+			m.SetFocus()
 			m.SetCursor(index)
 		}
 		label.SetMouseCallback(

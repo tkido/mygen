@@ -20,24 +20,34 @@ type PartMenu struct {
 func NewPartMenu(w, h, col, row int) *PartMenu {
 	m := &PartMenu{
 		NewMenuBase(w, h, col, row, color.White),
-		nil,
+		ui.NewBox(w, h, ui.Color("ff0a")),
 		part.Face,
 		[]*ebiten.Image{},
 	}
 	m.Self = m
 
-	m.Self.SetKeyCallback(ebiten.KeyLeft, func(el ui.Element) {
+	m.SetKeyCallback(ebiten.KeyLeft, func(el ui.Element) {
 		m.MoveCursor(-1, 0)
 	})
-	m.Self.SetKeyCallback(ebiten.KeyRight, func(el ui.Element) {
+	m.SetKeyCallback(ebiten.KeyRight, func(el ui.Element) {
 		m.MoveCursor(1, 0)
 	})
-	m.Self.SetKeyCallback(ebiten.KeyUp, func(el ui.Element) {
+	m.SetKeyCallback(ebiten.KeyUp, func(el ui.Element) {
 		m.MoveCursor(0, -1)
 	})
-	m.Self.SetKeyCallback(ebiten.KeyDown, func(el ui.Element) {
+	m.SetKeyCallback(ebiten.KeyDown, func(el ui.Element) {
 		m.MoveCursor(0, 1)
 	})
+
+	m.SetUiCallback(ui.GotFocus, func(el ui.Element) {
+		log.Printf("PartMenu GotFocus")
+		m.CursorBox.SetBackgroundColor(ui.Color("f00a"))
+	})
+	m.SetUiCallback(ui.LostFocus, func(el ui.Element) {
+		log.Printf("PartMenu LostFocus")
+		m.CursorBox.SetBackgroundColor(ui.Color("ff0a"))
+	})
+
 	return m
 }
 
@@ -72,18 +82,20 @@ func (m *PartMenu) Update() {
 		box := ui.NewBox(m.W, m.H, nil)
 		index := i
 		clicked := func(el ui.Element) {
+			m.SetFocus()
 			m.SetCursor(index)
 		}
 		box.SetMouseCallback(ui.LeftClick, clicked)
 		x, y := i%m.Col, i/m.Col
 		m.Add(x*m.W, y*m.H, box)
 	}
-	m.CursorBox = ui.NewBox(m.W, m.H, ui.Color("ff0a"))
-	x, y := m.Cursor%m.Col, m.Cursor/m.Col
-	m.Add(x*m.W, y*m.H, m.CursorBox)
+
 	// restore cursor position from data
 	m.Limit = len(m.Data) - 1
 	m.SetCursor(int(g.Character.StatusMap[status.Human].Parts[m.Part] + 1))
+
+	x, y := m.Cursor%m.Col, m.Cursor/m.Col
+	m.Add(x*m.W, y*m.H, m.CursorBox)
 
 	m.Dirty()
 }
