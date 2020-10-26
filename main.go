@@ -57,8 +57,8 @@ func init() {
 	// mainMenu.SetFocus()
 	// g.Root.Add(0, 0, mainMenu)
 
-	g.MainMenu.Update()
 	g.MainMenu.SetFocus()
+	g.MainMenu.Update()
 	g.Root.Add(0, 0, g.MainMenu)
 
 	g.PartMenu.Update()

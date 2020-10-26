@@ -23,6 +23,7 @@ type Box struct {
 	visible          bool
 	mouseCallbacks
 	keyCallbacks
+	uiCallbacks
 }
 
 // NewBox make new Box
@@ -38,6 +39,7 @@ func NewBox(w, h int, c color.Color) *Box {
 		Children:       []Element{},
 		mouseCallbacks: mouseCallbacks{},
 		keyCallbacks:   keyCallbacks{},
+		uiCallbacks:    uiCallbacks{},
 		Self:           nil,
 		visible:        true,
 	}

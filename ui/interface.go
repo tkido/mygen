@@ -38,7 +38,10 @@ type Element interface {
 
 	SetKeyCallback(key ebiten.Key, cb Callback)
 	handleKeyEvent(k ebiten.Key) bool
+	SetUiCallback(e UiEvent, cb Callback)
+	handleUiEvent(e UiEvent) bool
 	SetFocus()
+	IsFocused() bool
 
 	String() string
 }

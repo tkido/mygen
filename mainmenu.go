@@ -20,23 +20,31 @@ type MainMenu struct {
 func NewMainMenu(w, h, col, row int) *MainMenu {
 	m := &MainMenu{
 		NewMenuBase(w, h, col, row, color.White),
-		nil,
+		ui.NewBox(w, h, nil),
 		[]string{},
 	}
 	m.Self = m
 
-	m.Self.SetKeyCallback(ebiten.KeyLeft, func(el ui.Element) {
+	m.SetKeyCallback(ebiten.KeyLeft, func(el ui.Element) {
 		m.MoveCursor(-1, 0)
 	})
-	m.Self.SetKeyCallback(ebiten.KeyRight, func(el ui.Element) {
+	m.SetKeyCallback(ebiten.KeyRight, func(el ui.Element) {
 		m.MoveCursor(1, 0)
 	})
-	m.Self.SetKeyCallback(ebiten.KeyUp, func(el ui.Element) {
+	m.SetKeyCallback(ebiten.KeyUp, func(el ui.Element) {
 		m.MoveCursor(0, -1)
 	})
-	m.Self.SetKeyCallback(ebiten.KeyDown, func(el ui.Element) {
+	m.SetKeyCallback(ebiten.KeyDown, func(el ui.Element) {
 		m.MoveCursor(0, 1)
 	})
+
+	m.SetUiCallback(ui.GotFocus, func(el ui.Element) {
+		m.CursorBox.SetBackgroundColor(ui.Color("f00a"))
+	})
+	m.SetUiCallback(ui.LostFocus, func(el ui.Element) {
+		m.CursorBox.SetBackgroundColor(ui.Color("ff0a"))
+	})
+
 	return m
 }
 
@@ -90,7 +98,7 @@ func (m *MainMenu) Update() {
 		x, y := i%m.Col, i/m.Col
 		m.Add(x*m.W, y*m.H, label)
 	}
-	m.CursorBox = ui.NewBox(m.W, m.H, ui.Color("ff0a"))
+
 	x, y := m.Cursor%m.Col, m.Cursor/m.Col
 	m.Add(x*m.W, y*m.H, m.CursorBox)
 

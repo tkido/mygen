@@ -35,7 +35,19 @@ func (k keyCallbacks) SetKeyCallback(key ebiten.Key, cb Callback) {
 
 // SetFocus set focus to element
 func (b *Box) SetFocus() {
+	if gm.Focused == b.Self {
+		return
+	}
+	if gm.Focused != nil {
+		gm.Focused.handleUiEvent(LostFocus)
+	}
 	gm.Focused = b.Self
+	b.Self.handleUiEvent(GotFocus)
+}
+
+// IsFocused return isFocused
+func (b *Box) IsFocused() bool {
+	return gm.Focused == b.Self
 }
 
 // keyManager manage status of key
