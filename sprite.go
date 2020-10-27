@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"regexp"
 	"strconv"
@@ -29,7 +30,7 @@ func NewSprites() *Sprites {
 	tvd, _ := ebiten.NewImage(48*3, 48*1, ebiten.FilterDefault)
 	sv, _ := ebiten.NewImage(64*9, 64*6, ebiten.FilterDefault)
 	s := &Sprites{
-		ui.NewBox(144, 144, nil),
+		ui.NewBox(64*12, 64*6, nil),
 		status.Human,
 		face,
 		tv,
@@ -43,14 +44,57 @@ func NewSprites() *Sprites {
 func (s *Sprites) Reflesh() {
 	log.Println("Sprites.Reflesh")
 
-	for j := 0; j < 3; j++ {
-		for i := 0; i < 3; i++ {
+	for j := 0; j < 6; j++ {
+		for i := 0; i < 12; i++ {
 			op := &ebiten.DrawImageOptions{}
 			op.GeoM.Translate(float64(i*64), float64(j*64))
 			s.Image.DrawImage(g.ImageManager.Bg, op)
 		}
 	}
 
+	s.refleshFace()
+	s.refleshTv()
+}
+func (s *Sprites) refleshTv() {
+	s.Tv.Clear()
+	for i := len(layer.TvLayers) - 1; 0 <= i; i-- { // reverse
+		lay := layer.TvLayers[i]
+		label := "01"
+		if pt, ok := g.PartManager.LayerPartMap[lay]; ok {
+			if list, ok := g.VariationManager.Map[g.Character.Base][pt]; ok {
+				if index, ok := g.Character.StatusMap[s.Status].Parts[pt]; ok {
+					if index == part.Null {
+						continue
+					}
+					if index < part.Index(len(list)) {
+						label = list[index].label
+					}
+				}
+			}
+		}
+		files := g.PartManager.Get(sprite.Tv, g.Character.Base, lay, label)
+		for i := len(files) - 1; 0 <= i; i-- { // reverse
+			file := files[i]
+			fmt.Println(file)
+			imgSrc := g.ImageManager.LoadImage(file)
+			maskFileName := file[:len(file)-4] + `_c.png`
+			// mask info found
+			if imgMask := g.ImageManager.LoadImage(maskFileName); imgMask != nil {
+				fmt.Println(maskFileName)
+				imgSrc = g.ImageManager.FilterImage2(imgSrc, imgMask)
+			}
+			op := &ebiten.DrawImageOptions{}
+			s.Tv.DrawImage(imgSrc, op)
+		}
+	}
+
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(0, 144)
+	s.Image.DrawImage(s.Tv, op)
+
+}
+
+func (s *Sprites) refleshFace() {
 	var reDefaultColor = regexp.MustCompile(`_m(\d{3})`)
 
 	s.Face.Clear()

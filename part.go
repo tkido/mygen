@@ -64,13 +64,15 @@ func NewPartManager() PartManager {
 
 func (pm *PartManager) Get(sp sprite.Type, base base.Type, layer layer.Type, label string) []string {
 	header := sp.String()
+	format := "%s_%s_p%s.png"
 	if sp == sprite.Face {
 		header = "FG"
+		format = "%s_%s_p%s_*.png"
 	}
 	pattern := filepath.Join(
 		rootPath,
 		sp.String(),
 		base.String(),
-		fmt.Sprintf("%s_%s_p%s_*.png", header, layer, label))
+		fmt.Sprintf(format, header, layer, label))
 	return g.GlobManager.Get(pattern)
 }

@@ -9,9 +9,9 @@ func _() {
 	// Re-run the stringer command to generate them again.
 	var x [1]struct{}
 	_ = x[Face-0]
-	_ = x[SV-1]
-	_ = x[TV-2]
-	_ = x[TVD-3]
+	_ = x[Sv-1]
+	_ = x[Tv-2]
+	_ = x[Tvd-3]
 }
 
 const _Type_name = "FaceSVTVTVD"

@@ -2,6 +2,8 @@ package gradient
 
 type Row int
 
+const Null = -1
+
 //go:generate stringer -type=Type
 type Type int
 

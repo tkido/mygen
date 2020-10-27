@@ -1,6 +1,8 @@
 package palette
 
 import (
+	"image/color"
+
 	"github.com/tkido/mygen/gradient"
 	"github.com/tkido/mygen/part"
 )
@@ -91,4 +93,31 @@ var Map = map[part.Type][]Type{
 	part.AccA:       {AccA, AccASub1, AccASub2},
 	part.AccB:       {AccB, AccBSub1, AccBSub2, AccBSub3},
 	part.Glasses:    {Glasses, GlassesSub1, GlassesSub2},
+}
+
+var MaskPaletteMap = map[color.Color]Type{
+	color.RGBA{249, 193, 157, 255}: Skin,
+	color.RGBA{44, 128, 203, 255}:  Eyes,
+	color.RGBA{252, 203, 10, 255}:  Hair,
+	color.RGBA{184, 146, 197, 255}: HairSub,
+	color.RGBA{0, 146, 150, 255}:   FacialMark,
+	color.RGBA{211, 206, 199, 255}: BeastEars,
+	color.RGBA{174, 134, 130, 255}: Clothing,
+	color.RGBA{254, 157, 30, 255}:  ClothingSub1,
+	color.RGBA{28, 118, 208, 255}:  ClothingSub2,
+	color.RGBA{217, 164, 4, 255}:   ClothingSub3,
+	color.RGBA{216, 172, 0, 255}:   Cloak,
+	color.RGBA{163, 7, 8, 255}:     CloakSub,
+	color.RGBA{211, 206, 194, 255}: AccA,
+	color.RGBA{218, 52, 110, 255}:  AccASub1,
+	color.RGBA{164, 201, 17, 255}:  AccASub2,
+	color.RGBA{199, 132, 7, 255}:   AccB,
+	color.RGBA{192, 211, 210, 255}: AccBSub1,
+	color.RGBA{65, 85, 182, 255}:   AccBSub2,
+	color.RGBA{186, 59, 69, 255}:   AccBSub3,
+	color.RGBA{53, 153, 153, 255}:  Glasses,
+	color.RGBA{204, 186, 210, 255}: GlassesSub1,
+	color.RGBA{96, 126, 75, 255}:   GlassesSub2,
+	color.RGBA{230, 214, 189, 255}: Tail,
+	color.RGBA{167, 214, 214, 255}: Wing,
 }
