@@ -17,3 +17,4 @@
 dist/
 assets/statik/statik.go
 generator
+_savedata
