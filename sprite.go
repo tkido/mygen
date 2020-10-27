@@ -52,13 +52,34 @@ func (s *Sprites) Reflesh() {
 		}
 	}
 
-	s.refleshFace()
-	s.refleshTv()
+	for _, st := range sprite.Types {
+		s.reflesh(st)
+	}
 }
-func (s *Sprites) refleshTv() {
-	s.Tv.Clear()
-	for i := len(layer.TvLayers) - 1; 0 <= i; i-- { // reverse
-		lay := layer.TvLayers[i]
+
+func (s *Sprites) reflesh(st sprite.Type) {
+	if st == sprite.Face {
+		s.refleshFace()
+		return
+	}
+	var target *ebiten.Image
+	op := &ebiten.DrawImageOptions{}
+	switch st {
+	case sprite.Tv:
+		target = s.Tv
+		op.GeoM.Translate(0, 144)
+	case sprite.Tvd:
+		target = s.Tvd
+		op.GeoM.Translate(0, 144+48*4)
+	case sprite.Sv:
+		target = s.Sv
+		op.GeoM.Translate(144, 0)
+	}
+	target.Clear()
+
+	layers := layer.Map[st]
+	for i := len(layers) - 1; 0 <= i; i-- { // reverse
+		lay := layers[i]
 		label := "01"
 		if pt, ok := g.PartManager.LayerPartMap[lay]; ok {
 			if list, ok := g.VariationManager.Map[g.Character.Base][pt]; ok {
@@ -72,7 +93,7 @@ func (s *Sprites) refleshTv() {
 				}
 			}
 		}
-		files := g.PartManager.Get(sprite.Tv, g.Character.Base, lay, label)
+		files := g.PartManager.Get(st, g.Character.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- { // reverse
 			file := files[i]
 			fmt.Println(file)
@@ -84,22 +105,19 @@ func (s *Sprites) refleshTv() {
 				imgSrc = g.ImageManager.FilterImage2(imgSrc, imgMask)
 			}
 			op := &ebiten.DrawImageOptions{}
-			s.Tv.DrawImage(imgSrc, op)
+			target.DrawImage(imgSrc, op)
 		}
 	}
 
-	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(0, 144)
-	s.Image.DrawImage(s.Tv, op)
-
+	s.Image.DrawImage(target, op)
 }
 
 func (s *Sprites) refleshFace() {
 	var reDefaultColor = regexp.MustCompile(`_m(\d{3})`)
-
+	layers := layer.Map[sprite.Face]
 	s.Face.Clear()
-	for i := len(layer.FaceLayers) - 1; 0 <= i; i-- { // reverse
-		lay := layer.FaceLayers[i]
+	for i := len(layers) - 1; 0 <= i; i-- { // reverse
+		lay := layers[i]
 		// log.Printf("Set %s...\n", lay)
 		label := "01"
 		if pt, ok := g.PartManager.LayerPartMap[lay]; ok {

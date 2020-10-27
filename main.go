@@ -40,7 +40,7 @@ var (
 func init() {
 	g = Game{
 		Root:      ui.NewRoot(screenWidth, screenHeight, ui.Color("ff0000")),
-		Character: NewCharacter(0, base.Female),
+		Character: NewCharacter(0, base.Male),
 		// Logic:            NewLogic(),
 		ImageManager:     NewImageManager(),
 		GlobManager:      NewGlobManager(),
