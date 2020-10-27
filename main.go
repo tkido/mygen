@@ -17,7 +17,6 @@ const (
 type Game struct {
 	Root ui.Element
 	Character
-	// Logic
 	ImageManager
 	GlobManager
 	VariationManager
@@ -39,9 +38,8 @@ var (
 
 func init() {
 	g = Game{
-		Root:      ui.NewRoot(screenWidth, screenHeight, ui.Color("ff0000")),
-		Character: NewCharacter(0, base.Male),
-		// Logic:            NewLogic(),
+		Root:             ui.NewRoot(screenWidth, screenHeight, ui.Color("ff0000")),
+		Character:        NewCharacter(0, base.Male),
 		ImageManager:     NewImageManager(),
 		GlobManager:      NewGlobManager(),
 		VariationManager: NewVariationManager(),
