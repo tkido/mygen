@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"image"
 	"log"
 
@@ -37,8 +36,6 @@ var loopCycle = [4]int{1, 2, 1, 0}
 
 func (s *Sample) Reflesh() {
 	cycle := loopCycle[(ui.Now()/30)%4]
-	fmt.Println(cycle)
-
 	log.Println("Sample.Reflesh")
 	// BG
 	for j := 0; j < 6; j++ {

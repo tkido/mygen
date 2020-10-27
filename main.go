@@ -1,8 +1,13 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	_ "image/png"
+	"io/ioutil"
 	"log"
+	"os"
+	"path/filepath"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/base"
@@ -91,10 +96,53 @@ func init() {
 
 	g.Root.Add(0, 64*8, g.Sprites)
 	g.Root.Add(800, 64*8, g.Sample)
+
+	g.Root.SetKeyCallback(ebiten.KeyS, g.Save)
+	g.Root.SetKeyCallback(ebiten.KeyL, g.Load)
+}
+
+func (g *Game) Load(el ui.Element) {
+	if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+		return
+	}
+	file := filepath.Join(".", "_savedata", fmt.Sprintf("%04d.gen", g.Character.Id))
+	f, err := os.Open(file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+	bs, err := ioutil.ReadAll(f)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := json.Unmarshal(bs, &g.Character); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Loaded!!")
+
+}
+func (g *Game) Save(el ui.Element) {
+	if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+		return
+	}
+	bs, err := json.Marshal(g.Character)
+	if err != nil {
+		log.Fatal(err)
+	}
+	file := filepath.Join(".", "_savedata", fmt.Sprintf("%04d.gen", g.Character.Id))
+	f, err := os.Create(file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+	if _, err = f.Write(bs); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Saved!!")
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {
-	g.Sample.Update()
+	// g.Sample.Update()
 	return ui.Update()
 }
 
