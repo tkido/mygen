@@ -11,7 +11,8 @@ import (
 type Type int
 
 const (
-	Skin Type = iota + 1
+	Null Type = iota
+	Skin
 	Eyes
 	Hair
 	HairSub
@@ -41,6 +42,7 @@ type Setting map[Type]gradient.Row
 
 func NewSetting() Setting {
 	return Setting{
+		Null:         -1,
 		Skin:         -1,
 		Eyes:         -1,
 		Hair:         -1,
@@ -120,4 +122,18 @@ var MaskPaletteMap = map[color.Color]Type{
 	color.RGBA{96, 126, 75, 255}:   GlassesSub2,
 	color.RGBA{230, 214, 189, 255}: Tail,
 	color.RGBA{167, 214, 214, 255}: Wing,
+	// nonColors
+	color.RGBA{0, 0, 0, 255}:       Null,
+	color.RGBA{79, 65, 60, 255}:    Null,
+	color.RGBA{87, 87, 85, 255}:    Null,
+	color.RGBA{170, 175, 175, 255}: Null,
+	color.RGBA{56, 59, 59, 255}:    Null,
+	color.RGBA{123, 66, 0, 255}:    Null,
+	color.RGBA{73, 14, 18, 255}:    Null,
+	color.RGBA{218, 121, 18, 255}:  Null,
+	color.RGBA{211, 136, 79, 255}:  Null,
+	color.RGBA{255, 252, 255, 255}: Null,
+	color.RGBA{32, 29, 26, 255}:    Null,
+	color.RGBA{183, 118, 38, 255}:  Null,
+	color.RGBA{37, 38, 66, 255}:    Null,
 }

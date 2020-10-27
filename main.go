@@ -30,6 +30,7 @@ type Game struct {
 	TabIndex    int
 
 	Sprites *Sprites
+	Sample  *Sample
 }
 
 var (
@@ -51,8 +52,11 @@ func init() {
 		Tabs:             []ui.Element{},
 		TabIndex:         0,
 		Sprites:          NewSprites(),
+		Sample:           nil,
 	}
 	g.VariationManager.Init()
+
+	g.Sample = NewSample(g.Sprites)
 
 	g.MainMenu.SetFocus()
 	g.MainMenu.Update()
@@ -86,9 +90,11 @@ func init() {
 	g.Root.SetKeyCallback(ebiten.KeyTab, changeTab)
 
 	g.Root.Add(0, 64*8, g.Sprites)
+	g.Root.Add(800, 64*8, g.Sample)
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {
+	g.Sample.Update()
 	return ui.Update()
 }
 

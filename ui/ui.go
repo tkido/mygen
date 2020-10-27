@@ -51,3 +51,7 @@ func NewRoot(w, h int, c color.Color) *Box {
 	gm.Root = root
 	return root
 }
+
+func Now() int {
+	return gm.Now
+}
