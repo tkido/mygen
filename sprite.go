@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"image"
 	"log"
 	"regexp"
 	"strconv"
@@ -58,22 +58,34 @@ func (s *Sprites) Reflesh() {
 }
 
 func (s *Sprites) reflesh(st sprite.Type) {
+	const flag = true
+
 	if st == sprite.Face {
 		s.refleshFace()
 		return
 	}
 	var target *ebiten.Image
 	op := &ebiten.DrawImageOptions{}
+	var clip image.Rectangle
 	switch st {
 	case sprite.Tv:
 		target = s.Tv
 		op.GeoM.Translate(0, 144)
+		if flag {
+			clip = image.Rect(0, 0, 48, 48)
+		}
 	case sprite.Tvd:
 		target = s.Tvd
 		op.GeoM.Translate(0, 144+48*4)
+		if flag {
+			clip = image.Rect(0, 0, 48, 48)
+		}
 	case sprite.Sv:
 		target = s.Sv
 		op.GeoM.Translate(144, 0)
+		if flag {
+			clip = image.Rect(0, 0, 64, 64)
+		}
 	}
 	target.Clear()
 
@@ -96,12 +108,16 @@ func (s *Sprites) reflesh(st sprite.Type) {
 		files := g.PartManager.Get(st, g.Character.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- { // reverse
 			file := files[i]
-			fmt.Println(file)
 			imgSrc := g.ImageManager.LoadImage(file)
+			if flag {
+				imgSrc = imgSrc.SubImage(clip).(*ebiten.Image)
+			}
 			maskFileName := file[:len(file)-4] + `_c.png`
 			// mask info found
 			if imgMask := g.ImageManager.LoadImage(maskFileName); imgMask != nil {
-				fmt.Println(maskFileName)
+				if flag {
+					imgMask = imgMask.SubImage(clip).(*ebiten.Image)
+				}
 				imgSrc = g.ImageManager.FilterImage2(imgSrc, imgMask)
 			}
 			op := &ebiten.DrawImageOptions{}

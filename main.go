@@ -50,9 +50,9 @@ func init() {
 		GlobManager:      NewGlobManager(),
 		VariationManager: NewVariationManager(),
 		PartManager:      NewPartManager(),
-		MainMenu:         NewMainMenu(100, 20, 2, 20),
+		MainMenu:         NewMainMenu(80, 20, 2, 20),
 		PartMenu:         NewPartMenu(64, 64, 12, 7),
-		PaletteMenu:      NewPaletteMenu(80, 20, 4, 1),
+		PaletteMenu:      NewPaletteMenu(80, 20, 1, 4),
 		ColorMenu:        NewColorMenu(32, 32, 6, 4),
 		Tabs:             []ui.Element{},
 		TabIndex:         0,
@@ -69,13 +69,13 @@ func init() {
 	g.Tabs = append(g.Tabs, g.MainMenu)
 
 	g.PartMenu.Update()
-	g.Root.Add(200, 0, g.PartMenu)
+	g.Root.Add(160, 0, g.PartMenu)
 	g.Tabs = append(g.Tabs, g.PartMenu)
 
-	g.Root.Add(1000, 0, g.PaletteMenu)
+	g.Root.Add(80*2+64*12, 0, g.PaletteMenu)
 	g.Tabs = append(g.Tabs, g.PaletteMenu)
 
-	g.Root.Add(1000, 20, g.ColorMenu)
+	g.Root.Add(80*2+64*12+80, 0, g.ColorMenu)
 	g.Tabs = append(g.Tabs, g.ColorMenu)
 
 	changeTab := func(el ui.Element) {
@@ -142,7 +142,7 @@ func (g *Game) Save(el ui.Element) {
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {
-	g.Sample.Update()
+	// g.Sample.Update()
 	return ui.Update()
 }
 
