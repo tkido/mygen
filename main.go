@@ -105,7 +105,7 @@ func (g *Game) Load(el ui.Element) {
 	if !ebiten.IsKeyPressed(ebiten.KeyControl) {
 		return
 	}
-	file := filepath.Join(".", "_savedata", fmt.Sprintf("%04d.gen", g.Character.Id))
+	file := filepath.Join(".", "_savedata", fmt.Sprintf("%04d.json", g.Character.Id))
 	f, err := os.Open(file)
 	if err != nil {
 		log.Fatal(err)
@@ -129,7 +129,7 @@ func (g *Game) Save(el ui.Element) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	file := filepath.Join(".", "_savedata", fmt.Sprintf("%04d.gen", g.Character.Id))
+	file := filepath.Join(".", "_savedata", fmt.Sprintf("%04d.json", g.Character.Id))
 	f, err := os.Create(file)
 	if err != nil {
 		log.Fatal(err)
@@ -142,7 +142,7 @@ func (g *Game) Save(el ui.Element) {
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {
-	// g.Sample.Update()
+	g.Sample.Update()
 	return ui.Update()
 }
 

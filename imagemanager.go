@@ -128,8 +128,5 @@ func (m *ImageManager) ColorToGradientIndex(col color.Color) int {
 	max = math.Max(max, fb)
 
 	rst := math.Floor(255.0 - (min+max)/2)
-	// rst := math.Floor(255.0 - (fr+fg+fb)/3)
-	// rst := math.Floor(255.0 - math.Pow(fr*fg*fb, 1/3))
-
 	return int(rst)
 }
