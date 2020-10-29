@@ -149,6 +149,10 @@ func (b *Box) draw(screen *ebiten.Image, clip image.Rectangle) {
 	x, y := b.Position()
 	w, h := b.Size()
 	op := &ebiten.DrawImageOptions{}
+	if b.drawImageOptions != nil {
+		op.GeoM.Concat(b.drawImageOptions.GeoM)
+		op.ColorM.Concat(b.drawImageOptions.ColorM)
+	}
 	op.GeoM.Translate(float64(clip.Min.X+x), float64(clip.Min.Y+y))
 	clip = clip.Intersect(image.Rect(x, y, x+w, y+h))
 	screen.DrawImage(b.Image, op)
@@ -159,9 +163,9 @@ func (b *Box) draw(screen *ebiten.Image, clip image.Rectangle) {
 
 // SetDrawImageOptions set DrawImageOptions
 func (b *Box) SetDrawImageOptions(op *ebiten.DrawImageOptions) {
-	if op == nil {
-		op = &ebiten.DrawImageOptions{}
-	}
+	// if op == nil {
+	// 	op = &ebiten.DrawImageOptions{}
+	// }
 	b.drawImageOptions = op
 }
 
