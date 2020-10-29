@@ -26,14 +26,17 @@ func NewSample(src *Sprites) *Sample {
 }
 
 func (s *Sample) Update() {
-	if s.src.Mode == mode.Animation {
-		now := ui.Now()
-		if now%animationInterval != 0 {
-			return
-		}
-		s.Dirty()
-		log.Println("Sample.Update")
+	if s.src.Mode != mode.Animation {
+		s.Hide()
+		return
 	}
+	s.Show()
+	now := ui.Now()
+	if now%animationInterval != 0 {
+		return
+	}
+	s.Dirty()
+	log.Println("Sample.Update")
 }
 
 var loopCycle = [4]int{1, 2, 1, 0}
