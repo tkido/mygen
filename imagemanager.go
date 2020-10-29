@@ -1,24 +1,33 @@
 package main
 
 import (
+	"fmt"
 	"image/color"
 	"image/png"
 	"log"
 	"math"
 	"os"
+	"runtime"
 
+	"github.com/dustin/go-humanize"
 	"github.com/tkido/mygen/palette"
 	"github.com/tkido/mygen/status"
+	"github.com/tkido/mygen/ui"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/tkido/mygen/gradient"
 )
 
+type CachedImage struct {
+	Image *ebiten.Image
+	Frame int
+}
+
 type ImageManager struct {
 	Bg       *ebiten.Image
 	Gradient *ebiten.Image
-	Cache    map[string]*ebiten.Image
+	Cache    map[string]*CachedImage
 }
 
 func NewImageManager() ImageManager {
@@ -27,20 +36,50 @@ func NewImageManager() ImageManager {
 	return ImageManager{
 		Bg,
 		Gradient,
-		map[string]*ebiten.Image{},
+		map[string]*CachedImage{},
 	}
 }
 
-func (m *ImageManager) LoadImage(path string) *ebiten.Image {
-	img, ok := m.Cache[path]
-	if !ok {
-		var err error
-		img, _, err = ebitenutil.NewImageFromFile(path, ebiten.FilterDefault)
-		if err != nil {
-			log.Println(err)
-		}
-		m.Cache[path] = img
+func (m *ImageManager) Gc() {
+	const limit = 480
+	if len(m.Cache) < limit {
+		return
 	}
+	log.Printf("ImageManager Gc Start")
+	var mem runtime.MemStats
+	runtime.ReadMemStats(&mem)
+	fmt.Printf("Alloc : %v\n", humanize.Bytes(mem.Alloc))
+	fmt.Printf("Cache size: %d\n", len(m.Cache))
+	const sampleSize = 16
+	i := 0
+	sum := 0
+	for _, v := range m.Cache {
+		if i == sampleSize {
+			break
+		}
+		i++
+		sum += v.Frame
+	}
+	floor := sum / sampleSize
+	for k, v := range m.Cache {
+		if v.Frame < floor {
+			delete(m.Cache, k)
+		}
+	}
+	fmt.Printf("Alloc : %v\n", humanize.Bytes(mem.Alloc))
+	fmt.Printf("Cache size: %d\n", len(m.Cache))
+}
+
+func (m *ImageManager) LoadImage(path string) *ebiten.Image {
+	if cached, ok := m.Cache[path]; ok {
+		cached.Frame = ui.Now()
+		return cached.Image
+	}
+	img, _, err := ebitenutil.NewImageFromFile(path, ebiten.FilterDefault)
+	if err != nil {
+		log.Println(err)
+	}
+	m.Cache[path] = &CachedImage{img, ui.Now()}
 	return img
 }
 

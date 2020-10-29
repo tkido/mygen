@@ -45,6 +45,7 @@ func NewSprites() *Sprites {
 }
 
 func (s *Sprites) Reflesh() {
+	g.ImageManager.Gc()
 	log.Println("Sprites.Reflesh")
 
 	for j := 0; j < 6; j++ {

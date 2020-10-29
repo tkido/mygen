@@ -3,6 +3,7 @@ module github.com/tkido/mygen
 go 1.13
 
 require (
+	github.com/dustin/go-humanize v1.0.0
 	github.com/fatih/color v1.9.0
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
 	github.com/hajimehoshi/ebiten v1.12.2
