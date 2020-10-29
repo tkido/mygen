@@ -8,6 +8,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/layer"
+	"github.com/tkido/mygen/mode"
 	"github.com/tkido/mygen/palette"
 	"github.com/tkido/mygen/part"
 	"github.com/tkido/mygen/sprite"
@@ -18,6 +19,7 @@ import (
 type Sprites struct {
 	*ui.Box
 	Status status.Type
+	Mode   mode.Type
 	Face   *ebiten.Image
 	Tv     *ebiten.Image
 	Tvd    *ebiten.Image
@@ -32,6 +34,7 @@ func NewSprites() *Sprites {
 	s := &Sprites{
 		ui.NewBox(64*12, 64*6, nil),
 		status.Human,
+		mode.Normal,
 		face,
 		tv,
 		tvd,
@@ -58,8 +61,6 @@ func (s *Sprites) Reflesh() {
 }
 
 func (s *Sprites) reflesh(st sprite.Type) {
-	const flag = true
-
 	if st == sprite.Face {
 		s.refleshFace()
 		return
@@ -71,19 +72,19 @@ func (s *Sprites) reflesh(st sprite.Type) {
 	case sprite.Tv:
 		target = s.Tv
 		op.GeoM.Translate(0, 144)
-		if flag {
+		if s.Mode == mode.Simple {
 			clip = image.Rect(0, 0, 48, 48)
 		}
 	case sprite.Tvd:
 		target = s.Tvd
 		op.GeoM.Translate(0, 144+48*4)
-		if flag {
+		if s.Mode == mode.Simple {
 			clip = image.Rect(0, 0, 48, 48)
 		}
 	case sprite.Sv:
 		target = s.Sv
 		op.GeoM.Translate(144, 0)
-		if flag {
+		if s.Mode == mode.Simple {
 			clip = image.Rect(0, 0, 64, 64)
 		}
 	}
@@ -109,13 +110,13 @@ func (s *Sprites) reflesh(st sprite.Type) {
 		for i := len(files) - 1; 0 <= i; i-- { // reverse
 			file := files[i]
 			imgSrc := g.ImageManager.LoadImage(file)
-			if flag {
+			if s.Mode == mode.Simple {
 				imgSrc = imgSrc.SubImage(clip).(*ebiten.Image)
 			}
 			maskFileName := file[:len(file)-4] + `_c.png`
 			// mask info found
 			if imgMask := g.ImageManager.LoadImage(maskFileName); imgMask != nil {
-				if flag {
+				if s.Mode == mode.Simple {
 					imgMask = imgMask.SubImage(clip).(*ebiten.Image)
 				}
 				imgSrc = g.ImageManager.FilterImage2(imgSrc, imgMask)
