@@ -65,10 +65,10 @@ func init() {
 
 	g.MainMenu.SetFocus()
 	g.MainMenu.Update()
+	g.MainMenu.SetCursor(0)
 	g.Root.Add(0, 0, g.MainMenu)
 	g.Tabs = append(g.Tabs, g.MainMenu)
 
-	g.PartMenu.Update()
 	g.Root.Add(100*2, 0, g.PartMenu)
 	g.Tabs = append(g.Tabs, g.PartMenu)
 

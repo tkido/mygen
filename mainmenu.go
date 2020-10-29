@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"image/color"
 	"log"
 
@@ -60,12 +59,9 @@ func (m *MainMenu) MoveCursor(dX, dY int) (exit bool) {
 func (m *MainMenu) SetCursor(index int) {
 	log.Printf("MainMenu SetCursor index = %d", index)
 	m.MenuBase.SetCursor(index)
-	const offset = 2 // num of appended menu item
-	if m.Cursor >= offset {
-		g.PartMenu.Part = part.Types[m.Cursor-offset]
-		g.PartMenu.Update()
-		g.PaletteMenu.Update()
-	}
+	g.PartMenu.Part = part.Types[m.Cursor]
+	g.PartMenu.Update()
+	g.PaletteMenu.Update()
 	x, y := m.Cursor%m.Col, m.Cursor/m.Col
 	m.CursorBox.Move(x*m.W, y*m.H)
 
@@ -74,8 +70,8 @@ func (m *MainMenu) SetCursor(index int) {
 
 func (m *MainMenu) Update() {
 	m.Data = []string{}
-	m.Data = append(m.Data, fmt.Sprintf("%04d", g.Character.Id))
-	m.Data = append(m.Data, g.Character.Base.String())
+	// m.Data = append(m.Data, fmt.Sprintf("%04d", g.Character.Id))
+	// m.Data = append(m.Data, g.Character.Base.String())
 	for _, pt := range part.Types {
 		m.Data = append(m.Data, pt.String())
 	}
