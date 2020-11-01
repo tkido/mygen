@@ -1,16 +1,11 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	_ "image/png"
-	"io/ioutil"
 	"log"
-	"os"
-	"path/filepath"
 
 	"github.com/hajimehoshi/ebiten"
-	"github.com/tkido/mygen/base"
+	"github.com/tkido/mygen/flag"
 	"github.com/tkido/mygen/ui"
 )
 
@@ -19,38 +14,46 @@ const (
 	screenHeight = 1080
 )
 
+var (
+	g Game
+)
+
 type Game struct {
-	Root ui.Element
-	Character
+	Root      ui.Element
+	Character *Character
+
 	ImageManager
 	GlobManager
 	VariationManager
 	PartManager
+	SaveManager
 
 	MainMenu    *MainMenu
 	PartMenu    *PartMenu
 	PaletteMenu *PaletteMenu
 	ColorMenu   *ColorMenu
-	ModeMenu    *ModeMenu
 	Tabs        []ui.Element
 	TabIndex    int
+	ModeMenu    *ModeMenu
 
 	Sprites *Sprites
 	Sample  *Sample
 }
 
-var (
-	g Game
-)
-
 func init() {
+	sm := NewSaveManager("_savedata")
+	char := NewCharacter(flag.Id, flag.Base)
+	if sm.Exists(sm.FileName(char.Id)) {
+		char = sm.Load(char.Id)
+	}
 	g = Game{
 		Root:             ui.NewRoot(screenWidth, screenHeight, ui.Color("ff0000")),
-		Character:        NewCharacter(0, base.Male),
+		Character:        char,
 		ImageManager:     NewImageManager(),
 		GlobManager:      NewGlobManager(),
 		VariationManager: NewVariationManager(),
 		PartManager:      NewPartManager(),
+		SaveManager:      sm,
 		MainMenu:         NewMainMenu(100, 20, 2, 20),
 		PartMenu:         NewPartMenu(64, 64, 12, 7),
 		PaletteMenu:      NewPaletteMenu(100, 20, 1, 4),
@@ -77,7 +80,7 @@ func init() {
 	g.Root.Add(100*2+64*12, 0, g.PaletteMenu)
 	g.Tabs = append(g.Tabs, g.PaletteMenu)
 
-	g.Root.Add(100*2+64*12+100, 0, g.ColorMenu)
+	g.Root.Add(100*2+64*12+100, 4, g.ColorMenu)
 	g.Tabs = append(g.Tabs, g.ColorMenu)
 
 	changeTab := func(el ui.Element) {
@@ -110,40 +113,14 @@ func (g *Game) Load(el ui.Element) {
 	if !ebiten.IsKeyPressed(ebiten.KeyControl) {
 		return
 	}
-	file := filepath.Join(".", "_savedata", fmt.Sprintf("%04d.json", g.Character.Id))
-	f, err := os.Open(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-	bs, err := ioutil.ReadAll(f)
-	if err != nil {
-		log.Fatal(err)
-	}
-	if err := json.Unmarshal(bs, &g.Character); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("Loaded!!")
-
+	g.Character = g.SaveManager.Load(g.Character.Id)
 }
+
 func (g *Game) Save(el ui.Element) {
 	if !ebiten.IsKeyPressed(ebiten.KeyControl) {
 		return
 	}
-	bs, err := json.Marshal(g.Character)
-	if err != nil {
-		log.Fatal(err)
-	}
-	file := filepath.Join(".", "_savedata", fmt.Sprintf("%04d.json", g.Character.Id))
-	f, err := os.Create(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-	if _, err = f.Write(bs); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("Saved!!")
+	g.SaveManager.Save()
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {
