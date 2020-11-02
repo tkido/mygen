@@ -58,7 +58,7 @@ func init() {
 		PartMenu:         NewPartMenu(64, 64, 12, 7),
 		PaletteMenu:      NewPaletteMenu(100, 20, 1, 4),
 		ColorMenu:        NewColorMenu(32, 32, 6, 4),
-		ModeMenu:         NewModeMenu(100, 20, 1, 3),
+		ModeMenu:         NewModeMenu(100, 20, 1, 20),
 		Tabs:             []ui.Element{},
 		TabIndex:         0,
 		Sprites:          NewSprites(),
@@ -99,14 +99,13 @@ func init() {
 	}
 	g.Root.SetKeyCallback(ebiten.KeyTab, changeTab)
 
-	g.ModeMenu.Update()
-	g.Root.Add(0, 64*8, g.ModeMenu)
-
 	g.Root.Add(100, 64*8, g.Sprites)
-	g.Root.Add(900, 64*8, g.Sample)
-
+	g.Root.Add(100+720+100, 64*8, g.Sample)
 	g.Root.SetKeyCallback(ebiten.KeyS, g.Save)
 	g.Root.SetKeyCallback(ebiten.KeyL, g.Load)
+
+	g.ModeMenu.Update()
+	g.Root.Add(100+720, 64*8, g.ModeMenu)
 }
 
 func (g *Game) Load(el ui.Element) {

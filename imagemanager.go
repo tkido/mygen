@@ -1,15 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"image/color"
 	"image/png"
 	"log"
 	"math"
 	"os"
-	"runtime"
 
-	"github.com/dustin/go-humanize"
 	"github.com/tkido/mygen/palette"
 	"github.com/tkido/mygen/status"
 	"github.com/tkido/mygen/ui"
@@ -46,28 +43,17 @@ func (m *ImageManager) Gc() {
 		return
 	}
 	log.Printf("ImageManager Gc Start")
-	var mem runtime.MemStats
-	runtime.ReadMemStats(&mem)
-	fmt.Printf("Alloc : %v\n", humanize.Bytes(mem.Alloc))
-	fmt.Printf("Cache size: %d\n", len(m.Cache))
-	const sampleSize = 16
+	log.Printf("Cache size: %d\n", len(m.Cache))
 	i := 0
 	sum := 0
-	for _, v := range m.Cache {
-		if i == sampleSize {
-			break
-		}
+	for k, v := range m.Cache {
 		i++
 		sum += v.Frame
-	}
-	floor := sum / sampleSize
-	for k, v := range m.Cache {
-		if v.Frame < floor {
+		if v.Frame < sum/i {
 			delete(m.Cache, k)
 		}
 	}
-	fmt.Printf("Alloc : %v\n", humanize.Bytes(mem.Alloc))
-	fmt.Printf("Cache size: %d\n", len(m.Cache))
+	log.Printf("Cache size: %d\n", len(m.Cache))
 }
 
 func (m *ImageManager) LoadImage(path string) *ebiten.Image {
