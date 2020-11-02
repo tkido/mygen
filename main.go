@@ -106,25 +106,44 @@ func init() {
 
 	g.Root.Add(100, 64*8, g.Sprites)
 	g.Root.Add(100+720+100, 64*8, g.Sample)
-	g.Root.SetKeyCallback(ebiten.KeyS, g.Save)
-	g.Root.SetKeyCallback(ebiten.KeyL, g.Load)
 
 	g.ModeMenu.Update()
 	g.Root.Add(100+720, 64*8, g.ModeMenu)
-}
 
-func (g *Game) Load(el ui.Element) {
-	if !ebiten.IsKeyPressed(ebiten.KeyControl) {
-		return
+	// functions
+	load := func(el ui.Element) {
+		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+			return
+		}
+		g.Character = g.SaveManager.Load(g.Character.Id)
 	}
-	g.Character = g.SaveManager.Load(g.Character.Id)
-}
+	g.Root.SetKeyCallback(ebiten.KeyL, load)
 
-func (g *Game) Save(el ui.Element) {
-	if !ebiten.IsKeyPressed(ebiten.KeyControl) {
-		return
+	save := func(el ui.Element) {
+		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+			return
+		}
+		g.SaveManager.Save()
 	}
-	g.SaveManager.Save()
+	g.Root.SetKeyCallback(ebiten.KeyS, save)
+
+	copy := func(el ui.Element) {
+		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+			return
+		}
+		g.SaveManager.Copy()
+	}
+	g.Root.SetKeyCallback(ebiten.KeyC, copy)
+
+	paste := func(el ui.Element) {
+		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+			return
+		}
+		g.SaveManager.Paste()
+		g.Sprites.Dirty()
+	}
+	g.Root.SetKeyCallback(ebiten.KeyV, paste)
+
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {

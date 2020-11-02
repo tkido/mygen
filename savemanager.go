@@ -10,12 +10,14 @@ import (
 )
 
 type SaveManager struct {
-	Root string
+	Root      string
+	ClipBoard []byte
 }
 
 func NewSaveManager(root string) SaveManager {
 	return SaveManager{
-		Root: root,
+		Root:      root,
+		ClipBoard: []byte{},
 	}
 }
 
@@ -61,4 +63,27 @@ func (m *SaveManager) Save() {
 		log.Fatal(err)
 	}
 	fmt.Println("Saved!!")
+}
+
+func (m *SaveManager) Copy() {
+	data := g.Character.StatusMap[g.StatusMenu.Status]
+	bs, err := json.Marshal(data)
+	if err != nil {
+		log.Fatal(err)
+	}
+	m.ClipBoard = bs
+	fmt.Println("Copied!!")
+}
+
+func (m *SaveManager) Paste() {
+	var data Status
+	bs := m.ClipBoard
+	if len(bs) == 0 {
+		return
+	}
+	if err := json.Unmarshal(bs, &data); err != nil {
+		log.Fatal(err)
+	}
+	g.Character.StatusMap[g.StatusMenu.Status] = data
+	fmt.Println("Pasted!!")
 }
