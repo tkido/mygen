@@ -9,18 +9,18 @@ func _() {
 	// Re-run the stringer command to generate them again.
 	var x [1]struct{}
 	_ = x[Human-0]
-	_ = x[Vampire-1]
-	_ = x[Woke-2]
-	_ = x[Zombie-3]
-	_ = x[HumanNaked-4]
-	_ = x[VampireNaked-5]
-	_ = x[WokeNaked-6]
+	_ = x[HumanNaked-1]
+	_ = x[Vampire-2]
+	_ = x[VampireNaked-3]
+	_ = x[Woke-4]
+	_ = x[WokeNaked-5]
+	_ = x[Zombie-6]
 	_ = x[ZombieNaked-7]
 }
 
-const _Type_name = "HumanVampireWokeZombieHumanNakedVampireNakedWokeNakedZombieNaked"
+const _Type_name = "HumanHumanNakedVampireVampireNakedWokeWokeNakedZombieZombieNaked"
 
-var _Type_index = [...]uint8{0, 5, 12, 16, 22, 32, 44, 53, 64}
+var _Type_index = [...]uint8{0, 5, 15, 22, 34, 38, 47, 53, 64}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {

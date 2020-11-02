@@ -10,7 +10,6 @@ import (
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/tkido/mygen/gradient"
 	"github.com/tkido/mygen/part"
-	"github.com/tkido/mygen/status"
 	"github.com/tkido/mygen/ui"
 )
 
@@ -72,7 +71,7 @@ func (m *ColorMenu) SetCursor(index int) {
 	m.MenuBase.SetCursor(index)
 
 	pt := g.PaletteMenu.Data[g.PaletteMenu.Cursor]
-	g.Character.StatusMap[status.Human].Colors[pt] = m.Data[m.Cursor]
+	g.Character.StatusMap[g.StatusMenu.Status].Colors[pt] = m.Data[m.Cursor]
 
 	x, y := m.Cursor%m.Col, m.Cursor/m.Col
 	m.CursorBox.Move(x*m.W-4, y*m.H-4)
@@ -86,7 +85,7 @@ func (m *ColorMenu) Update() {
 
 	if gt, ok := part.GradientMap[g.PartMenu.Part]; ok {
 		pt := g.PaletteMenu.Data[g.PaletteMenu.Cursor]
-		currentRow := g.Character.StatusMap[status.Human].Colors[pt]
+		currentRow := g.Character.StatusMap[g.StatusMenu.Status].Colors[pt]
 
 		g := gradient.Map[gt]
 		for row := g.Start; row <= g.Start+g.Number; row++ {

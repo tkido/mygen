@@ -6,7 +6,6 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/part"
-	"github.com/tkido/mygen/status"
 	"github.com/tkido/mygen/ui"
 )
 
@@ -61,7 +60,7 @@ func (m *PartMenu) MoveCursor(dX, dY int) (exit bool) {
 func (m *PartMenu) SetCursor(index int) {
 	log.Printf("PartMenu SetCursor")
 	m.MenuBase.SetCursor(index)
-	g.Character.StatusMap[status.Human].Parts[m.Part] = part.Index(index - 1)
+	g.Character.StatusMap[g.StatusMenu.Status].Parts[m.Part] = part.Index(index - 1)
 	x, y := m.Cursor%m.Col, m.Cursor/m.Col
 	m.CursorBox.Move(x*m.W, y*m.H)
 	g.Sprites.Dirty()
@@ -93,7 +92,7 @@ func (m *PartMenu) Update() {
 
 	// restore cursor position from data
 	m.Limit = len(m.Data) - 1
-	m.SetCursor(int(g.Character.StatusMap[status.Human].Parts[m.Part] + 1))
+	m.SetCursor(int(g.Character.StatusMap[g.StatusMenu.Status].Parts[m.Part] + 1))
 
 	x, y := m.Cursor%m.Col, m.Cursor/m.Col
 	m.Add(x*m.W, y*m.H, m.CursorBox)

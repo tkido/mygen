@@ -6,20 +6,22 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/font"
-	"github.com/tkido/mygen/part"
+	"github.com/tkido/mygen/status"
 	"github.com/tkido/mygen/ui"
 )
 
-type MainMenu struct {
+type StatusMenu struct {
 	*MenuBase
 	CursorBox *ui.Box
+	Status    status.Type
 	Data      []string
 }
 
-func NewMainMenu(w, h, col, row int) *MainMenu {
-	m := &MainMenu{
+func NewStatusMenu(w, h, col, row int) *StatusMenu {
+	m := &StatusMenu{
 		NewMenuBase(w, h, col, row, color.White),
 		ui.NewBox(w, h, ui.Color("ff0a")),
+		status.Human,
 		[]string{},
 	}
 	m.Self = m
@@ -38,47 +40,49 @@ func NewMainMenu(w, h, col, row int) *MainMenu {
 	})
 
 	m.SetUiCallback(ui.GotFocus, func(el ui.Element) {
-		log.Printf("MainMenu GotFocus")
+		log.Printf("StatusMenu GotFocus")
 		m.CursorBox.SetBackgroundColor(ui.Color("f00a"))
 	})
 	m.SetUiCallback(ui.LostFocus, func(el ui.Element) {
-		log.Printf("MainMenu LostFocus")
+		log.Printf("StatusMenu LostFocus")
 		m.CursorBox.SetBackgroundColor(ui.Color("ff0a"))
 	})
 
 	return m
 }
 
-func (m *MainMenu) MoveCursor(dX, dY int) (exit bool) {
-	log.Printf("MainMenu MoveCursor")
+func (m *StatusMenu) MoveCursor(dX, dY int) (exit bool) {
+	log.Printf("StatusMenu MoveCursor")
 	exit = m.MenuBase.MoveCursor(dX, dY)
 	m.SetCursor(m.Cursor)
 	return exit
 }
 
-func (m *MainMenu) SetCursor(index int) {
-	log.Printf("MainMenu SetCursor index = %d", index)
+func (m *StatusMenu) SetCursor(index int) {
+	log.Printf("StatusMenu SetCursor index = %d", index)
 	m.MenuBase.SetCursor(index)
-	g.PartMenu.Part = part.Types[m.Cursor]
-	g.PartMenu.Update()
-	g.PaletteMenu.Update()
+
+	m.Status = status.Type(m.Cursor)
+	// g.PartMenu.Part = part.Types[m.Cursor]
+	// g.PartMenu.Update()
+	// g.PaletteMenu.Update()
+
 	x, y := m.Cursor%m.Col, m.Cursor/m.Col
 	m.CursorBox.Move(x*m.W, y*m.H)
-
 	g.Sprites.Dirty()
 }
 
-func (m *MainMenu) Update() {
+func (m *StatusMenu) Update() {
 	m.Data = []string{}
-	for _, pt := range part.Types {
-		m.Data = append(m.Data, pt.String())
+	for _, st := range status.Types {
+		m.Data = append(m.Data, st.String())
 	}
 	m.Limit = len(m.Data) - 1
 
 	m.Clear()
 	for i, text := range m.Data {
 		bgColor := ui.Color("fff")
-		if i%4 == 1 || i%4 == 2 {
+		if i%2 == 1 {
 			bgColor = ui.Color("e3ebf1")
 		}
 		label := ui.NewLabel(m.W, m.H, text, font.Regular, font.Small, ui.Center, color.Black, bgColor)
@@ -104,7 +108,7 @@ func (m *MainMenu) Update() {
 	m.Dirty()
 }
 
-func (m *MainMenu) Reflesh() {
-	log.Println("MainMenu.Reflesh")
+func (m *StatusMenu) Reflesh() {
+	log.Println("StatusMenu.Reflesh")
 	m.Image.Fill(ui.Color("aa0"))
 }

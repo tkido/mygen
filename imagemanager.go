@@ -8,7 +8,6 @@ import (
 	"os"
 
 	"github.com/tkido/mygen/palette"
-	"github.com/tkido/mygen/status"
 	"github.com/tkido/mygen/ui"
 
 	"github.com/hajimehoshi/ebiten"
@@ -97,7 +96,7 @@ func (m *ImageManager) FilterImage2(img, mask *ebiten.Image) *ebiten.Image {
 			if index == -1 {
 				continue
 			}
-			row, ok := g.Character.StatusMap[status.Human].Colors[pt]
+			row, ok := g.Character.StatusMap[g.StatusMenu.Status].Colors[pt]
 			if !ok || row == gradient.Null {
 				newImage.Set(x, y, oc)
 				continue

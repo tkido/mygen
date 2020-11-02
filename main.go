@@ -35,6 +35,7 @@ type Game struct {
 	Tabs        []ui.Element
 	TabIndex    int
 	ModeMenu    *ModeMenu
+	StatusMenu  *StatusMenu
 
 	Sprites *Sprites
 	Sample  *Sample
@@ -59,6 +60,7 @@ func init() {
 		PaletteMenu:      NewPaletteMenu(100, 20, 1, 4),
 		ColorMenu:        NewColorMenu(32, 32, 6, 4),
 		ModeMenu:         NewModeMenu(100, 20, 1, 20),
+		StatusMenu:       NewStatusMenu(100, 20, 1, 16),
 		Tabs:             []ui.Element{},
 		TabIndex:         0,
 		Sprites:          NewSprites(),
@@ -98,6 +100,9 @@ func init() {
 		g.Tabs[g.TabIndex].SetFocus()
 	}
 	g.Root.SetKeyCallback(ebiten.KeyTab, changeTab)
+
+	g.StatusMenu.Update()
+	g.Root.Add(0, 64*8, g.StatusMenu)
 
 	g.Root.Add(100, 64*8, g.Sprites)
 	g.Root.Add(100+720+100, 64*8, g.Sample)

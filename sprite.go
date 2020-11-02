@@ -97,7 +97,7 @@ func (s *Sprites) reflesh(st sprite.Type) {
 		label := "01"
 		if pt, ok := g.PartManager.LayerPartMap[lay]; ok {
 			if list, ok := g.VariationManager.Map[g.Character.Base][pt]; ok {
-				if index, ok := g.Character.StatusMap[s.Status].Parts[pt]; ok {
+				if index, ok := g.Character.StatusMap[g.StatusMenu.Status].Parts[pt]; ok {
 					if index == part.Null {
 						continue
 					}
@@ -140,7 +140,7 @@ func (s *Sprites) refleshFace() {
 		label := "01"
 		if pt, ok := g.PartManager.LayerPartMap[lay]; ok {
 			if list, ok := g.VariationManager.Map[g.Character.Base][pt]; ok {
-				if index, ok := g.Character.StatusMap[s.Status].Parts[pt]; ok {
+				if index, ok := g.Character.StatusMap[g.StatusMenu.Status].Parts[pt]; ok {
 					if index == part.Null {
 						continue
 					}
@@ -164,7 +164,7 @@ func (s *Sprites) refleshFace() {
 					log.Fatalf("invalid color info")
 				}
 				p := palette.Type(index)
-				row, ok := g.Character.StatusMap[status.Human].Colors[p]
+				row, ok := g.Character.StatusMap[g.StatusMenu.Status].Colors[p]
 				if ok && row != -1 {
 					imgSrc = g.ImageManager.FilterImage(imgSrc, row)
 				}

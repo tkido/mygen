@@ -5,11 +5,22 @@ type Type int
 
 const (
 	Human Type = iota
-	Vampire
-	Woke
-	Zombie
 	HumanNaked
+	Vampire
 	VampireNaked
+	Woke
 	WokeNaked
+	Zombie
 	ZombieNaked
 )
+
+var Types = []Type{
+	Human,
+	HumanNaked,
+	Vampire,
+	VampireNaked,
+	Woke,
+	WokeNaked,
+	Zombie,
+	ZombieNaked,
+}
