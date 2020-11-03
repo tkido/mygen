@@ -27,6 +27,7 @@ type Game struct {
 	VariationManager
 	PartManager
 	SaveManager
+	ExportManager
 
 	MainMenu    *MainMenu
 	PartMenu    *PartMenu
@@ -55,16 +56,18 @@ func init() {
 		VariationManager: NewVariationManager(),
 		PartManager:      NewPartManager(),
 		SaveManager:      sm,
-		MainMenu:         NewMainMenu(100, 20, 2, 20),
-		PartMenu:         NewPartMenu(64, 64, 12, 7),
-		PaletteMenu:      NewPaletteMenu(100, 20, 1, 4),
-		ColorMenu:        NewColorMenu(32, 32, 6, 4),
-		ModeMenu:         NewModeMenu(100, 20, 1, 20),
-		StatusMenu:       NewStatusMenu(100, 20, 1, 16),
-		Tabs:             []ui.Element{},
-		TabIndex:         0,
-		Sprites:          NewSprites(),
-		Sample:           nil,
+		ExportManager:    NewExportManager("_dist"),
+
+		MainMenu:    NewMainMenu(100, 20, 2, 20),
+		PartMenu:    NewPartMenu(64, 64, 12, 7),
+		PaletteMenu: NewPaletteMenu(100, 20, 1, 4),
+		ColorMenu:   NewColorMenu(32, 32, 6, 4),
+		ModeMenu:    NewModeMenu(100, 20, 1, 20),
+		StatusMenu:  NewStatusMenu(100, 20, 1, 16),
+		Tabs:        []ui.Element{},
+		TabIndex:    0,
+		Sprites:     NewSprites(),
+		Sample:      nil,
 	}
 	g.VariationManager.Init()
 
@@ -143,6 +146,14 @@ func init() {
 		g.Sprites.Dirty()
 	}
 	g.Root.SetKeyCallback(ebiten.KeyV, paste)
+
+	export := func(el ui.Element) {
+		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+			return
+		}
+		g.ExportManager.Export()
+	}
+	g.Root.SetKeyCallback(ebiten.KeyE, export)
 
 }
 

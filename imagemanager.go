@@ -2,10 +2,8 @@ package main
 
 import (
 	"image/color"
-	"image/png"
 	"log"
 	"math"
-	"os"
 
 	"github.com/tkido/mygen/palette"
 	"github.com/tkido/mygen/ui"
@@ -66,18 +64,6 @@ func (m *ImageManager) LoadImage(path string) *ebiten.Image {
 	}
 	m.Cache[path] = &CachedImage{img, ui.Now()}
 	return img
-}
-
-func (m *ImageManager) SaveImage(path string, img *ebiten.Image) {
-	f, err := os.Create(path)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-	err = png.Encode(f, img)
-	if err != nil {
-		log.Fatal(err)
-	}
 }
 
 func (m *ImageManager) FilterImage2(img, mask *ebiten.Image) *ebiten.Image {
