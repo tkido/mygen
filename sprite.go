@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"log"
 	"regexp"
@@ -110,6 +111,7 @@ func (s *Sprites) reflesh(st sprite.Type) {
 		files := g.PartManager.Get(st, g.Character.Base, lay, label)
 		for i := len(files) - 1; 0 <= i; i-- { // reverse
 			file := files[i]
+			fmt.Println(file)
 			imgSrc := g.ImageManager.LoadImage(file)
 			if s.Mode == mode.Simple {
 				imgSrc = imgSrc.SubImage(clip).(*ebiten.Image)

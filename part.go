@@ -17,21 +17,19 @@ type Part struct {
 }
 
 type PartManager struct {
-	// Map          map[sprite.Type]map[base.Type]map[layer.Type]map[string][]string
 	LayerPartMap map[layer.Type]part.Type
 }
 
 func NewPartManager() PartManager {
 	return PartManager{
-		// Map: map[sprite.Type]map[base.Type]map[layer.Type]map[string][]string{},
 		LayerPartMap: map[layer.Type]part.Type{
-			layer.AccA:      part.AccA,
-			layer.AccB:      part.AccB,
-			layer.Beard:     part.Beard,
-			layer.Beard1:    part.Beard,
-			layer.Beard2:    part.Beard,
-			layer.BeastEars: part.BeastEars,
-			// layer.Body:       part.Body,
+			layer.AccA:       part.AccA,
+			layer.AccB:       part.AccB,
+			layer.Beard:      part.Beard,
+			layer.Beard1:     part.Beard,
+			layer.Beard2:     part.Beard,
+			layer.BeastEars:  part.BeastEars,
+			layer.Body:       part.Body,
 			layer.Cloak:      part.Cloak,
 			layer.Cloak1:     part.Cloak,
 			layer.Cloak2:     part.Cloak,

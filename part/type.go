@@ -16,6 +16,7 @@ func NewSetting(bt base.Type, st status.Type) Setting {
 		AccB:       Null,
 		BeastEars:  Null,
 		Beard:      Null,
+		Body:       0,
 		Clothing:   Null,
 		Cloak:      Null,
 		Ears:       0,
@@ -39,11 +40,11 @@ type Setting map[Type]Index
 type Type int
 
 const (
-	// Body
 	AccA Type = iota
 	AccB
 	BeastEars
 	Beard
+	Body
 	Clothing
 	Cloak
 	Ears
@@ -62,6 +63,7 @@ const (
 )
 
 var Types = []Type{
+	Body,
 	Face,
 	RearHair,
 	FrontHair,
@@ -83,6 +85,7 @@ var Types = []Type{
 }
 
 var GradientMap = map[Type]gradient.Type{
+	Body:       gradient.Skin,
 	Face:       gradient.Skin,
 	RearHair:   gradient.Hair,
 	FrontHair:  gradient.Hair,

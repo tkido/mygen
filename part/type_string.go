@@ -12,25 +12,26 @@ func _() {
 	_ = x[AccB-1]
 	_ = x[BeastEars-2]
 	_ = x[Beard-3]
-	_ = x[Clothing-4]
-	_ = x[Cloak-5]
-	_ = x[Ears-6]
-	_ = x[Eyebrows-7]
-	_ = x[Eyes-8]
-	_ = x[Face-9]
-	_ = x[FacialMark-10]
-	_ = x[FrontHair-11]
-	_ = x[Glasses-12]
-	_ = x[Mouth-13]
-	_ = x[Nose-14]
-	_ = x[RearHair-15]
-	_ = x[Tail-16]
-	_ = x[Wing-17]
+	_ = x[Body-4]
+	_ = x[Clothing-5]
+	_ = x[Cloak-6]
+	_ = x[Ears-7]
+	_ = x[Eyebrows-8]
+	_ = x[Eyes-9]
+	_ = x[Face-10]
+	_ = x[FacialMark-11]
+	_ = x[FrontHair-12]
+	_ = x[Glasses-13]
+	_ = x[Mouth-14]
+	_ = x[Nose-15]
+	_ = x[RearHair-16]
+	_ = x[Tail-17]
+	_ = x[Wing-18]
 }
 
-const _Type_name = "AccAAccBBeastEarsBeardClothingCloakEarsEyebrowsEyesFaceFacialMarkFrontHairGlassesMouthNoseRearHairTailWing"
+const _Type_name = "AccAAccBBeastEarsBeardBodyClothingCloakEarsEyebrowsEyesFaceFacialMarkFrontHairGlassesMouthNoseRearHairTailWing"
 
-var _Type_index = [...]uint8{0, 4, 8, 17, 22, 30, 35, 39, 47, 51, 55, 65, 74, 81, 86, 90, 98, 102, 106}
+var _Type_index = [...]uint8{0, 4, 8, 17, 22, 26, 34, 39, 43, 51, 55, 59, 69, 78, 85, 90, 94, 102, 106, 110}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {
