@@ -26,6 +26,7 @@ func NewSetting(bt base.Type, st status.Type) Setting {
 		FacialMark: Null,
 		FrontHair:  Null,
 		Glasses:    Null,
+		Head:       0,
 		Mouth:      0,
 		Nose:       0,
 		RearHair:   Null,
@@ -54,6 +55,7 @@ const (
 	FacialMark
 	FrontHair
 	Glasses
+	Head
 	Mouth
 	Nose
 	RearHair
@@ -64,6 +66,7 @@ const (
 
 var Types = []Type{
 	Body,
+	Head,
 	Face,
 	RearHair,
 	FrontHair,
@@ -86,6 +89,7 @@ var Types = []Type{
 
 var GradientMap = map[Type]gradient.Type{
 	Body:       gradient.Skin,
+	Head:       gradient.Skin,
 	Face:       gradient.Skin,
 	RearHair:   gradient.Hair,
 	FrontHair:  gradient.Hair,

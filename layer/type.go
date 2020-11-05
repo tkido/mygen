@@ -30,6 +30,7 @@ const (
 	FrontHair1
 	FrontHair2
 	Glasses
+	Head
 	Mouth
 	Nose
 	RearHair
@@ -53,16 +54,16 @@ var Map = map[sprite.Type][]Type{
 	sprite.Tv: []Type{
 		Wing1, AccB, FrontHair1, AccA, RearHair1, Glasses,
 		Ears, BeastEars, Cloak1, Tail1, Clothing1, Beard1, Clothing2,
-		RearHair2, FacialMark, Body, Beard2, FrontHair2, Tail2,
+		RearHair2, FacialMark, Head, Body, Beard2, FrontHair2, Tail2,
 		Cloak2, Wing2,
 	},
 	sprite.Tvd: []Type{
 		AccB, FrontHair, AccA, Eyes, Ears, BeastEars, RearHair, Wing,
-		Glasses, Cloak, Tail, Beard, Clothing, FacialMark, Body,
+		Glasses, Cloak, Tail, Beard, Clothing, FacialMark, Head,
 	},
 	sprite.Sv: []Type{
 		AccB, FrontHair, AccA, Glasses, Ears, BeastEars, Cloak1,
-		Clothing1, Beard, Clothing2, RearHair1, FacialMark, Body,
+		Clothing1, Beard, Clothing2, RearHair1, FacialMark, Head, Body,
 		Tail, Cloak2, Wing,
 	},
 }

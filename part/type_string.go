@@ -22,16 +22,17 @@ func _() {
 	_ = x[FacialMark-11]
 	_ = x[FrontHair-12]
 	_ = x[Glasses-13]
-	_ = x[Mouth-14]
-	_ = x[Nose-15]
-	_ = x[RearHair-16]
-	_ = x[Tail-17]
-	_ = x[Wing-18]
+	_ = x[Head-14]
+	_ = x[Mouth-15]
+	_ = x[Nose-16]
+	_ = x[RearHair-17]
+	_ = x[Tail-18]
+	_ = x[Wing-19]
 }
 
-const _Type_name = "AccAAccBBeastEarsBeardBodyClothingCloakEarsEyebrowsEyesFaceFacialMarkFrontHairGlassesMouthNoseRearHairTailWing"
+const _Type_name = "AccAAccBBeastEarsBeardBodyClothingCloakEarsEyebrowsEyesFaceFacialMarkFrontHairGlassesHeadMouthNoseRearHairTailWing"
 
-var _Type_index = [...]uint8{0, 4, 8, 17, 22, 26, 34, 39, 43, 51, 55, 59, 69, 78, 85, 90, 94, 102, 106, 110}
+var _Type_index = [...]uint8{0, 4, 8, 17, 22, 26, 34, 39, 43, 51, 55, 59, 69, 78, 85, 89, 94, 98, 106, 110, 114}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {

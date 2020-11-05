@@ -78,6 +78,7 @@ type Pallete struct {
 
 var Map = map[part.Type][]Type{
 	part.Body:       {Skin},
+	part.Head:       {Skin},
 	part.Face:       {Skin},
 	part.FrontHair:  {Hair},
 	part.RearHair:   {Hair, HairSub},

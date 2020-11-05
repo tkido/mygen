@@ -45,6 +45,7 @@ func NewPartManager() PartManager {
 			layer.FrontHair1: part.FrontHair,
 			layer.FrontHair2: part.FrontHair,
 			layer.Glasses:    part.Glasses,
+			layer.Head:       part.Head,
 			layer.Mouth:      part.Mouth,
 			layer.Nose:       part.Nose,
 			layer.RearHair:   part.RearHair,
