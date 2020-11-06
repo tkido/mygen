@@ -2,10 +2,13 @@ package main
 
 import (
 	"fmt"
+	"image"
 	"image/png"
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/tkido/mygen/part"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/sprite"
@@ -59,7 +62,14 @@ func (m *ExportManager) Export() {
 		x, y := i%4%2, i%4/2
 		op.GeoM.Translate(float64(x)*48*3*2, float64(y)*48*4)
 		m.Tv.DrawImage(g.Sprites.Tv, op)
-		op.GeoM.Translate(48*3, 48*3)
+		// sleeping TV
+		g.Character.StatusMap[st].Parts[part.Head] = 4
+		g.Character.StatusMap[st].Parts[part.Glasses] = part.Null
+		g.Sprites.reflesh(sprite.Tv)
+		op.GeoM.Translate(48*3, 0)
+		m.Tv.DrawImage(g.Sprites.Tv.SubImage(image.Rect(0, 0, 48*3, 48*3)).(*ebiten.Image), op)
+		// TVD
+		op.GeoM.Translate(0, 48*3)
 		m.Tv.DrawImage(g.Sprites.Tvd, op)
 
 		if int(st)%4 == 3 {
