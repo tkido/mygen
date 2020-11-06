@@ -63,12 +63,11 @@ func (m *StatusMenu) SetCursor(index int) {
 	m.MenuBase.SetCursor(index)
 
 	m.Status = status.Type(m.Cursor)
-	// g.PartMenu.Part = part.Types[m.Cursor]
-	// g.PartMenu.Update()
-	// g.PaletteMenu.Update()
 
 	x, y := m.Cursor%m.Col, m.Cursor/m.Col
 	m.CursorBox.Move(x*m.W, y*m.H)
+
+	g.MainMenu.SetCursor(g.MainMenu.Cursor) // reset cursor position
 	g.Sprites.Dirty()
 }
 
