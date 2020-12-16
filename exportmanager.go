@@ -8,7 +8,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/tkido/mygen/base"
 	"github.com/tkido/mygen/part"
 
 	"github.com/hajimehoshi/ebiten"
@@ -64,13 +63,7 @@ func (m *ExportManager) Export() {
 		op.GeoM.Translate(float64(x)*48*3*2, float64(y)*48*4)
 		m.Tv.DrawImage(g.Sprites.Tv, op)
 		// sleeping TV
-		var sleepingHeadIndex part.Index
-		switch g.Character.Base {
-		case base.Male:
-			sleepingHeadIndex = 4
-		default:
-			sleepingHeadIndex = 2
-		}
+		sleepingHeadIndex := part.Index(6)
 		g.Character.StatusMap[st].Parts[part.Head] = sleepingHeadIndex
 		g.Character.StatusMap[st].Parts[part.Glasses] = part.Null
 		g.Sprites.reflesh(sprite.Tv)
