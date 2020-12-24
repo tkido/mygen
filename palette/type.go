@@ -36,7 +36,9 @@ const (
 	GlassesSub2
 	Tail
 	Wing
-	SkinSub // added
+	// added
+	SkinSub
+	Soil
 )
 
 type Setting map[Type]gradient.Row
@@ -49,6 +51,7 @@ func NewSetting() Setting {
 		Eyes:         -1,
 		Hair:         -1,
 		HairSub:      -1,
+		Soil:         -1,
 		FacialMark:   -1,
 		BeastEars:    -1,
 		Clothing:     -1,
@@ -90,6 +93,7 @@ var Map = map[part.Type][]Type{
 	part.Eyebrows:   {Hair},
 	part.Nose:       {Skin},
 	part.Mouth:      {Skin},
+	part.Soil:       {Soil},
 	part.FacialMark: {FacialMark},
 	part.BeastEars:  {BeastEars},
 	part.Tail:       {Tail},
@@ -107,6 +111,7 @@ var MaskPaletteMap = map[color.Color]Type{
 	color.RGBA{44, 128, 203, 255}:  Eyes,
 	color.RGBA{252, 203, 10, 255}:  Hair,
 	color.RGBA{184, 146, 197, 255}: HairSub,
+	color.RGBA{0, 1, 2, 3}:         Soil, // TBD
 	color.RGBA{0, 146, 150, 255}:   FacialMark,
 	color.RGBA{211, 206, 199, 255}: BeastEars,
 	color.RGBA{174, 134, 130, 255}: Clothing,

@@ -51,6 +51,7 @@ func NewPartManager() PartManager {
 			layer.RearHair:   part.RearHair,
 			layer.RearHair1:  part.RearHair,
 			layer.RearHair2:  part.RearHair,
+			layer.Soil:       part.Soil,
 			layer.Tail:       part.Tail,
 			layer.Tail1:      part.Tail,
 			layer.Tail2:      part.Tail,

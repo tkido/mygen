@@ -23,6 +23,7 @@ func NewSetting(bt base.Type, st status.Type) Setting {
 		Eyebrows:   Null,
 		Eyes:       0,
 		Face:       0,
+		Soil:       Null,
 		FacialMark: Null,
 		FrontHair:  Null,
 		Glasses:    Null,
@@ -59,9 +60,9 @@ const (
 	Mouth
 	Nose
 	RearHair
+	Soil
 	Tail
 	Wing
-	// Penis
 )
 
 var Types = []Type{
@@ -77,6 +78,7 @@ var Types = []Type{
 	Nose,
 	Beard,
 	Mouth,
+	Soil,
 	FacialMark,
 	BeastEars,
 	AccA,
@@ -100,6 +102,7 @@ var GradientMap = map[Type]gradient.Type{
 	Nose:       gradient.Skin,
 	Beard:      gradient.Hair,
 	Mouth:      gradient.Skin,
+	Soil:       gradient.Acc,
 	FacialMark: gradient.Acc,
 	BeastEars:  gradient.Hair,
 	AccA:       gradient.Acc,

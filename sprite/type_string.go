@@ -14,7 +14,7 @@ func _() {
 	_ = x[Tvd-3]
 }
 
-const _Type_name = "FaceSVTVTVD"
+const _Type_name = "FaceSvTvTvd"
 
 var _Type_index = [...]uint8{0, 4, 6, 8, 11}
 

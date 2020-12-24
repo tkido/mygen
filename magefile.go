@@ -35,13 +35,34 @@ func Build() error {
 func Run() error {
 	mg.Deps(Build)
 	fmt.Println("Run...")
-	return sh.RunV("./"+exeFileName, "-id", "3")
+	return sh.RunV("./"+exeFileName, "-id", "13", "-base", "1")
 }
 
 // Test execute test
 func Test() error {
 	fmt.Println("Test...")
 	return sh.RunV("go", "test")
+}
+
+// Generate generate code
+func Generate() error {
+	fmt.Println("Generate...")
+	folders := []string{
+		"layer",
+		"mode",
+		"palette",
+		"part",
+		"sprite",
+		"status",
+	}
+	for _, folder := range folders {
+		path := fmt.Sprintf("./%s", folder)
+		err := sh.RunV("go", "generate", path)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // Statik
