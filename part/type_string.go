@@ -12,28 +12,31 @@ func _() {
 	_ = x[AccB-1]
 	_ = x[BeastEars-2]
 	_ = x[Beard-3]
-	_ = x[Body-4]
-	_ = x[Clothing-5]
-	_ = x[Cloak-6]
-	_ = x[Ears-7]
-	_ = x[Eyebrows-8]
-	_ = x[Eyes-9]
-	_ = x[Face-10]
-	_ = x[FacialMark-11]
-	_ = x[FrontHair-12]
-	_ = x[Glasses-13]
-	_ = x[Head-14]
-	_ = x[Mouth-15]
-	_ = x[Nose-16]
-	_ = x[RearHair-17]
-	_ = x[Soil-18]
-	_ = x[Tail-19]
-	_ = x[Wing-20]
+	_ = x[Bitten-4]
+	_ = x[Body-5]
+	_ = x[Clothing-6]
+	_ = x[Cloak-7]
+	_ = x[Ears-8]
+	_ = x[Emotion-9]
+	_ = x[Eyebrows-10]
+	_ = x[Eyes-11]
+	_ = x[Face-12]
+	_ = x[FacialMark-13]
+	_ = x[FrontHair-14]
+	_ = x[Glasses-15]
+	_ = x[Head-16]
+	_ = x[Mouth-17]
+	_ = x[Nose-18]
+	_ = x[RearHair-19]
+	_ = x[Scar-20]
+	_ = x[Soil-21]
+	_ = x[Tail-22]
+	_ = x[Wing-23]
 }
 
-const _Type_name = "AccAAccBBeastEarsBeardBodyClothingCloakEarsEyebrowsEyesFaceFacialMarkFrontHairGlassesHeadMouthNoseRearHairSoilTailWing"
+const _Type_name = "AccAAccBBeastEarsBeardBittenBodyClothingCloakEarsEmotionEyebrowsEyesFaceFacialMarkFrontHairGlassesHeadMouthNoseRearHairScarSoilTailWing"
 
-var _Type_index = [...]uint8{0, 4, 8, 17, 22, 26, 34, 39, 43, 51, 55, 59, 69, 78, 85, 89, 94, 98, 106, 110, 114, 118}
+var _Type_index = [...]uint8{0, 4, 8, 17, 22, 28, 32, 40, 45, 49, 56, 64, 68, 72, 82, 91, 98, 102, 107, 111, 119, 123, 127, 131, 135}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {
