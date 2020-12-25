@@ -37,11 +37,11 @@ const (
 	Tail
 	Wing
 	// added
-	SkinSub
-	Soil
-	Emotion
-	Bitten
-	Scar
+	SkinSub // 25
+	Soil    // 26
+	Emotion // 27
+	Bitten  // 28
+	Scar    // 29
 )
 
 type Setting map[Type]gradient.Row
