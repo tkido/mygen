@@ -67,6 +67,9 @@ func (s *Sprites) reflesh(st sprite.Type) {
 		s.refleshFace()
 		return
 	}
+	if g.StatusMenu.Status > status.ZombieNaked {
+		return
+	}
 	var target *ebiten.Image
 	op := &ebiten.DrawImageOptions{}
 	var clip image.Rectangle

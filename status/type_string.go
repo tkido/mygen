@@ -16,11 +16,43 @@ func _() {
 	_ = x[WokeNaked-5]
 	_ = x[Zombie-6]
 	_ = x[ZombieNaked-7]
+	_ = x[Emotion00-8]
+	_ = x[Emotion01-9]
+	_ = x[Emotion02-10]
+	_ = x[Emotion03-11]
+	_ = x[Emotion04-12]
+	_ = x[Emotion05-13]
+	_ = x[Emotion06-14]
+	_ = x[Emotion07-15]
+	_ = x[Emotion08-16]
+	_ = x[Emotion09-17]
+	_ = x[Emotion10-18]
+	_ = x[Emotion11-19]
+	_ = x[Emotion12-20]
+	_ = x[Emotion13-21]
+	_ = x[Emotion14-22]
+	_ = x[Emotion15-23]
+	_ = x[Special00-24]
+	_ = x[Special01-25]
+	_ = x[Special02-26]
+	_ = x[Special03-27]
+	_ = x[Special04-28]
+	_ = x[Special05-29]
+	_ = x[Special06-30]
+	_ = x[Special07-31]
+	_ = x[Special08-32]
+	_ = x[Special09-33]
+	_ = x[Special10-34]
+	_ = x[Special11-35]
+	_ = x[Special12-36]
+	_ = x[Special13-37]
+	_ = x[Special14-38]
+	_ = x[Special15-39]
 }
 
-const _Type_name = "HumanHumanNakedVampireVampireNakedWokeWokeNakedZombieZombieNaked"
+const _Type_name = "HumanHumanNakedVampireVampireNakedWokeWokeNakedZombieZombieNakedEmotion00Emotion01Emotion02Emotion03Emotion04Emotion05Emotion06Emotion07Emotion08Emotion09Emotion10Emotion11Emotion12Emotion13Emotion14Emotion15Special00Special01Special02Special03Special04Special05Special06Special07Special08Special09Special10Special11Special12Special13Special14Special15"
 
-var _Type_index = [...]uint8{0, 5, 15, 22, 34, 38, 47, 53, 64}
+var _Type_index = [...]uint16{0, 5, 15, 22, 34, 38, 47, 53, 64, 73, 82, 91, 100, 109, 118, 127, 136, 145, 154, 163, 172, 181, 190, 199, 208, 217, 226, 235, 244, 253, 262, 271, 280, 289, 298, 307, 316, 325, 334, 343, 352}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {

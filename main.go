@@ -6,6 +6,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/flag"
+	"github.com/tkido/mygen/status"
 	"github.com/tkido/mygen/ui"
 )
 
@@ -46,8 +47,15 @@ func init() {
 	sm := NewSaveManager("_savedata")
 	char := NewCharacter(flag.Id, flag.Base)
 	if sm.Exists(sm.FileName(char.Id)) {
-		char = sm.Load(char.Id)
+		loaded := sm.Load(char.Id)
+		if len(loaded.StatusMap) == 8 {
+			for st := status.Emotion00; st <= status.Special15; st++ {
+				loaded.StatusMap[st] = char.StatusMap[st]
+			}
+		}
+		char = loaded
 	}
+
 	g = Game{
 		Root:             ui.NewRoot(screenWidth, screenHeight, ui.Color("ff0000")),
 		Character:        char,
@@ -63,7 +71,7 @@ func init() {
 		PaletteMenu: NewPaletteMenu(100, 20, 1, 4),
 		ColorMenu:   NewColorMenu(32, 32, 6, 4),
 		ModeMenu:    NewModeMenu(100, 20, 1, 20),
-		StatusMenu:  NewStatusMenu(100, 20, 1, 16),
+		StatusMenu:  NewStatusMenu(100, 20, 2, 16),
 		Tabs:        []ui.Element{},
 		TabIndex:    0,
 		Sprites:     NewSprites(),
@@ -107,11 +115,11 @@ func init() {
 	g.StatusMenu.Update()
 	g.Root.Add(0, 64*8, g.StatusMenu)
 
-	g.Root.Add(100, 64*8, g.Sprites)
-	g.Root.Add(100+720+100, 64*8, g.Sample)
+	g.Root.Add(200, 64*8, g.Sprites)
+	g.Root.Add(200+720+100, 64*8, g.Sample)
 
 	g.ModeMenu.Update()
-	g.Root.Add(100+720, 64*8, g.ModeMenu)
+	g.Root.Add(200+720, 64*8, g.ModeMenu)
 
 	// functions
 	load := func(el ui.Element) {

@@ -25,7 +25,7 @@ func NewCharacter(id int, bt base.Type) *Character {
 		Base:      bt,
 		StatusMap: map[status.Type]Status{},
 	}
-	for st := status.Human; st <= status.ZombieNaked; st++ {
+	for st := status.Human; st <= status.Special15; st++ {
 		s := Status{
 			Parts:  part.NewSetting(bt, st),
 			Colors: palette.NewSetting(),
