@@ -44,7 +44,7 @@ type Game struct {
 }
 
 func init() {
-	sm := NewSaveManager("_savedata")
+	sm := NewSaveManager("../vampire/mygen")
 	char := NewCharacter(flag.Id, flag.Base)
 	if sm.Exists(sm.FileName(char.Id)) {
 		loaded := sm.Load(char.Id)
@@ -64,7 +64,7 @@ func init() {
 		VariationManager: NewVariationManager(),
 		PartManager:      NewPartManager(),
 		SaveManager:      sm,
-		ExportManager:    NewExportManager("_dist"),
+		ExportManager:    NewExportManager("../vampire/img"),
 
 		MainMenu:    NewMainMenu(100, 20, 2, 20),
 		PartMenu:    NewPartMenu(64, 64, 12, 7),
