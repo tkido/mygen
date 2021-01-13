@@ -67,7 +67,7 @@ func init() {
 		ExportManager:    NewExportManager("../vampire/img"),
 
 		MainMenu:    NewMainMenu(100, 20, 2, 20),
-		PartMenu:    NewPartMenu(64, 64, 12, 7),
+		PartMenu:    NewPartMenu(64, 64, 12, 8),
 		PaletteMenu: NewPaletteMenu(100, 20, 1, 4),
 		ColorMenu:   NewColorMenu(32, 32, 6, 4),
 		ModeMenu:    NewModeMenu(100, 20, 1, 20),
