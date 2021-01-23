@@ -71,7 +71,7 @@ func init() {
 		PaletteMenu: NewPaletteMenu(100, 20, 1, 4),
 		ColorMenu:   NewColorMenu(32, 32, 6, 4),
 		ModeMenu:    NewModeMenu(100, 20, 1, 20),
-		StatusMenu:  NewStatusMenu(100, 20, 2, 16),
+		StatusMenu:  NewStatusMenu(100, 20, 2, 20),
 		Tabs:        []ui.Element{},
 		TabIndex:    0,
 		Sprites:     NewSprites(),
