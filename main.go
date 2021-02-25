@@ -3,6 +3,7 @@ package main
 import (
 	_ "image/png"
 	"log"
+	"runtime"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/flag"
@@ -159,7 +160,9 @@ func init() {
 		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
 			return
 		}
+		g.SaveManager.Save()
 		g.ExportManager.Export()
+		runtime.Goexit()
 	}
 	g.Root.SetKeyCallback(ebiten.KeyE, export)
 
