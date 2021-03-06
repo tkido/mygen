@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	_ "image/png"
 	"log"
 	"runtime"
@@ -165,6 +166,15 @@ func init() {
 		runtime.Goexit()
 	}
 	g.Root.SetKeyCallback(ebiten.KeyE, export)
+
+	exportSample := func(el ui.Element) {
+		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+			return
+		}
+		g.ExportManager.ExportSample()
+		fmt.Println("Sample Exported!!")
+	}
+	g.Root.SetKeyCallback(ebiten.KeyR, exportSample)
 
 }
 

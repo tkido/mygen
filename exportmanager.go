@@ -96,3 +96,9 @@ func (m *ExportManager) SaveImage(path string, img *ebiten.Image) {
 		log.Fatal(err)
 	}
 }
+
+func (m *ExportManager) ExportSample() {
+	g.Sample.RefleshImage(1)
+	samplePath := filepath.Join(".", m.Root, "sample", fmt.Sprintf("%04d_%02d.png", g.Character.Id, g.StatusMenu.Status))
+	m.SaveImage(samplePath, g.Sample.Image)
+}

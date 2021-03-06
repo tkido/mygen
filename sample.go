@@ -42,8 +42,12 @@ func (s *Sample) Update() {
 var loopCycle = [4]int{1, 2, 1, 0}
 
 func (s *Sample) Reflesh() {
-	cycle := loopCycle[(ui.Now()/animationInterval)%4]
 	log.Println("Sample.Reflesh")
+	cycle := loopCycle[(ui.Now()/animationInterval)%4]
+	s.RefleshImage(cycle)
+}
+
+func (s *Sample) RefleshImage(cycle int) {
 	// BG
 	for j := 0; j < 6; j++ {
 		for i := 0; i < 6; i++ {
