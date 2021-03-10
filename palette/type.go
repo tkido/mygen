@@ -120,10 +120,10 @@ var MaskPaletteMap = map[color.Color]Type{
 	color.RGBA{44, 128, 203, 255}:  Eyes,
 	color.RGBA{252, 203, 10, 255}:  Hair,
 	color.RGBA{184, 146, 197, 255}: HairSub,
-	color.RGBA{0, 1, 2, 3}:         Soil,    // TBD
-	color.RGBA{0, 1, 2, 3}:         Emotion, // TBD
-	color.RGBA{0, 1, 2, 3}:         Bitten,  // TBD
-	color.RGBA{0, 1, 2, 3}:         Scar,    // TBD
+	color.RGBA{79, 65, 60, 255}:    Soil,    // TBD
+	color.RGBA{87, 87, 85, 255}:    Emotion, // TBD
+	color.RGBA{170, 175, 175, 255}: Bitten,  // TBD
+	color.RGBA{56, 59, 59, 255}:    Scar,    // TBD
 	color.RGBA{0, 146, 150, 255}:   FacialMark,
 	color.RGBA{211, 206, 199, 255}: BeastEars,
 	color.RGBA{174, 134, 130, 255}: Clothing,
@@ -145,11 +145,6 @@ var MaskPaletteMap = map[color.Color]Type{
 	color.RGBA{230, 214, 189, 255}: Tail,
 	color.RGBA{167, 214, 214, 255}: Wing,
 	// nonColors
-	color.RGBA{0, 0, 0, 255}:       Null,
-	color.RGBA{79, 65, 60, 255}:    Null,
-	color.RGBA{87, 87, 85, 255}:    Null,
-	color.RGBA{170, 175, 175, 255}: Null,
-	color.RGBA{56, 59, 59, 255}:    Null,
 	color.RGBA{123, 66, 0, 255}:    Null,
 	color.RGBA{73, 14, 18, 255}:    Null,
 	color.RGBA{218, 121, 18, 255}:  Null,

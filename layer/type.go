@@ -57,18 +57,18 @@ var Map = map[sprite.Type][]Type{
 	},
 	sprite.Tv: []Type{
 		Wing1, AccB, FrontHair1, AccA, RearHair1, Glasses,
-		Ears, BeastEars, Cloak1, Tail1, Clothing1, Beard1, Clothing2,
-		RearHair2, Soil, FacialMark, Emotion, Scar,
+		Ears, BeastEars, Cloak1, Tail1, Soil, Clothing1, Beard1, Clothing2,
+		RearHair2, FacialMark, Emotion, Scar,
 		Head, Body, Beard2, FrontHair2,
 		Cloak2, Wing2, Tail2,
 	},
 	sprite.Tvd: []Type{
 		AccB, FrontHair, AccA, Eyes, Ears, BeastEars, RearHair, Wing,
-		Glasses, Cloak, Tail, Beard, Clothing, Soil, FacialMark, Emotion, Scar, Head,
+		Glasses, Cloak, Tail, Soil, Beard, Clothing, FacialMark, Emotion, Scar, Head,
 	},
 	sprite.Sv: []Type{
 		AccB, FrontHair, AccA, Glasses, Ears, BeastEars, Cloak1,
-		Clothing1, Beard, Clothing2, RearHair1, Soil, FacialMark, Emotion, Scar, Head, Body,
+		Soil, Clothing1, Beard, Clothing2, RearHair1, FacialMark, Emotion, Scar, Head, Body,
 		Wing, Tail, Cloak2,
 	},
 }

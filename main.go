@@ -13,8 +13,8 @@ import (
 )
 
 const (
-	screenWidth  = 1920
-	screenHeight = 1080
+	screenWidth  = 1920 - 520
+	screenHeight = 1080 - 168
 )
 
 var (
@@ -59,7 +59,7 @@ func init() {
 	}
 
 	g = Game{
-		Root:             ui.NewRoot(screenWidth, screenHeight, ui.Color("ff0000")),
+		Root:             ui.NewRoot(screenWidth, screenHeight, ui.Color("aaa")),
 		Character:        char,
 		ImageManager:     NewImageManager(),
 		GlobManager:      NewGlobManager(),
@@ -176,6 +176,13 @@ func init() {
 	}
 	g.Root.SetKeyCallback(ebiten.KeyR, exportSample)
 
+	// exchangeColor := func(el ui.Element) {
+	// 	if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+	// 		return
+	// 	}
+	// 	DoExchangeColor()
+	// }
+	// g.Root.SetKeyCallback(ebiten.KeyT, exchangeColor)
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {

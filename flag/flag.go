@@ -2,6 +2,7 @@ package flag
 
 import (
 	"flag"
+	"testing"
 
 	"github.com/tkido/mygen/base"
 )
@@ -12,6 +13,7 @@ var (
 )
 
 func init() {
+	testing.Init()
 	var btInt int
 
 	flag.IntVar(&Id, "id", 1, "id Actor ID")

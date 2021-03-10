@@ -102,7 +102,7 @@ func (m *PartMenu) Update() {
 
 func (m *PartMenu) Reflesh() {
 	log.Println("PartMenu.Reflesh")
-	m.Image.Fill(ui.Color("0f0"))
+	m.Image.Fill(ui.Color("0b0"))
 	for i, img := range m.Data {
 		x, y := i%m.Col, i/m.Col
 		op := &ebiten.DrawImageOptions{}
