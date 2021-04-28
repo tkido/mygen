@@ -34,7 +34,7 @@ func NewSprites() *Sprites {
 	sv, _ := ebiten.NewImage(64*9, 64*6, ebiten.FilterDefault)
 	s := &Sprites{
 		ui.NewBox(64*12, 64*6, nil),
-		status.Human,
+		status.Hum,
 		mode.Normal,
 		face,
 		tv,
@@ -67,7 +67,7 @@ func (s *Sprites) reflesh(st sprite.Type) {
 		s.refleshFace()
 		return
 	}
-	if g.StatusMenu.Status > status.ZombieNaked {
+	if g.StatusMenu.Status > status.ZombN {
 		return
 	}
 	var target *ebiten.Image

@@ -78,7 +78,7 @@ func (m *MainMenu) Update() {
 	m.Clear()
 	for i, text := range m.Data {
 		bgColor := ui.Color("fff")
-		if i%4 == 1 || i%4 == 2 {
+		if i%2 == 1 {
 			bgColor = ui.Color("e3ebf1")
 		}
 		label := ui.NewLabel(m.W, m.H, text, font.Regular, font.Small, ui.Center, color.Black, bgColor)

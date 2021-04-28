@@ -21,7 +21,7 @@ func NewStatusMenu(w, h, col, row int) *StatusMenu {
 	m := &StatusMenu{
 		NewMenuBase(w, h, col, row, color.White),
 		ui.NewBox(w, h, ui.Color("ff0a")),
-		status.Human,
+		status.Hum,
 		[]string{},
 	}
 	m.Self = m
@@ -81,7 +81,8 @@ func (m *StatusMenu) Update() {
 	m.Clear()
 	for i, text := range m.Data {
 		bgColor := ui.Color("fff")
-		if i%4 == 1 || i%4 == 2 {
+		switch i % 8 {
+		case 1, 3, 4, 6:
 			bgColor = ui.Color("e3ebf1")
 		}
 		label := ui.NewLabel(m.W, m.H, text, font.Regular, font.Small, ui.Center, color.Black, bgColor)

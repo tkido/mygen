@@ -27,23 +27,35 @@ func NewExportManager(root string) ExportManager {
 	}
 }
 
-func (m *ExportManager) Export() {
+func (m *ExportManager) Export(faceNum int) {
 	// Face
-	for i, st := range status.FaceTypes {
-		if int(st)%8 == 0 {
-			m.Face, _ = ebiten.NewImage(144*4, 144*2, ebiten.FilterDefault)
-		}
+	m.Face, _ = ebiten.NewImage(144*4, 144*4*faceNum, ebiten.FilterDefault)
+	for st := status.Hum; st < status.Type(faceNum*16); st++ {
 		g.StatusMenu.Status = st
 		g.Sprites.reflesh(sprite.Face)
 		op := &ebiten.DrawImageOptions{}
-		x, y := i%8/2, i%8%2
+		x, y := int(st)%4, int(st)/4
 		op.GeoM.Translate(float64(x)*144, float64(y)*144)
 		m.Face.DrawImage(g.Sprites.Face, op)
-		if int(st)%8 == 7 {
-			facePath := filepath.Join(".", m.Root, "faces", fmt.Sprintf("%04d_%02d.png", g.Character.Id, int(st)/8))
-			m.SaveImage(facePath, m.Face)
-		}
 	}
+	facePath := filepath.Join(".", m.Root, "faces", fmt.Sprintf("%04d.png", g.Character.Id))
+	m.SaveImage(facePath, m.Face)
+
+	// for i, st := range status.FaceTypes {
+	// 	if int(st)%8 == 0 {
+	// 		m.Face, _ = ebiten.NewImage(144*4, 144*2, ebiten.FilterDefault)
+	// 	}
+	// 	g.StatusMenu.Status = st
+	// 	g.Sprites.reflesh(sprite.Face)
+	// 	op := &ebiten.DrawImageOptions{}
+	// 	x, y := i%8/2, i%8%2
+	// 	op.GeoM.Translate(float64(x)*144, float64(y)*144)
+	// 	m.Face.DrawImage(g.Sprites.Face, op)
+	// 	if int(st)%8 == 7 {
+	// 		facePath := filepath.Join(".", m.Root, "faces", fmt.Sprintf("%04d_%02d.png", g.Character.Id, int(st)/8))
+	// 		m.SaveImage(facePath, m.Face)
+	// 	}
+	// }
 
 	// SV
 	for _, st := range status.Types {

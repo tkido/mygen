@@ -50,8 +50,9 @@ func init() {
 	char := NewCharacter(flag.Id, flag.Base)
 	if sm.Exists(sm.FileName(char.Id)) {
 		loaded := sm.Load(char.Id)
-		if len(loaded.StatusMap) == 8 {
-			for st := status.Emotion00; st <= status.Special15; st++ {
+		max := len(loaded.StatusMap)
+		if max != 80 {
+			for st := status.Type(max); st <= status.S63; st++ {
 				loaded.StatusMap[st] = char.StatusMap[st]
 			}
 		}
@@ -68,12 +69,12 @@ func init() {
 		SaveManager:      sm,
 		ExportManager:    NewExportManager("../vampire/img"),
 
-		MainMenu:    NewMainMenu(100, 20, 2, 20),
+		MainMenu:    NewMainMenu(100, 20, 1, 24),
 		PartMenu:    NewPartMenu(64, 64, 12, 8),
 		PaletteMenu: NewPaletteMenu(100, 20, 1, 4),
 		ColorMenu:   NewColorMenu(32, 32, 6, 4),
 		ModeMenu:    NewModeMenu(100, 20, 1, 20),
-		StatusMenu:  NewStatusMenu(100, 20, 2, 20),
+		StatusMenu:  NewStatusMenu(50, 20, 4, 20),
 		Tabs:        []ui.Element{},
 		TabIndex:    0,
 		Sprites:     NewSprites(),
@@ -89,13 +90,13 @@ func init() {
 	g.Root.Add(0, 0, g.MainMenu)
 	g.Tabs = append(g.Tabs, g.MainMenu)
 
-	g.Root.Add(100*2, 0, g.PartMenu)
+	g.Root.Add(100, 0, g.PartMenu)
 	g.Tabs = append(g.Tabs, g.PartMenu)
 
-	g.Root.Add(100*2+64*12, 0, g.PaletteMenu)
+	g.Root.Add(100+64*12, 0, g.PaletteMenu)
 	g.Tabs = append(g.Tabs, g.PaletteMenu)
 
-	g.Root.Add(100*2+64*12+100, 4, g.ColorMenu)
+	g.Root.Add(100+64*12+100, 4, g.ColorMenu)
 	g.Tabs = append(g.Tabs, g.ColorMenu)
 
 	changeTab := func(el ui.Element) {
@@ -157,15 +158,51 @@ func init() {
 	}
 	g.Root.SetKeyCallback(ebiten.KeyV, paste)
 
-	export := func(el ui.Element) {
+	export1 := func(el ui.Element) {
 		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
 			return
 		}
 		g.SaveManager.Save()
-		g.ExportManager.Export()
+		g.ExportManager.Export(1)
 		runtime.Goexit()
 	}
-	g.Root.SetKeyCallback(ebiten.KeyE, export)
+	g.Root.SetKeyCallback(ebiten.Key1, export1)
+	export2 := func(el ui.Element) {
+		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+			return
+		}
+		g.SaveManager.Save()
+		g.ExportManager.Export(2)
+		runtime.Goexit()
+	}
+	g.Root.SetKeyCallback(ebiten.Key2, export2)
+	export3 := func(el ui.Element) {
+		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+			return
+		}
+		g.SaveManager.Save()
+		g.ExportManager.Export(3)
+		runtime.Goexit()
+	}
+	g.Root.SetKeyCallback(ebiten.Key3, export3)
+	export4 := func(el ui.Element) {
+		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+			return
+		}
+		g.SaveManager.Save()
+		g.ExportManager.Export(4)
+		runtime.Goexit()
+	}
+	g.Root.SetKeyCallback(ebiten.Key4, export4)
+	export5 := func(el ui.Element) {
+		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
+			return
+		}
+		g.SaveManager.Save()
+		g.ExportManager.Export(5)
+		runtime.Goexit()
+	}
+	g.Root.SetKeyCallback(ebiten.Key5, export5)
 
 	exportSample := func(el ui.Element) {
 		if !ebiten.IsKeyPressed(ebiten.KeyControl) {

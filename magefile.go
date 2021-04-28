@@ -35,7 +35,7 @@ func Build() error {
 func Run() error {
 	mg.Deps(Build)
 	fmt.Println("Run...")
-	return sh.RunV("./"+exeFileName, "-id", "13", "-base", "1")
+	return sh.RunV("./"+exeFileName, "-id", "8", "-base", "2")
 }
 
 // Test execute test
