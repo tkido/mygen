@@ -38,14 +38,14 @@ func (m *ExportManager) Export(faceNum int) {
 		op.GeoM.Translate(float64(x)*144, float64(y)*144)
 		m.Face.DrawImage(g.Sprites.Face, op)
 	}
-	facePath := filepath.Join(".", m.Root, "faces", fmt.Sprintf("%04d.png", g.Character.Id))
+	facePath := filepath.Join(".", m.Root, "faces", fmt.Sprintf("%04d_%s.png", g.Character.Id, g.Character.Name))
 	m.SaveImage(facePath, m.Face)
 
 	// SV
 	for _, st := range status.Types {
 		g.StatusMenu.Status = st
 		g.Sprites.reflesh(sprite.Sv)
-		svPath := filepath.Join(".", m.Root, "sv_actors", fmt.Sprintf("%04d_%02d.png", g.Character.Id, st))
+		svPath := filepath.Join(".", m.Root, "sv_actors", fmt.Sprintf("%04d_%s_%02d.png", g.Character.Id, g.Character.Name, st))
 		m.SaveImage(svPath, g.Sprites.Sv)
 	}
 
@@ -74,7 +74,7 @@ func (m *ExportManager) Export(faceNum int) {
 		m.Tv.DrawImage(g.Sprites.Tvd, op)
 
 		if int(st)%4 == 3 {
-			tvPath := filepath.Join(".", m.Root, "characters", fmt.Sprintf("%04d_%02d.png", g.Character.Id, int(st)/4))
+			tvPath := filepath.Join(".", m.Root, "characters", fmt.Sprintf("%04d_%s_%02d.png", g.Character.Id, g.Character.Name, int(st)/4))
 			m.SaveImage(tvPath, m.Tv)
 		}
 	}
@@ -95,6 +95,6 @@ func (m *ExportManager) SaveImage(path string, img *ebiten.Image) {
 
 func (m *ExportManager) ExportSample() {
 	g.Sample.RefleshImage(1)
-	samplePath := filepath.Join(".", m.Root, "sample", fmt.Sprintf("%04d_%02d.png", g.Character.Id, g.StatusMenu.Status))
+	samplePath := filepath.Join(".", m.Root, "sample", fmt.Sprintf("%04d_%s_%02d.png", g.Character.Id, g.Character.Name, g.StatusMenu.Status))
 	m.SaveImage(samplePath, g.Sample.Image)
 }

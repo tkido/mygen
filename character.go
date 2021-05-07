@@ -10,6 +10,7 @@ import (
 
 type Character struct {
 	Id        int
+	Name      string
 	Base      base.Type
 	StatusMap map[status.Type]Status
 }
@@ -22,6 +23,7 @@ type Status struct {
 func NewCharacter(id int, bt base.Type) *Character {
 	c := &Character{
 		Id:        id,
+		Name:      "",
 		Base:      bt,
 		StatusMap: map[status.Type]Status{},
 	}
