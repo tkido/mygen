@@ -8,6 +8,8 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/tkido/mygen/flag"
+	"github.com/tkido/mygen/palette"
+	"github.com/tkido/mygen/part"
 	"github.com/tkido/mygen/status"
 	"github.com/tkido/mygen/ui"
 )
@@ -43,6 +45,8 @@ type Game struct {
 
 	Sprites *Sprites
 	Sample  *Sample
+
+	DefaultStatus Status
 }
 
 func init() {
@@ -79,6 +83,11 @@ func init() {
 		TabIndex:    0,
 		Sprites:     NewSprites(),
 		Sample:      nil,
+
+		DefaultStatus: Status{
+			Parts:  part.NewSetting(),
+			Colors: palette.NewSetting(),
+		},
 	}
 	g.VariationManager.Init()
 
@@ -158,51 +167,24 @@ func init() {
 	}
 	g.Root.SetKeyCallback(ebiten.KeyV, paste)
 
-	export1 := func(el ui.Element) {
+	export := func(el ui.Element) {
 		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
 			return
 		}
 		g.SaveManager.Save()
-		g.ExportManager.Export(1)
+		g.ExportManager.Export()
 		runtime.Goexit()
 	}
-	g.Root.SetKeyCallback(ebiten.Key1, export1)
-	export2 := func(el ui.Element) {
+	g.Root.SetKeyCallback(ebiten.KeyE, export)
+
+	exportFace := func(el ui.Element) {
 		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
 			return
 		}
 		g.SaveManager.Save()
-		g.ExportManager.Export(2)
-		runtime.Goexit()
+		g.ExportManager.ExportFace()
 	}
-	g.Root.SetKeyCallback(ebiten.Key2, export2)
-	export3 := func(el ui.Element) {
-		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
-			return
-		}
-		g.SaveManager.Save()
-		g.ExportManager.Export(3)
-		runtime.Goexit()
-	}
-	g.Root.SetKeyCallback(ebiten.Key3, export3)
-	export4 := func(el ui.Element) {
-		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
-			return
-		}
-		g.SaveManager.Save()
-		g.ExportManager.Export(4)
-		runtime.Goexit()
-	}
-	g.Root.SetKeyCallback(ebiten.Key4, export4)
-	export5 := func(el ui.Element) {
-		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
-			return
-		}
-		g.SaveManager.Save()
-		g.ExportManager.Export(5)
-		runtime.Goexit()
-	}
-	g.Root.SetKeyCallback(ebiten.Key5, export5)
+	g.Root.SetKeyCallback(ebiten.KeyF, exportFace)
 
 	exportSample := func(el ui.Element) {
 		if !ebiten.IsKeyPressed(ebiten.KeyControl) {
@@ -213,13 +195,6 @@ func init() {
 	}
 	g.Root.SetKeyCallback(ebiten.KeyR, exportSample)
 
-	// exchangeColor := func(el ui.Element) {
-	// 	if !ebiten.IsKeyPressed(ebiten.KeyControl) {
-	// 		return
-	// 	}
-	// 	DoExchangeColor()
-	// }
-	// g.Root.SetKeyCallback(ebiten.KeyT, exchangeColor)
 }
 
 func (g *Game) Update(screen *ebiten.Image) error {

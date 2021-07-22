@@ -29,7 +29,7 @@ func NewCharacter(id int, bt base.Type) *Character {
 	}
 	for st := status.Hum; st <= status.S63; st++ {
 		s := Status{
-			Parts:  part.NewSetting(bt, st),
+			Parts:  part.NewSetting(),
 			Colors: palette.NewSetting(),
 		}
 		c.StatusMap[st] = s

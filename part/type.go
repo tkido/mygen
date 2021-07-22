@@ -1,16 +1,14 @@
 package part
 
 import (
-	"github.com/tkido/mygen/base"
 	"github.com/tkido/mygen/gradient"
-	"github.com/tkido/mygen/status"
 )
 
 type Index int
 
 const Null Index = -1
 
-func NewSetting(bt base.Type, st status.Type) Setting {
+func NewSetting() Setting {
 	return Setting{
 		AccA:       Null,
 		AccB:       Null,
