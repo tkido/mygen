@@ -51,9 +51,12 @@ type Game struct {
 
 func init() {
 	sm := NewSaveManager("../vampire/mygen")
-	char := NewCharacter(flag.Id, flag.Base)
+	char := NewCharacter(flag.Id, flag.Base, flag.Name)
 	if sm.Exists(sm.FileName(char.Id)) {
 		loaded := sm.Load(char.Id)
+		if flag.Name != "" {
+			loaded.Name = flag.Name
+		}
 		max := len(loaded.StatusMap)
 		if max != 80 {
 			for st := status.Type(max); st <= status.S63; st++ {

@@ -20,10 +20,10 @@ type Status struct {
 	Colors map[palette.Type]gradient.Row
 }
 
-func NewCharacter(id int, bt base.Type) *Character {
+func NewCharacter(id int, bt base.Type, name string) *Character {
 	c := &Character{
 		Id:        id,
-		Name:      "",
+		Name:      name,
 		Base:      bt,
 		StatusMap: map[status.Type]Status{},
 	}
