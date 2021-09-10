@@ -26,7 +26,7 @@ type ImageManager struct {
 
 func NewImageManager() ImageManager {
 	Bg, _, _ := ebitenutil.NewImageFromFile("system/background.png", ebiten.FilterDefault)
-	Gradient, _, _ := ebitenutil.NewImageFromFile("generator/gradients.png", ebiten.FilterDefault)
+	Gradient, _, _ := ebitenutil.NewImageFromFile("../mvgenerator/gradients.png", ebiten.FilterDefault)
 	return ImageManager{
 		Bg,
 		Gradient,
