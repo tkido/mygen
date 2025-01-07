@@ -10,6 +10,5 @@ require (
 	github.com/magefile/mage v1.10.0
 	github.com/rakyll/statik v0.1.7 // indirect
 	github.com/tfriedel6/canvas v0.12.1
-	golang.org/x/image v0.0.0-20200927104501-e162460cd6b5
-	golang.org/x/tools v0.0.0-20201021000207-d49c4edd7d96 // indirect
+	golang.org/x/image v0.23.0
 )
